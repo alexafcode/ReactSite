@@ -90,25 +90,14 @@ function WeatherSearch(props) {
           {searchList}
         </div>
       )}
-      {/* {props.showSearchResult && ( */}
-      {/* <div className={classes.searchList} ref={wrapperRef}>
-          {props.searchCities &&
-            props.searchCities.map((item, index) => (
-              <SearchList
-                city={item.city}
-                country={item.country}
-                keyCity={item.keyCity}
-                key={`item-${index}`}
-              />
-            ))}
-        </div> */}
     </div>
   );
 }
 
 WeatherSearch.propTypes = {
   searchCities: PropTypes.array.isRequired,
-  searchPanelHide: PropTypes.func.isRequired
+  searchPanelHide: PropTypes.func.isRequired,
+  showSearchResult: PropTypes.bool.isRequired
   // ToDo
 };
 

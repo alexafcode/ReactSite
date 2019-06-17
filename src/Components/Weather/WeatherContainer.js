@@ -23,7 +23,7 @@ class WeatherContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
+  // console.log(state);
   return {
     city: state.weatherRedusers.city,
     loading: state.weatherRedusers.loading,

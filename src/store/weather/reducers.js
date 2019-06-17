@@ -9,14 +9,12 @@ const defaultState = {
 };
 
 export default (state = defaultState, action) => {
-  console.log("switch", action);
+  // console.log("switch", action);
   switch (action.type) {
     case FETCH_DATA:
       return {
         ...state,
         city: [action.payload, ...state.city]
-        // city: state.city.push(action.payload)
-        // city: [action.payload, ...state.city]
         // city: state.city.concat(action.payload)
       };
     case "CITY_IS_LOADING":
@@ -32,7 +30,7 @@ export default (state = defaultState, action) => {
     case "SEARCH_CITY":
       return {
         ...state,
-        searchCities: action.payload   //showSearchResult
+        searchCities: action.payload
       };
     case "SHOW_SEARCH_RESULT":
       return {

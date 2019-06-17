@@ -89,7 +89,6 @@ export const fetchData = () => dispatch => {
 
 export const searchClick = input => dispatch => {
   dispatch({ type: SEARCH_CLICK, payload: true });
-  console.log("input", input);
   const url = `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${key}&q=${input}&language=ru-ru`;
   let items = [];
   let cities = {};

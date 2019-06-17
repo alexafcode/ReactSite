@@ -51,7 +51,10 @@ export default class WeatherPage extends React.Component {
 WeatherPage.propTypes = {
   city: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
+  searchCities: PropTypes.array.isRequired,
   showSearchLoad: PropTypes.bool.isRequired,
+  searchPanelHide: PropTypes.func.isRequired,
   showSearchResult: PropTypes.bool.isRequired,
+
   // ToDo
 };

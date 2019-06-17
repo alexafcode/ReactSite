@@ -5,7 +5,9 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import PropTypes from "prop-types";
-import InboxIcon from "@material-ui/icons/Inbox";
+// import InboxIcon from "@material-ui/icons/Inbox";
+import Home from "@material-ui/icons/Home"; // wb_cloudy
+import Cloud from "@material-ui/icons/Cloud";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Drawer } from "@material-ui/core";
@@ -33,7 +35,7 @@ class TemporaryDrawer extends React.Component {
         <List>
           <ListItem button>
             <ListItemIcon>
-              <InboxIcon />
+              <Home />
             </ListItemIcon>
             <Link to="/" className={classes.link}>
               <ListItemText primary="Home" />
@@ -41,7 +43,7 @@ class TemporaryDrawer extends React.Component {
           </ListItem>
           <ListItem button>
             <ListItemIcon>
-              <InboxIcon />
+              <Cloud />
             </ListItemIcon>
             <Link to="/weather" className={classes.link}>
               <ListItemText primary="Weather" />
@@ -76,7 +78,9 @@ class TemporaryDrawer extends React.Component {
 }
 
 TemporaryDrawer.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  toggleDrawer: PropTypes.func,
+  isOpen: PropTypes.bool.isRequired
 };
 
 export default withStyles(styles)(TemporaryDrawer);

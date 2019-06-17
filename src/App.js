@@ -1,24 +1,23 @@
 import React from "react";
-// import { Link } from "react-router-dom";
-// import StartPage from "./Components/StartPage"
-import MenuAppBar from "./Components/Layouts/MenuAppBar"
-
+import { Router, Route } from "react-router-dom";
+import { createBrowserHistory } from "history";
+import { Provider } from "react-redux";
+import WeatherContainer from "./Components/Weather/WeatherContainer";
+import StartPage from "./Components/StartPage";
+import MenuAppBar from "./Components/Layouts/MenuAppBar";
+import configureStore from "./store/configureStore";
 import "./App.scss";
 
+const store = configureStore();
+
 const App = () => (
-  <p>Load</p>
-  // <MenuAppBar />
-  // <StartPage />
-  // <div className="container">
-  //   <ul>
-  //     <li>
-  //       <Link to="/">Home</Link>
-  //     </li>
-  //     <li>
-  //       <Link to="/weather">Weather</Link>
-  //     </li>
-  //   </ul>
-  // </div>
+  <Provider store={store}>
+    <Router history={createBrowserHistory()}>
+      <MenuAppBar />
+        <Route exact path="/" component={StartPage} />
+        <Route path="/weather" component={WeatherContainer} />
+    </Router>
+  </Provider>
 );
 
 export default App;
