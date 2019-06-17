@@ -12,8 +12,7 @@ import "./SearchList.scss";
 // }
 
 const SearchList = props => (
-  <div className="search-list__item" onClick={() => props.getWeather(props)}>
-  {/* <div className="search-list__item" onClick={() => console.log(props)}> */}
+  <div className="search-list__item" onClick={() => props.getWeatherCity(props)}>
     <div className="search-list__city">{props.city}</div>
     <div className="search-list__country">{props.country}</div>
   </div>
@@ -21,7 +20,8 @@ const SearchList = props => (
 
 SearchList.propTypes = {
   city: PropTypes.string.isRequired,
-  country: PropTypes.string.isRequired,
-  keyCity: PropTypes.string.isRequired
+  country: PropTypes.string,
+  keyCity: PropTypes.string.isRequired,
+  getWeatherCity: PropTypes.func.isRequired
 };
 export default SearchList;

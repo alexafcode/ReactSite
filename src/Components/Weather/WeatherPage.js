@@ -14,10 +14,6 @@ export default class WeatherPage extends React.Component {
   //   this.props.fetchData();
   // }
 
-  test = () => {
-    console.log(this.props)
-  };
-
   render() {
     const stylus = {
       container: {
@@ -35,13 +31,13 @@ export default class WeatherPage extends React.Component {
           showSearchResult={this.props.showSearchResult}
           searchClick={this.props.searchClick}
           searchPanelHide={this.props.searchPanelHide}
-          // getWeather={this.getWeather}
+          getWeatherCity={this.props.getWeatherCity}
         />
         {this.props.loading && <Loading />}
         {this.props.city &&
           !this.props.loading &&
           this.props.city.map((city, index) => (
-            <WeatherCard city={city} key={`item-${index}`} />
+            <WeatherCard city={city} showForecast={this.props.showForecast} forecastWeather={this.props.forecastWeather} getForecast={this.props.getForecast} key={`item-${index}`} />
           ))}
       </div>
     );
@@ -55,6 +51,8 @@ WeatherPage.propTypes = {
   showSearchLoad: PropTypes.bool.isRequired,
   searchPanelHide: PropTypes.func.isRequired,
   showSearchResult: PropTypes.bool.isRequired,
-
+  forecastWeather: PropTypes.array.isRequired,
+  showForecast: PropTypes.bool.isRequired,
+  getForecast: PropTypes.func.isRequired
   // ToDo
 };

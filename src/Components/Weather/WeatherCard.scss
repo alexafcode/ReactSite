@@ -66,6 +66,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    color: lightgray;
     button {
       border: none;
       min-width: 95px;
@@ -75,10 +76,56 @@
       text-decoration: underline;
       background-color: transparent;
     }
-    color: lightgray;
     .card__footer-text {
       text-align: center;
       align-items: flex-end;
     }
+  }
+}
+.card__datails {
+  position: relative;
+  width: 500px;
+  margin: auto;
+  display: flex;
+  height: 240px;
+  padding: 20px;
+  margin-bottom: 1vh;
+  border-radius: 1em;
+  flex-direction: row;
+  background-color: lightgray;
+}
+@media screen and (max-width: 800px) {
+  .card {
+    width: 90%;
+    height: 40%;
+    margin: auto;
+    .card__center {
+      font-size: 12px;
+      .card__center-icon {
+        width: 45vw;
+        height: 25vh;
+        background-position: center;
+      }
+      .card__center-wind {
+        // font-size: 1.25rem;
+      }
+    }
+    .card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      .card__footer-text {
+        font-size: 12px;
+        text-align: center;
+      }
+    }
+  }
+  .card__datails {
+    width: 90%;
+    margin: auto;
+  }
+  .card__datails {
+    width: 90%;
+    margin: auto;
   }
 }

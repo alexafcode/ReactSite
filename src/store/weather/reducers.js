@@ -5,7 +5,9 @@ const defaultState = {
   loading: true,
   showSearchLoad: false,
   showSearchResult: false,
-  searchCities: []
+  searchCities: [],
+  showForecast: false,
+  forecastWeather: []
 };
 
 export default (state = defaultState, action) => {
@@ -36,8 +38,20 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         showSearchResult: action.payload
+      };
+    case "SHOW_FORECAST":
+      return {
+        ...state,
+        showForecast: action.payload
+      };
+    case "FORECAST_WEATHER":
+      return {
+        ...state,
+        forecastWeather: action.payload
       }
     default:
       return state;
   }
 };
+
+// ToDo hide showForecast

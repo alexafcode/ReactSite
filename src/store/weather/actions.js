@@ -4,6 +4,8 @@ export const CITY_IS_LOADING = "CITY_IS_LOADING";
 export const SEARCH_CLICK = "SEARCH_CLICK";
 export const SEARCH_CITY = "SEARCH_CITY";
 export const SHOW_SEARCH_RESULT = "SHOW_SEARCH_RESULT";
+export const SHOW_FORECAST = "SHOW_FORECAST";
+export const FORECAST_WEATHER = "FORECAST_WEATHER";
 
 const key = "";
 
@@ -47,18 +49,18 @@ export const fetchData = () => dispatch => {
                     : data.country,
                   temp: `${res.Temperature.Metric.Value.toFixed()}°  ${
                     res.Temperature.Metric.Unit
-                  }`,
+                    }`,
                   windDirect: res.Wind.Direction.Localized,
                   windSpeed: `${res.Wind.Speed.Metric.Value}  ${
                     res.Wind.Speed.Metric.Unit
-                  }`,
+                    }`,
                   weatherText: res.WeatherText,
                   realFeelTemperature: `${res.RealFeelTemperature.Metric.Value.toFixed()}° ${
                     res.RealFeelTemperature.Metric.Unit
-                  }`,
+                    }`,
                   visibility: `${res.Visibility.Metric.Value} ${
                     res.Visibility.Metric.Unit
-                  }`,
+                    }`,
                   WeatherIcon: res.WeatherIcon,
                   IsDayTime: res.IsDayTime,
                   time: time,
@@ -122,3 +124,79 @@ export const searchClick = input => dispatch => {
 export const searchPanelHide = () => dispatch => {
   dispatch({ type: SHOW_SEARCH_RESULT, payload: false });
 };
+
+export const getWeatherCity = (data) => dispatch => {
+  const url = `https://dataservice.accuweather.com/currentconditions/v1/${data.keyCity}?apikey=${key}&language=ru-ru&details=true`;
+  let city = {};
+  axios
+    .get(url)
+    .then(result => {
+      const res = result.data[0];
+      const time = new Date(
+        res.LocalObservationDateTime
+      ).toLocaleString("ru", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+      city = {
+        // fromLS: data.fromLS ? true : false,
+        key: data.keyCity,
+        city: data.city,
+        country: data.сountry,
+        temp: `${res.Temperature.Metric.Value.toFixed()}°  ${
+          res.Temperature.Metric.Unit
+          }`,
+        windDirect: res.Wind.Direction.Localized,
+        windSpeed: `${res.Wind.Speed.Metric.Value}  ${
+          res.Wind.Speed.Metric.Unit
+          }`,
+        weatherText: res.WeatherText,
+        realFeelTemperature: `${res.RealFeelTemperature.Metric.Value.toFixed()}° ${
+          res.RealFeelTemperature.Metric.Unit
+          }`,
+        visibility: `${res.Visibility.Metric.Value} ${
+          res.Visibility.Metric.Unit
+          }`,
+        WeatherIcon: res.WeatherIcon,
+        IsDayTime: res.IsDayTime,
+        time: time,
+        pressure: `${res.Pressure.Metric.Value} мм рт. ст.`
+      };
+      dispatch({ type: FETCH_DATA, payload: city });
+      dispatch({ type: SHOW_SEARCH_RESULT, payload: false });
+      return city;
+    })
+    .catch(error => console.error(error.message));
+  dispatch({ type: SHOW_SEARCH_RESULT, payload: false });
+}
+
+export const getForecast = (queryKey) => dispatch => {
+  let arr = [];
+  const url = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${
+    queryKey
+    }?apikey=${key}&language=ru-ru&metric=true`;
+  axios
+    .get(url)
+    .then(result => {
+      const res = result.data.DailyForecasts;
+      arr = res.map(el => {
+        return {
+          date: new Date(el.Date).toLocaleString("ru", {
+            day: "numeric",
+            month: "long"
+          }),
+          dayIcon: el.Day.Icon,
+          dayIconText: el.Day.IconPhrase,
+          tempDay: `${el.Temperature.Maximum.Value.toFixed()} ° C`,
+          nightIcon: el.Night.Icon,
+          tempNight: `${el.Temperature.Minimum.Value.toFixed()} ° C`
+        };
+      });
+      dispatch({ type: FORECAST_WEATHER, payload: arr });
+      dispatch({ type: SHOW_FORECAST, payload: true });
+    })
+    .catch(error => console.error(error.message));
+  return arr;
+}
+

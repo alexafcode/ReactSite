@@ -48,7 +48,7 @@ function WeatherSearch(props) {
       city={item.city}
       country={item.country}
       keyCity={item.keyCity}
-      getWeather={props.getWeather}
+      getWeatherCity={props.getWeatherCity}
       key={`item-${index}`}
     />
   ));
