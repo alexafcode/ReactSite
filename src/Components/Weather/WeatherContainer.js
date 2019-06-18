@@ -23,14 +23,11 @@ class WeatherContainer extends React.Component {
     );
   }
   componentDidMount() {
-    if (!this.props.city.length) {
-      this.props.fetchData();
-    }
+    !this.props.city.length && this.props.fetchData();
   }
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     city: state.weatherRedusers.city,
     loading: state.weatherRedusers.loading,

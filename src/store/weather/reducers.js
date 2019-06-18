@@ -48,6 +48,7 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         forecastWeather: action.payload
+        // forecastWeather: [action.payload, ...state.forecastWeather]
       }
     default:
       return state;

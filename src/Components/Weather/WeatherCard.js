@@ -6,77 +6,100 @@ import pressureIcon from "../../assets/weather-icons/icon-pressure.png";
 import WeatherDetail from "./WeatherDetail"
 import "./WeatherCard.scss";
 
-function WeatherCard(props) {
-  const icon = require(`../../assets/weather-icons/${props.city.WeatherIcon}.png`)
-
-  const styles = {
-    root: {
-      backgroundImage: props.city.IsDayTime
-        ? "url(" + dayIcon + ")"
-        : "url(" + nightIcon + ")",
-      backgroundSize: "cover",
-      overflow: "hidden"
-    },
-    icon: {
-      backgroundImage: "url(" + icon + ")"
+// function WeatherCard(props) {
+class WeatherCard extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      clicked: false,
+      forecastWeather: []
     }
-  };
-  return (
-    <div>
-      <div className="card" style={styles.root}>
-        <div className="card__title">
-          <div className="card__title-time">{props.city.time}</div>
-          <div className="card__title-location">
-            {props.city.country}, {props.city.city}
+  }
+  render() {
+    const icon = require(`../../assets/weather-icons/${this.props.city.WeatherIcon}.png`)
+
+    const styles = {
+      root: {
+        backgroundImage: this.props.city.IsDayTime
+          ? "url(" + dayIcon + ")"
+          : "url(" + nightIcon + ")",
+        backgroundSize: "cover",
+        overflow: "hidden"
+      },
+      icon: {
+        backgroundImage: "url(" + icon + ")"
+      }
+    };
+
+    const showForecast = () => {
+      if (!this.state.clicked) {
+        this.props.getForecast(this.props.city.key).then(fw => this.setState({ forecastWeather: fw }));
+        this.setState({ clicked: true }, () => console.log("clicked1", this.state.clicked))
+      } else {
+        this.setState({ clicked: false })
+      }
+
+    }
+    return (
+      <>
+        <div className="card" style={styles.root}>
+          <div className="card__title">
+            <div className="card__title-time">{this.props.city.time}</div>
+            <div className="card__title-location">
+              {this.props.city.country}, {this.props.city.city}
+            </div>
           </div>
-        </div>
-        <div className="card__center">
-          <div className="card__center-text">
-            Сейчас:
-          <div className="card__center-temp">{props.city.temp}</div>
-            <div className="card__center-real">
-              Ощущается как:
+          <div className="card__center">
+            <div className="card__center-text">
+              Сейчас:
+          <div className="card__center-temp">{this.props.city.temp}</div>
+              <div className="card__center-real">
+                Ощущается как:
             <div className="card__center-val">
-                {props.city.realFeelTemperature}
+                  {this.props.city.realFeelTemperature}
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className="card__center-icon" style={styles.icon} />
+            </div>
+            <div className="card__center-wind">
+              <span className="card__center-direct">
+                Направление ветра: {this.props.city.windDirect}
+              </span>
+              <div className="card__center-speed">
+                Скорость ветра: {this.props.city.windSpeed}
+              </div>
+              <div className="card__center-pressure">
+                <img src={pressureIcon} alt="pressure" />
+                <span className="card__center-pressure-val">
+                  {this.props.city.pressure}
+                </span>
               </div>
             </div>
           </div>
-          <div>
-            <div className="card__center-icon" style={styles.icon} />
-          </div>
-          <div className="card__center-wind">
-            <span className="card__center-direct">
-              Направление ветра: {props.city.windDirect}
-            </span>
-            <div className="card__center-speed">
-              Скорость ветра: {props.city.windSpeed}
+          <div className="card__footer">
+            <button>Сохранить</button>
+            {/* <button>Удалить</button> */}
+            <div className="card__footer-text">
+              <div>{this.props.city.weatherText}</div>
+              <div>Видимость {this.props.city.visibility}</div>
             </div>
-            <div className="card__center-pressure">
-              <img src={pressureIcon} alt="pressure" />
-              <span className="card__center-pressure-val">
-                {props.city.pressure}
-              </span>
-            </div>
+            {/* <button className="card__footer-more" onClick={() => { !props.showForecast ? props.getForecast(props.city.key) : props.hideForecast() }}>На 5 дней</button> */}
+            <button className="card__footer-more" onClick={() => showForecast()}>На 5 дней</button>
           </div>
         </div>
-        <div className="card__footer">
-          <button>Сохранить</button>
-          {/* <button>Удалить</button> */}
-          <div className="card__footer-text">
-            <div>{props.city.weatherText}</div>
-            <div>Видимость {props.city.visibility}</div>
+        {
+          this.state.clicked &&
+          <div className="card__datails" style={styles.root}>
+            {this.state.forecastWeather.map((item, index) => (
+              <WeatherDetail cityItem={item} key={`item-${index}`} />
+            ))}
           </div>
-          <button className="card__footer-more" onClick={() => { !props.showForecast ? props.getForecast(props.city.key) : props.hideForecast()}}>На 5 дней</button>
-        </div>
-      </div>
-      {props.showForecast &&
-        <div className="card__datails" style={styles.root}>
-          {props.forecastWeather.map((item, index) => (
-            <WeatherDetail cityItem={item} key={`item-${index}`} />
-          ))}
-        </div>}
-    </div>
-  );
+        }
+      </>
+    );
+  }
 }
 
 WeatherCard.propTypes = {

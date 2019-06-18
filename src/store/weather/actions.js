@@ -171,12 +171,12 @@ export const getWeatherCity = (data) => dispatch => {
   dispatch({ type: SHOW_SEARCH_RESULT, payload: false });
 }
 
-export const getForecast = (queryKey) => dispatch => {
+export const getForecast = (queryKey) => async  dispatch => {
   let arr = [];
   const url = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${
     queryKey
     }?apikey=${key}&language=ru-ru&metric=true`;
-  axios
+  await axios
     .get(url)
     .then(result => {
       const res = result.data.DailyForecasts;
@@ -193,8 +193,8 @@ export const getForecast = (queryKey) => dispatch => {
           tempNight: `${el.Temperature.Minimum.Value.toFixed()} ° C`
         };
       });
-      dispatch({ type: FORECAST_WEATHER, payload: arr });
-      dispatch({ type: SHOW_FORECAST, payload: true });
+      // dispatch({ type: FORECAST_WEATHER, payload: arr });
+      // dispatch({ type: SHOW_FORECAST, payload: true });
     })
     .catch(error => console.error(error.message));
   return arr;
