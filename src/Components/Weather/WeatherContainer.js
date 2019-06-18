@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import WeatherPage from "./WeatherPage";
-import { fetchData, searchClick, searchPanelHide, getWeatherCity, getForecast } from "../../store/weather/actions";
+import { fetchData, searchClick, searchPanelHide, getWeatherCity, getForecast, hideForecast } from "../../store/weather/actions";
 
 class WeatherContainer extends React.Component {
   render() {
@@ -18,6 +18,7 @@ class WeatherContainer extends React.Component {
         showForecast={this.props.showForecast}
         forecastWeather={this.props.forecastWeather}
         getForecast={this.props.getForecast}
+        hideForecast={this.props.hideForecast}
       />
     );
   }
@@ -46,7 +47,8 @@ const mapDispatchToProps = {
   searchClick,
   searchPanelHide,
   getWeatherCity,
-  getForecast
+  getForecast,
+  hideForecast
 };
 
 export default connect(

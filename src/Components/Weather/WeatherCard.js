@@ -66,7 +66,7 @@ function WeatherCard(props) {
             <div>{props.city.weatherText}</div>
             <div>Видимость {props.city.visibility}</div>
           </div>
-          <button className="card__footer-more" onClick={() => props.getForecast(props.city.key)}>На 5 дней</button>
+          <button className="card__footer-more" onClick={() => { !props.showForecast ? props.getForecast(props.city.key) : props.hideForecast()}}>На 5 дней</button>
         </div>
       </div>
       {props.showForecast &&

@@ -143,7 +143,7 @@ export const getWeatherCity = (data) => dispatch => {
         // fromLS: data.fromLS ? true : false,
         key: data.keyCity,
         city: data.city,
-        country: data.сountry,
+        country: data.country,
         temp: `${res.Temperature.Metric.Value.toFixed()}°  ${
           res.Temperature.Metric.Unit
           }`,
@@ -198,5 +198,9 @@ export const getForecast = (queryKey) => dispatch => {
     })
     .catch(error => console.error(error.message));
   return arr;
+}
+
+export const hideForecast = () => dispatch => {
+  dispatch({ type: SHOW_FORECAST, payload: false });
 }
 

@@ -37,7 +37,14 @@ export default class WeatherPage extends React.Component {
         {this.props.city &&
           !this.props.loading &&
           this.props.city.map((city, index) => (
-            <WeatherCard city={city} showForecast={this.props.showForecast} forecastWeather={this.props.forecastWeather} getForecast={this.props.getForecast} key={`item-${index}`} />
+            <WeatherCard
+              city={city}
+              showForecast={this.props.showForecast}
+              forecastWeather={this.props.forecastWeather}
+              getForecast={this.props.getForecast}
+              hideForecast={this.props.hideForecast}
+              key={`item-${index}`}
+            />
           ))}
       </div>
     );
@@ -53,6 +60,7 @@ WeatherPage.propTypes = {
   showSearchResult: PropTypes.bool.isRequired,
   forecastWeather: PropTypes.array.isRequired,
   showForecast: PropTypes.bool.isRequired,
-  getForecast: PropTypes.func.isRequired
+  getForecast: PropTypes.func.isRequired,
+  hideForecast: PropTypes.func.isRequired
   // ToDo
 };
