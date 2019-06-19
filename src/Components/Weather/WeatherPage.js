@@ -24,7 +24,6 @@ function WeatherPage(props) {
         showSearchResult={props.showSearchResult}
         searchClick={props.searchClick}
         searchPanelHide={props.searchPanelHide}
-        getWeatherCity={props.getWeatherCity}
       />
       {props.loading && <Loading />}
       <TransitionGroup>

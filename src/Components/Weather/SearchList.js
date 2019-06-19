@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getWeatherCity } from "../../store/weather/actions";
 import "./SearchList.scss";
 
 // const styles = {
@@ -24,4 +26,14 @@ SearchList.propTypes = {
   keyCity: PropTypes.string.isRequired,
   getWeatherCity: PropTypes.func.isRequired
 };
-export default SearchList;
+
+
+const mapDispatchToProps = {
+  getWeatherCity
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(SearchList);
+

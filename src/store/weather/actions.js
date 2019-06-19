@@ -73,7 +73,6 @@ export const fetchData = () => dispatch => {
               .catch(error => console.error(error.message));
             //ToDo error
           })
-          // eslint-disable-next-line
           .catch(error => console.error("Erorr", error.message));
         //ToDo error
       },
@@ -171,12 +170,12 @@ export const getWeatherCity = (data) => dispatch => {
   dispatch({ type: SHOW_SEARCH_RESULT, payload: false });
 }
 
-export const getForecast = (queryKey) => async  dispatch => {
+export const getForecast = (queryKey) =>  dispatch => {
   let arr = [];
   const url = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${
     queryKey
     }?apikey=${key}&language=ru-ru&metric=true`;
-  await axios
+  axios
     .get(url)
     .then(result => {
       const res = result.data.DailyForecasts;
