@@ -40,7 +40,8 @@ const useStyles = makeStyles({
 });
 
 function WeatherSearch(props) {
-  const [input, setInput] = useState("");
+  let initialState = "";
+  const [input, setInput] = useState(initialState);
   const classes = useStyles();
 
   const searchList = props.searchCities.map((item, index) => (
@@ -75,12 +76,16 @@ function WeatherSearch(props) {
           className={classes.input}
           placeholder="Search City"
           inputProps={{ "aria-label": "Search" }}
+          value={input}
           onChange={e => setInput(e.target.value)}
         />
         <IconButton
           className={classes.iconButton}
           aria-label="Search"
-          onClick={() => props.searchClick(input)}
+          onClick={() => {
+            props.searchClick(input);
+            // setInput(initialState);
+          }}
         >
           <SearchIcon />
         </IconButton>

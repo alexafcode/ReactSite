@@ -1,18 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import dayIcon from "../../assets/weather-icons/day.jpg";
 import nightIcon from "../../assets/weather-icons/night.jpg";
 import pressureIcon from "../../assets/weather-icons/icon-pressure.png";
 import WeatherDetail from "./WeatherDetail"
 import "./WeatherCard.scss";
 
-// function WeatherCard(props) {
 class WeatherCard extends React.Component {
   constructor() {
     super();
     this.state = {
-      clicked: false,
-      forecastWeather: []
+      clicked: false
     }
   }
   render() {
@@ -33,15 +32,17 @@ class WeatherCard extends React.Component {
 
     const showForecast = () => {
       if (!this.state.clicked) {
-        this.props.getForecast(this.props.city.key).then(fw => this.setState({ forecastWeather: fw }));
-        this.setState({ clicked: true }, () => console.log("clicked1", this.state.clicked))
+        if (this.props.forecastWeather.length === 0) {
+          this.props.getForecast(this.props.city.key)
+        }
+        this.setState({ clicked: true })
       } else {
         this.setState({ clicked: false })
       }
 
     }
     return (
-      <>
+      <div className="card__cantainer">
         <div className="card" style={styles.root}>
           <div className="card__title">
             <div className="card__title-time">{this.props.city.time}</div>
@@ -85,25 +86,33 @@ class WeatherCard extends React.Component {
               <div>{this.props.city.weatherText}</div>
               <div>Видимость {this.props.city.visibility}</div>
             </div>
-            {/* <button className="card__footer-more" onClick={() => { !props.showForecast ? props.getForecast(props.city.key) : props.hideForecast() }}>На 5 дней</button> */}
             <button className="card__footer-more" onClick={() => showForecast()}>На 5 дней</button>
           </div>
         </div>
         {
           this.state.clicked &&
           <div className="card__datails" style={styles.root}>
-            {this.state.forecastWeather.map((item, index) => (
+            {this.props.forecastWeather.map((item, index) => (
               <WeatherDetail cityItem={item} key={`item-${index}`} />
             ))}
           </div>
         }
-      </>
+      </div>
     );
   }
 }
 
 WeatherCard.propTypes = {
-  city: PropTypes.object.isRequired,
-  forecastWeather: PropTypes.array.isRequired
+  city: PropTypes.object.isRequired
 };
-export default WeatherCard;
+
+
+const mapStateToProps = (state, props) => {
+  return {
+    forecastWeather: state.weatherRedusers.forecastWeather.filter(city => city.key == props.city.key)
+  };
+};
+
+export default connect(
+  mapStateToProps
+)(WeatherCard);

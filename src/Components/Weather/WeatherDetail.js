@@ -6,7 +6,6 @@ function WeatherDetail(props) {
   const dayIcon = require(`../../assets/weather-icons/${props.cityItem.dayIcon}.png`)
   const nightIcon = require(`../../assets/weather-icons/${props.cityItem.nightIcon}.png`)
 
-  console.log("props", props)
   const styles= {
     dayIcon: {
       backgroundImage: "url(" + dayIcon + ")"

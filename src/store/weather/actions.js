@@ -182,6 +182,7 @@ export const getForecast = (queryKey) => async  dispatch => {
       const res = result.data.DailyForecasts;
       arr = res.map(el => {
         return {
+          key: queryKey,
           date: new Date(el.Date).toLocaleString("ru", {
             day: "numeric",
             month: "long"
@@ -193,14 +194,9 @@ export const getForecast = (queryKey) => async  dispatch => {
           tempNight: `${el.Temperature.Minimum.Value.toFixed()} ° C`
         };
       });
-      // dispatch({ type: FORECAST_WEATHER, payload: arr });
-      // dispatch({ type: SHOW_FORECAST, payload: true });
+      dispatch({ type: FORECAST_WEATHER, payload: arr });
     })
     .catch(error => console.error(error.message));
   return arr;
-}
-
-export const hideForecast = () => dispatch => {
-  dispatch({ type: SHOW_FORECAST, payload: false });
 }
 

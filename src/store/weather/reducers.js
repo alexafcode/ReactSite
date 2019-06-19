@@ -11,13 +11,12 @@ const defaultState = {
 };
 
 export default (state = defaultState, action) => {
-  // console.log("switch", action);
   switch (action.type) {
     case FETCH_DATA:
       return {
         ...state,
-        city: [action.payload, ...state.city]
-        // city: state.city.concat(action.payload)
+        // city: [action.payload, ...state.city]
+        city: [...state.city, action.payload]
       };
     case "CITY_IS_LOADING":
       return {
@@ -39,20 +38,12 @@ export default (state = defaultState, action) => {
         ...state,
         showSearchResult: action.payload
       };
-    case "SHOW_FORECAST":
-      return {
-        ...state,
-        showForecast: action.payload
-      };
     case "FORECAST_WEATHER":
       return {
         ...state,
-        forecastWeather: action.payload
-        // forecastWeather: [action.payload, ...state.forecastWeather]
+        forecastWeather: [...action.payload, ...state.forecastWeather]
       }
     default:
       return state;
   }
 };
-
-// ToDo hide showForecast
