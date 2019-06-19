@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useState, useRef, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
@@ -90,11 +91,15 @@ function WeatherSearch(props) {
           <SearchIcon />
         </IconButton>
       </Paper>
+      <TransitionGroup>
       {props.showSearchResult && (
+        <CSSTransition timeout={500} classNames="transition">
         <div className={classes.searchList} ref={wrapperRef}>
           {searchList}
         </div>
+        </CSSTransition>
       )}
+      </TransitionGroup>
     </div>
   );
 }

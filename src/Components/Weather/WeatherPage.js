@@ -4,6 +4,9 @@ import WeatherSearch from "./WeatherSearch";
 import WeatherCard from "./WeatherCard";
 import Loading from "../Layouts/Loading";
 import SearchLoading from "../Layouts/SearchLoading";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import "../Layouts/Animate.scss";
+// import "./WeatherPage.scss";
 
 function WeatherPage(props) {
   const stylus = {
@@ -24,15 +27,19 @@ function WeatherPage(props) {
         getWeatherCity={props.getWeatherCity}
       />
       {props.loading && <Loading />}
-      {props.city &&
-        !props.loading &&
-        props.city.map((city, index) => (
-          <WeatherCard
-            city={city}
-            getForecast={props.getForecast}
-            key={`item-${index}`}
-          />
-        ))}
+      <TransitionGroup>
+        {props.city &&
+          !props.loading &&
+          props.city.map((city, index) => (
+            <CSSTransition timeout={500} key={index} classNames="transition">
+              <WeatherCard
+                city={city}
+                getForecast={props.getForecast}
+                key={`item-${index}`}
+              />
+            </CSSTransition>
+          ))}
+      </TransitionGroup>
     </div>
   );
 }
