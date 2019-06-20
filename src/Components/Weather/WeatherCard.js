@@ -4,18 +4,21 @@ import { connect } from "react-redux";
 import dayIcon from "../../assets/weather-icons/day.jpg";
 import nightIcon from "../../assets/weather-icons/night.jpg";
 import pressureIcon from "../../assets/weather-icons/icon-pressure.png";
-import WeatherDetail from "./WeatherDetail"
+import WeatherDetail from "./WeatherDetail";
 import "./WeatherCard.scss";
 
 class WeatherCard extends React.Component {
   constructor() {
     super();
     this.state = {
-      clicked: false
-    }
+      clicked: false,
+      save: false
+    };
   }
   render() {
-    const icon = require(`../../assets/weather-icons/${this.props.city.WeatherIcon}.png`)
+    const icon = require(`../../assets/weather-icons/${
+      this.props.city.WeatherIcon
+    }.png`);
 
     const styles = {
       root: {
@@ -33,14 +36,20 @@ class WeatherCard extends React.Component {
     const showForecast = () => {
       if (!this.state.clicked) {
         if (this.props.forecastWeather.length === 0) {
-          this.props.getForecast(this.props.city.key)
+          this.props.getForecast(this.props.city.key);
         }
-        this.setState({ clicked: true })
+        this.setState({ clicked: true });
       } else {
-        this.setState({ clicked: false })
+        this.setState({ clicked: false });
       }
+    };
 
-    }
+    const saveLS = () => {
+      this.setState(state => {
+        return { save: !state.save };
+      });
+    };
+
     return (
       <div className="card__cantainer">
         <div className="card" style={styles.root}>
@@ -53,10 +62,10 @@ class WeatherCard extends React.Component {
           <div className="card__center">
             <div className="card__center-text">
               Сейчас:
-          <div className="card__center-temp">{this.props.city.temp}</div>
+              <div className="card__center-temp">{this.props.city.temp}</div>
               <div className="card__center-real">
                 Ощущается как:
-            <div className="card__center-val">
+                <div className="card__center-val">
                   {this.props.city.realFeelTemperature}
                 </div>
               </div>
@@ -80,23 +89,28 @@ class WeatherCard extends React.Component {
             </div>
           </div>
           <div className="card__footer">
-            <button>Сохранить</button>
-            {/* <button>Удалить</button> */}
+            <button onClick={() => saveLS()}>
+              {!this.state.save ? "Сохранить" : "Удалить"}
+            </button>
             <div className="card__footer-text">
               <div>{this.props.city.weatherText}</div>
               <div>Видимость {this.props.city.visibility}</div>
             </div>
-            <button className="card__footer-more" onClick={() => showForecast()}>На 5 дней</button>
+            <button
+              className="card__footer-more"
+              onClick={() => showForecast()}
+            >
+              На 5 дней
+            </button>
           </div>
         </div>
-        {
-          this.state.clicked &&
+        {this.state.clicked && (
           <div className="card__datails" style={styles.root}>
             {this.props.forecastWeather.map((item, index) => (
               <WeatherDetail cityItem={item} key={`item-${index}`} />
             ))}
           </div>
-        }
+        )}
       </div>
     );
   }
@@ -106,13 +120,12 @@ WeatherCard.propTypes = {
   city: PropTypes.object.isRequired
 };
 
-
 const mapStateToProps = (state, props) => {
   return {
-    forecastWeather: state.weatherRedusers.forecastWeather.filter(city => city.key == props.city.key)
+    forecastWeather: state.weatherRedusers.forecastWeather.filter(
+      city => city.key == props.city.key
+    )
   };
 };
 
-export default connect(
-  mapStateToProps
-)(WeatherCard);
+export default connect(mapStateToProps)(WeatherCard);
