@@ -45,7 +45,7 @@ class MenuAppBar extends React.Component {
           //onClick={this.handleMenu}
         >
           <Toolbar>
-            <Hidden only={['md','lg']}>
+            <Hidden only={['md','xl','lg']}>
               <TemporaryDrawer
                 onClick={this.handleMenu}
                 isOpen={drawerOpen}
