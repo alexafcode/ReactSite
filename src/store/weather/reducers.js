@@ -1,5 +1,3 @@
-import { FETCH_DATA } from "./actions";
-
 const defaultState = {
   city: [],
   loading: true,
@@ -12,7 +10,7 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case FETCH_DATA:
+    case "FETCH_DATA":
       return {
         ...state,
         // city: [action.payload, ...state.city]
