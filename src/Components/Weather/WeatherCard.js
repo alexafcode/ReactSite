@@ -5,8 +5,7 @@ import dayIcon from "../../assets/weather-icons/day.jpg";
 import nightIcon from "../../assets/weather-icons/night.jpg";
 import pressureIcon from "../../assets/weather-icons/icon-pressure.png";
 import WeatherDetail from "./WeatherDetail";
-import { saveToLS } from "../../store/weather/helperActions";
-import { deleteToLS } from "../../store/weather/helperActions";
+import { saveToLS, deleteToLS } from "../../store/weather/helperActions";
 import "./WeatherCard.scss";
 
 class WeatherCard extends React.Component {
