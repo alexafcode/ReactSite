@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { searchClick, searchPanelHide } from "../../store/weather/actions";
 import { useState, useRef, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -91,13 +93,13 @@ function WeatherSearch(props) {
         </IconButton>
       </Paper>
       <TransitionGroup>
-      {props.showSearchResult && (
-        <CSSTransition timeout={500} classNames="transition">
-        <div className={classes.searchList} ref={wrapperRef}>
-          {searchList}
-        </div>
-        </CSSTransition>
-      )}
+        {props.showSearchResult && (
+          <CSSTransition timeout={500} classNames="transition">
+            <div className={classes.searchList} ref={wrapperRef}>
+              {searchList}
+            </div>
+          </CSSTransition>
+        )}
       </TransitionGroup>
     </div>
   );
@@ -110,4 +112,19 @@ WeatherSearch.propTypes = {
   // ToDo
 };
 
-export default WeatherSearch;
+const mapStateToProps = state => {
+  return {
+    showSearchLoad: state.weatherRedusers.showSearchLoad,
+    searchCities: state.weatherRedusers.searchCities,
+    showSearchResult: state.weatherRedusers.showSearchResult,
+  };
+};
+const mapDispatchToProps = {
+  searchClick,
+  searchPanelHide
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WeatherSearch);

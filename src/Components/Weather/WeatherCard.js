@@ -5,7 +5,8 @@ import dayIcon from "../../assets/weather-icons/day.jpg";
 import nightIcon from "../../assets/weather-icons/night.jpg";
 import pressureIcon from "../../assets/weather-icons/icon-pressure.png";
 import WeatherDetail from "./WeatherDetail";
-import { saveToLS, deleteToLS } from "../../store/weather/actions";
+import { saveToLS } from "../../store/weather/helperActions";
+import { deleteToLS } from "../../store/weather/helperActions";
 import "./WeatherCard.scss";
 
 class WeatherCard extends React.Component {
@@ -52,12 +53,12 @@ class WeatherCard extends React.Component {
 
     const saveLS = () => {
       if (!this.state.save) {
-        this.props.saveToLS(this.props.city)
+        saveToLS(this.props.city)
         this.setState(state => {
           return { save: !state.save };
         });
       } else {
-        this.props.deleteToLS(this.props.city)
+        deleteToLS(this.props.city)
         this.setState(state => {
           return { save: !state.save };
         });
@@ -143,8 +144,6 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = {
-  saveToLS,
-  deleteToLS
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WeatherCard);
