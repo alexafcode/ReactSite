@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+// import firebase from 'firebase/app';
 const config = {
   apiKey: "AIzaSyAJiJqj-00ZD8KVrmIa4x9BuguEKSG7oDY",
   authDomain: "routesite-vue.firebaseapp.com",

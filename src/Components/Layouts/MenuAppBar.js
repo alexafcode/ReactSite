@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { compose } from "redux";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import { AppBar, Toolbar } from "@material-ui/core";
@@ -27,7 +29,6 @@ const styles = {
 
 class MenuAppBar extends React.Component {
   state = {
-    auth: true,
     drawerOpen: false
   };
 
@@ -38,35 +39,39 @@ class MenuAppBar extends React.Component {
   render() {
     const { classes } = this.props;
     const { drawerOpen } = this.state;
+
     return (
       <div className={classes.root}>
-        <AppBar
-          position="static"
-          //onClick={this.handleMenu}
-        >
+        <AppBar position="static">
           <Toolbar>
-            <Hidden only={['md','xl','lg']}>
+            <Hidden only={["md", "xl", "lg"]}>
               <TemporaryDrawer
                 onClick={this.handleMenu}
                 isOpen={drawerOpen}
                 toggleDrawer={this.handleMenu}
               />
             </Hidden>
-            <Hidden only={['xs','sm']}>
-            <Typography variant="h6">
-              <Link to="/" className={classes.link}>
-                Home
-              </Link>
-              <Link to="/weather" className={classes.link}>
-                Weather
-              </Link>
-              <Link to="/signin" className={classes.link}>
-                SignIn
-              </Link>
-              <Link to="/signup" className={classes.link}>
-                SignUp
-              </Link>
-            </Typography>
+            <Hidden only={["xs", "sm"]}>
+              {this.props.isAuthenticated ? (
+                <Typography variant="h6">
+                  <Link to="/" className={classes.link}>
+                    Home
+                  </Link>
+                  <Link to="/weather" className={classes.link}>
+                    Weather
+                  </Link>
+                </Typography>
+              ) : (
+                <Typography variant="h6">
+                  <Link to="/signin" className={classes.link}>
+                    SignIn
+                  </Link>
+                  <Link to="/signup" className={classes.link}>
+                    SignUp
+                  </Link>
+                </Typography>
+              )}
+              {/* <button onClick={() => console.log(this.props.AuthReducers)} /> */}
             </Hidden>
           </Toolbar>
         </AppBar>
@@ -78,5 +83,17 @@ class MenuAppBar extends React.Component {
 MenuAppBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
+const mapStateToProps = (state, props) => ({
+  ...state,
+  isAuthenticated: state.AuthReducers.isAuthenticated
+});
 
-export default withStyles(styles)(MenuAppBar);
+export default compose(
+  withStyles(styles, {
+    name: "MenuAppBar"
+  }),
+  connect(
+    mapStateToProps,
+    null
+  )
+)(MenuAppBar);

@@ -1,6 +1,7 @@
-export default (state = {}, action) => {
+const initialState = JSON.parse(window.localStorage.getItem('rr_user')) || {}
+export default (state = initialState, action) => {
   switch (action.type) {
-    case "signIn":
+    case "SIGNIN":
       return {
         ...state,
         isAuthenticated: action.payload
