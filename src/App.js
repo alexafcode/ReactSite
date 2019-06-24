@@ -4,6 +4,8 @@ import { createBrowserHistory } from "history";
 import { Provider } from "react-redux";
 import WeatherContainer from "./Components/Weather/WeatherContainer";
 import StartPage from "./Components/StartPage";
+import SignIn from "./Components/Login/SignIn"
+import SignUp from "./Components/Login/SignUp"
 import MenuAppBar from "./Components/Layouts/MenuAppBar";
 import configureStore from "./store/configureStore";
 import "./App.scss";
@@ -16,6 +18,8 @@ const App = () => (
       <MenuAppBar />
         <Route exact path="/" component={StartPage} />
         <Route path="/weather" component={WeatherContainer} />
+        <Route path="/signin" component={SignIn} />
+        <Route path="/signup" component={SignUp} />
     </Router>
   </Provider>
 );

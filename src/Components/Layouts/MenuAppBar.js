@@ -60,6 +60,12 @@ class MenuAppBar extends React.Component {
               <Link to="/weather" className={classes.link}>
                 Weather
               </Link>
+              <Link to="/signin" className={classes.link}>
+                SignIn
+              </Link>
+              <Link to="/signup" className={classes.link}>
+                SignUp
+              </Link>
             </Typography>
             </Hidden>
           </Toolbar>

@@ -49,6 +49,16 @@ class TemporaryDrawer extends React.Component {
               <ListItemText primary="Weather" />
             </Link>
           </ListItem>
+          <ListItem button>
+            <Link to="/signin" className={classes.link}>
+              <ListItemText primary="SignIn" />
+            </Link>
+          </ListItem>
+          <ListItem button>
+            <Link to="/signup" className={classes.link}>
+              <ListItemText primary="SignUp" />
+            </Link>
+          </ListItem>
         </List>
       </div>
     );
