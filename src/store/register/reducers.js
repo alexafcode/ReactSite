@@ -6,6 +6,11 @@ export default (state = initialState, action) => {
         ...state,
         isAuthenticated: action.payload
       };
+      case "USER":
+        return {
+          ...state,
+          user: action.payload
+        }
     default:
       return state;
   }

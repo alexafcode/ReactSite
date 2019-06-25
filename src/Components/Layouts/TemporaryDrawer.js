@@ -8,10 +8,12 @@ import PropTypes from "prop-types";
 // import InboxIcon from "@material-ui/icons/Inbox";
 import Home from "@material-ui/icons/Home"; // wb_cloudy
 import Cloud from "@material-ui/icons/Cloud";
+import AccountCircle from "@material-ui/icons/AccountCircle";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Drawer } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
 const styles = {
   list: {
@@ -27,38 +29,58 @@ const styles = {
 };
 
 class TemporaryDrawer extends React.Component {
-  render() {
+  render(props) {
     const { classes, toggleDrawer, isOpen } = this.props;
 
     const sideList = (
       <div className={classes.list}>
         <List>
-          <ListItem button>
-            <ListItemIcon>
-              <Home />
-            </ListItemIcon>
-            <Link to="/" className={classes.link}>
-              <ListItemText primary="Home" />
-            </Link>
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Cloud />
-            </ListItemIcon>
-            <Link to="/weather" className={classes.link}>
-              <ListItemText primary="Weather" />
-            </Link>
-          </ListItem>
-          <ListItem button>
-            <Link to="/signin" className={classes.link}>
-              <ListItemText primary="SignIn" />
-            </Link>
-          </ListItem>
-          <ListItem button>
-            <Link to="/signup" className={classes.link}>
-              <ListItemText primary="SignUp" />
-            </Link>
-          </ListItem>
+          {this.props.isAuthenticated ? (
+            <>
+              <ListItem button>
+                <ListItemIcon>
+                  <Home />
+                </ListItemIcon>
+                <Link to="/" className={classes.link}>
+                  <ListItemText primary="Home" />
+                </Link>
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <Cloud />
+                </ListItemIcon>
+                <Link to="/weather" className={classes.link}>
+                  <ListItemText primary="Weather" />
+                </Link>
+              </ListItem>
+              <Button
+                color="inherit"
+                className={classes.linkAuth}
+                onClick={() => this.props.singOutAction()}
+              >
+                SignOut
+              </Button>
+            </>
+          ) : (
+            <>
+              <ListItem button>
+                <ListItemIcon>
+                  <AccountCircle />
+                </ListItemIcon>
+                <Link to="/signin" className={classes.link}>
+                  <ListItemText primary="SignIn" />
+                </Link>
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <AccountCircle />
+                </ListItemIcon>
+                <Link to="/signup" className={classes.link}>
+                  <ListItemText primary="SignUp" />
+                </Link>
+              </ListItem>
+            </>
+          )}
         </List>
       </div>
     );

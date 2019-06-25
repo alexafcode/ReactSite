@@ -1,17 +1,23 @@
 import firebaseConfig from "../../firebase-config";
-import history from "../../../src/history"
+import history from "../../../src/history";
 export const SIGNIN = "SIGNIN";
+export const USER = "USER";
 
-const registerAction = (email, password) => async dispatch => {
+export const signInAction = (email, password) => async dispatch => {
   await firebaseConfig
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(user => {
       console.log(user);
       dispatch({ type: SIGNIN, payload: true });
-      history.push('/')
+      dispatch({ type: USER, payload: user.user });
+      history.push("/");
     })
     .catch(error => console.error(error.message));
 };
-export default registerAction;
 
+export const singOutAction = () => async dispatch => {
+  dispatch({ type: SIGNIN, payload: false });
+  dispatch({ type: USER, payload: null });
+  history.push("/");
+};

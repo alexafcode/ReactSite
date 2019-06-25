@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useState } from "react";
-import registerAction from "../../store/register/actions"
+import { signInAction } from "../../store/register/actions";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -94,10 +94,10 @@ function SignIn(props) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={(e) => {
+            onClick={e => {
               e.preventDefault();
               console.log(email, password);
-              props.registerAction(email, password)
+              props.signInAction(email, password);
             }}
           >
             Sign In
@@ -121,7 +121,7 @@ function SignIn(props) {
 }
 
 const mapDispatchToProps = {
-  registerAction
+  signInAction
 };
 
 export default connect(
