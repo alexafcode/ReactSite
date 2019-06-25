@@ -1,10 +1,10 @@
-import firebaseConfig from "../../firebase-config";
+import { firebaseApp } from "../../firebase-config";
 import history from "../../../src/history";
 export const SIGNIN = "SIGNIN";
 export const USER = "USER";
 
 export const signInAction = (email, password) => async dispatch => {
-  await firebaseConfig
+  await firebaseApp
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(user => {
