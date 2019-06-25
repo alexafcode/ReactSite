@@ -28,7 +28,7 @@ const styles = {
     color: "white",
   },
   linkAuth: {
-    left: "85%"
+    left: "80%"
   }
 };
 
@@ -67,6 +67,9 @@ class MenuAppBar extends React.Component {
                     </Link>
                     <Link to="/weather" className={classes.link}>
                       Weather
+                    </Link>
+                    <Link to="/auto" className={classes.link}>
+                      Cars
                     </Link>
                   </Typography>
                   <Button
