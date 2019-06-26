@@ -19,9 +19,24 @@ export const signInAction = (email, password) => async dispatch => {
 };
 
 export const singOutAction = () => async dispatch => {
-  dispatch({ type: SIGNIN, payload: false });
-  dispatch({ type: USER, payload: null });
-  history.push("/");
+  await firebaseApp
+    .auth()
+    .signOut()
+    .then(() => {
+      dispatch({ type: SIGNIN, payload: false });
+      dispatch({ type: USER, payload: null });
+      history.push("/");
+    });
+};
+
+export const verifyAuth = () => async dispatch => {
+  await firebaseApp.auth().onAuthStateChanged(user => {
+    console.log("user actions", user);
+    if (user) {
+      dispatch({ type: SIGNIN, payload: true });
+      dispatch({ type: USER, payload: user });
+    }
+  });
 };
 
 // ToDo

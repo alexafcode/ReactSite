@@ -97,7 +97,9 @@ function SignIn(props) {
             onClick={e => {
               e.preventDefault();
               console.log(email, password);
-              props.signInAction(email, password);
+              if (email && password) {
+                props.signInAction(email, password);
+              }
             }}
           >
             Sign In
