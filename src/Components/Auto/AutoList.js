@@ -4,6 +4,10 @@ import AutoFilter from "./AutoFilter";
 
 function AutoList(props) {
   const stylus = {
+    auto: {
+      width: "90%",
+      margin: "auto"
+    },
     card: {
       marginTop: "2%",
       display: "grid",
@@ -24,7 +28,7 @@ function AutoList(props) {
   };
 
   return (
-    <div>
+    <div className="autolist" style={stylus.auto}>
       {props.cars && <AutoFilter filters={uniqAuto()} />}
       <div className="cars" style={stylus.card}>
         {props.cars &&

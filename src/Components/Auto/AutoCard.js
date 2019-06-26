@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: "65%",
+    maxWidth: "75%",
     marginBottom: "2%",
     margin: "auto"
   },
@@ -31,7 +31,6 @@ export default function AutoCard(props) {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          // image="/static/images/cards/contemplative-reptile.jpg"
           image={props.car.imageUrlPrev ? props.car.imageUrlPrev : props.car.imageUrl}
           title="Contemplative Reptile"
         />

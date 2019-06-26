@@ -1,23 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 
 export default function CheckboxLabels(props) {
-  const [state, setState] = React.useState({
-    checked: false
+  const initial = props.filters.map(filter => {
+    return {
+      checked: false,
+      name: filter
+    };
   });
+  const [state, setState] = useState({
+    initial,
+    selectedFilters: []
+  });
+
   const stylus = {
     formGroup: {
       position: "absolute",
-      margiLeft: "1% !important"
     }
   };
 
   const handleChange = name => event => {
-    setState({ ...state, [name]: event.target.checked });
+    if (event.target.checked) {
+      let newFilters = state.selectedFilters;
+      newFilters.push(name);
+      setState({ ...state, selectedFilters: newFilters });
+    } else {
+      const newFilters = state.selectedFilters.filter(el => el !== name);
+      setState({ ...state, selectedFilters: newFilters });
+    }
   };
+
+  const resetFilters = () => {
+    // ToDo
+    console.log(state.selectedFilters)
+  }
 
   return (
     <FormGroup style={stylus.formGroup}>
@@ -29,7 +48,7 @@ export default function CheckboxLabels(props) {
               control={
                 <Checkbox
                   checked={state.checked}
-                  onChange={handleChange("checked")}
+                  onChange={handleChange(filter)}
                   value="checked"
                   color="primary"
                 />
@@ -38,7 +57,11 @@ export default function CheckboxLabels(props) {
             />
           );
         })}
-      <Button variant="contained" color="primary">
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => resetFilters()}
+      >
         Reset
       </Button>
     </FormGroup>
