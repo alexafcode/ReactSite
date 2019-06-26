@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { loadCars } from "../../store/auto/actions";
-import AutoList from "./AutoList"
+import AutoList from "./AutoList";
 
 class AutoContainer extends React.Component {
   componentDidMount() {
@@ -12,11 +12,7 @@ class AutoContainer extends React.Component {
     if (!this.props.isAuthenticated) {
       return <Redirect to="/signin" />;
     }
-    return (
-      <div>
-        <AutoList />
-      </div>
-    );
+    return <div><AutoList cars={this.props.cars} /></div>;
   }
 }
 const mapStateToProps = state => {

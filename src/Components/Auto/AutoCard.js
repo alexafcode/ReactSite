@@ -1,52 +1,57 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: 345,
+    maxWidth: "65%",
+    marginBottom: "2%",
+    margin: "auto"
   },
   media: {
-    height: 140,
+    height: 250
   },
+  desc: {
+    height: 160,
+    overflow: "hidden"
+  }
 });
 
-export default function AutoCard() {
+export default function AutoCard(props) {
   const classes = useStyles();
 
   return (
     <Card className={classes.card}>
       <CardActionArea>
-        {/* <CardMedia
+        <CardMedia
           className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
+          // image="/static/images/cards/contemplative-reptile.jpg"
+          image={props.car.imageUrlPrev ? props.car.imageUrlPrev : props.car.imageUrl}
           title="Contemplative Reptile"
-        /> */}
+        />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Lizard
+            {props.car.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
+          <Typography variant="body2" color="textSecondary" component="p" className={classes.desc}>
+            {props.car.descriptions}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
         <Button size="small" color="primary">
-          Share
+          Open
         </Button>
-        <Button size="small" color="primary">
+        {/* <Button size="small" color="primary">
           Learn More
-        </Button>
+        </Button> */}
       </CardActions>
     </Card>
   );
 }
-
