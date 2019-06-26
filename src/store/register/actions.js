@@ -3,6 +3,8 @@ import history from "../../../src/history";
 export const SIGNIN = "SIGNIN";
 export const USER = "USER";
 
+// firebaseApp.auth().onAuthStateChanged((user) => console.log("user", user))
+
 export const signInAction = (email, password) => async dispatch => {
   await firebaseApp
     .auth()

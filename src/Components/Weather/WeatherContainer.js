@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 import WeatherPage from "./WeatherPage";
 import {
   fetchData,
@@ -11,9 +11,9 @@ import {
 
 class WeatherContainer extends React.Component {
   render() {
-    if (!this.props.isAuthenticated) {
-      return <Redirect to="/signin" />;
-    }
+    // if (!this.props.isAuthenticated) {
+    //   return <Redirect to="/signin" />;
+    // }
     return (
       <WeatherPage
         city={this.props.city}

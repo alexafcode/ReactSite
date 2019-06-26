@@ -28,7 +28,7 @@ function AutoList(props) {
       {props.cars && <AutoFilter filters={uniqAuto()} />}
       <div className="cars" style={stylus.card}>
         {props.cars &&
-          props.cars.map((car, index) => <AutoCard car={car} key={index} />)}
+          props.cars.map((car, index) => <AutoCard car={car}  key={`item-${index}`} />)}
       </div>
     </div>
   );

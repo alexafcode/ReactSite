@@ -20,11 +20,12 @@ export default function CheckboxLabels(props) {
   };
 
   return (
-    <FormGroup column style={stylus.formGroup}>
+    <FormGroup style={stylus.formGroup}>
       {props.filters &&
         props.filters.map((filter, index) => {
           return (
             <FormControlLabel
+              key={index}
               control={
                 <Checkbox
                   checked={state.checked}
@@ -37,7 +38,9 @@ export default function CheckboxLabels(props) {
             />
           );
         })}
-        <Button variant="contained" color="primary">Reset</Button>
+      <Button variant="contained" color="primary">
+        Reset
+      </Button>
     </FormGroup>
   );
 }

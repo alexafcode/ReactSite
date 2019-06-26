@@ -10,7 +10,8 @@ import MenuAppBar from "./Components/Layouts/MenuAppBar";
 import NotFound from "./Components/Layouts/NotFound";
 import configureStore from "./store/configureStore";
 import "./App.scss";
-import Auto from "./Components/Auto/AutoContainer"
+import Auto from "./Components/Auto/AutoContainer";
+import PrivateRoute from "./Components/Layouts/PrivateRoute";
 
 const store = configureStore();
 
@@ -20,10 +21,10 @@ const App = () => (
       <MenuAppBar />
       <Switch>
         <Route exact path="/" component={StartPage} />
-        <Route path="/weather" component={WeatherContainer} />
+        <PrivateRoute path="/weather" component={WeatherContainer} />
+        <PrivateRoute path="/auto" component={Auto} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
-        <Route path="/auto" component={Auto} />
         <Route component={NotFound} />
       </Switch>
     </Router>
