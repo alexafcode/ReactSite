@@ -21,3 +21,15 @@ export const singOutAction = () => async dispatch => {
   dispatch({ type: USER, payload: null });
   history.push("/");
 };
+
+// ToDo
+export const createUserAction = (email, pw) => async dispatch => {
+  await firebaseApp
+    .auth()
+    .createUserWithEmailAndPassword(email, pw)
+    .then(user => console.log(user));
+};
+
+export const resetPasswordAction = email => async dispatch => {
+  await firebaseApp.auth().sendPasswordResetEmail(email);
+};
