@@ -39,7 +39,7 @@ export default function CheckboxLabels(props) {
   }
 
   return (
-    <FormGroup style={stylus.formGroup}>
+    <FormGroup style={stylus.formGroup} className="filter">
       {props.filters &&
         props.filters.map((filter, index) => {
           return (

@@ -1,0 +1,15 @@
+.autolist {
+  margin-top: 2%;
+  min-width: 900px;
+  .filter {
+    margin-left: 2%;
+  }
+  .cars {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: auto;
+  }
+}
+

@@ -1,21 +1,10 @@
 import React from "react";
 import AutoCard from "./AutoCard";
 import AutoFilter from "./AutoFilter";
+import "./AutoList.scss";
 
 function AutoList(props) {
-  const stylus = {
-    auto: {
-      width: "90%",
-      margin: "auto"
-    },
-    card: {
-      marginTop: "2%",
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      gridTemplateRows: "auto" // "1fr 1fr 1fr",
-      // gridTemplateAreas: '". ." ". ." ". ."'
-    }
-  };
+
   const uniqAuto = () => {
     if (props.cars) {
       let setAuto = new Set();
@@ -28,12 +17,14 @@ function AutoList(props) {
   };
 
   return (
-    <div className="autolist" style={stylus.auto}>
-      {props.cars && <AutoFilter filters={uniqAuto()} />}
-      <div className="cars" style={stylus.card}>
+    <div className="autolist">
+      {props.cars && <AutoFilter filters={uniqAuto()} className="filter" />}
+      <div className="cars">
         {props.cars &&
-          props.cars.map((car, index) => <AutoCard car={car}  key={`item-${index}`} />)}
-      </div>
+          props.cars.map((car, index) => (
+            <AutoCard car={car}  key={`item-${index}`} />
+          ))}
+          </div>
     </div>
   );
 }
