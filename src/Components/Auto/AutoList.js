@@ -18,9 +18,9 @@ function AutoList(props) {
     setState({ ...state, offset });
   };
 
-  const changeLimit = (lim) => {
+  const changeLimit = lim => {
     setState({ ...state, limit: lim });
-  }
+  };
 
   const uniqAuto = () => {
     if (props.cars) {
@@ -35,19 +35,25 @@ function AutoList(props) {
 
   return (
     <div className="autolist">
-      {props.cars && <AutoFilter filters={uniqAuto()} changeLimit={changeLimit} className="filter" />}
+      <AutoFilter
+        filters={uniqAuto()}
+        changeLimit={changeLimit}
+        className="filter"
+      />
       <div className="cars">
-        {props.cars &&
-          props.cars
-            .slice(
-              state.offset,
-              state.offset === 0 ? state.limit : state.offset * 2
-            )
-            .map((car, index) => <AutoCard car={car} key={`item-${index}`} />)}
+        {props.cars
+          .slice(
+            state.offset,
+            state.offset === 0 ? state.limit : state.offset * 2
+          )
+          .map((car, index) => (
+            <AutoCard car={car} key={`item-${index}`} />
+          ))}
       </div>
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
-        <Pagination className="pagination"
+        <Pagination
+          className="pagination"
           limit={state.limit}
           offset={state.offset}
           total={props.cars.length}

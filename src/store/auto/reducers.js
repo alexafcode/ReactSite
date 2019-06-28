@@ -1,5 +1,6 @@
 const initialState = {
-  cars: []
+  cars: [],
+  loading: true
 }
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -8,6 +9,11 @@ export default (state = initialState, action) => {
         ...state,
         cars: action.payload
       };
+      case "CARS_IS_LOADING":
+        return {
+          ...state,
+          loading: action.payload
+        };
     default:
       return state;
   }

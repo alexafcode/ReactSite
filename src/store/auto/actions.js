@@ -1,6 +1,7 @@
 import { autoDb } from "../../firebase-config";
 
 export const LOAD_AUTO_DB = "LOAD_AUTO_DB";
+export const CARS_IS_LOADING = "CARS_IS_LOADING";
 
 export const loadCars = () => async dispatch => {
   let tempDB = [];
@@ -20,6 +21,6 @@ export const loadCars = () => async dispatch => {
       tempDB.push(auto);
     });
     dispatch({ type: LOAD_AUTO_DB, payload: tempDB })
-    console.log(tempDB);
+    dispatch({ type: CARS_IS_LOADING, payload: false })
   });
 };
