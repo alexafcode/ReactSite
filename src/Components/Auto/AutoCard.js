@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   card: {
     maxWidth: "45%",
     marginBottom: "2%",
-    margin: "auto",
+    margin: "auto"
   },
   media: {
     height: 250
@@ -31,14 +31,21 @@ export default function AutoCard(props) {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={props.car.imageUrlPrev ? props.car.imageUrlPrev : props.car.imageUrl}
+          image={
+            props.car.imageUrlPrev ? props.car.imageUrlPrev : props.car.imageUrl
+          }
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {props.car.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p" className={classes.desc}>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            className={classes.desc}
+          >
             {props.car.descriptions}
           </Typography>
         </CardContent>
