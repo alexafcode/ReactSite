@@ -12,14 +12,49 @@ import InputLabel from "@material-ui/core/InputLabel";
 export default function CheckboxLabels(props) {
   const initial = props.filters.map(filter => {
     return {
-      checked: false,
-      name: filter
+      name: filter,
+      checked: false
     };
   });
+
   const [state, setState] = useState({
     initial,
     selectedFilters: []
   });
+
+  const [values, setValues] = React.useState({
+    limit: 4
+  });
+
+  const handleChangeLimit = event => {
+    setValues(oldValues => ({
+      ...oldValues,
+      [event.target.name]: event.target.value
+    }));
+    props.changeLimit(event.target.value);
+  };
+
+  const handleChange = name => event => {
+    let init = state.initial;
+    init.map(el =>
+      el.name === name ? (el.checked = event.target.checked) : el
+    );
+    if (event.target.checked) {
+      let newFilters = state.selectedFilters;
+      newFilters.push(name);
+      setState({ ...state, selectedFilters: newFilters });
+    } else {
+      const newFilters = state.selectedFilters.filter(el => el !== name);
+      setState({ ...state, selectedFilters: newFilters });
+    }
+  };
+
+  const resetFilters = () => {
+    let init = state.initial;
+    init.map(el => (el.checked = false));
+    // init.forEach(e => (e.checked = false));
+    setState({ initial: init, selectedFilters: [] });
+  };
 
   const stylus = {
     formGroup: {
@@ -39,52 +74,27 @@ export default function CheckboxLabels(props) {
       marginTop: theme.spacing(2)
     }
   }));
-
-  const handleChangeLimit = event => {
-    setValues(oldValues => ({
-      ...oldValues,
-      [event.target.name]: event.target.value
-    }));
-    props.changeLimit(event.target.value);
-  };
-
-  const handleChange = name => event => {
-    if (event.target.checked) {
-      let newFilters = state.selectedFilters;
-      newFilters.push(name);
-      setState({ ...state, selectedFilters: newFilters });
-    } else {
-      const newFilters = state.selectedFilters.filter(el => el !== name);
-      setState({ ...state, selectedFilters: newFilters });
-    }
-  };
-
-  const resetFilters = () => {
-    // ToDo
-    console.log(state.selectedFilters);
-  };
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    limit: 4
-  });
+
 
   return (
     <div>
       <FormGroup style={stylus.formGroup} className="filter">
         {props.filters &&
-          props.filters.map((filter, index) => {
+          state.initial.map((filter, index) => {
             return (
               <FormControlLabel
                 key={index}
                 control={
                   <Checkbox
-                    checked={state.checked}
-                    onChange={handleChange(filter)}
-                    value="checked"
+                    checked={filter.checked}
+                    onChange={handleChange(filter.name)}
+                    value={filter.checked}
                     color="primary"
+                    name={filter.name}
                   />
                 }
-                label={filter}
+                label={filter.name}
               />
             );
           })}
