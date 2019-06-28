@@ -18,6 +18,10 @@ function AutoList(props) {
     setState({ ...state, offset });
   };
 
+  const changeLimit = (lim) => {
+    setState({ ...state, limit: lim });
+  }
+
   const uniqAuto = () => {
     if (props.cars) {
       let setAuto = new Set();
@@ -31,7 +35,7 @@ function AutoList(props) {
 
   return (
     <div className="autolist">
-      {props.cars && <AutoFilter filters={uniqAuto()} className="filter" />}
+      {props.cars && <AutoFilter filters={uniqAuto()} changeLimit={changeLimit} className="filter" />}
       <div className="cars">
         {props.cars &&
           props.cars
