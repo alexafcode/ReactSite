@@ -23,7 +23,7 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={StartPage} />
         <PrivateRoute path="/weather" component={WeatherContainer} />
-        <Route path="/auto/:id"  component={AutoItem} />
+        <PrivateRoute path="/auto/:id" component={AutoItem} />
         <PrivateRoute path="/auto" component={Auto} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
