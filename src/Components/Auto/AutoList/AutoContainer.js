@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 // import { Redirect } from "react-router-dom";
-import { loadCars } from "../../store/auto/actions";
+import { loadCars } from "../../../store/auto/actions";
 import AutoList from "./AutoList";
-import Loading from "../Layouts/Loading";
+import Loading from "../../Layouts/Loading";
 
 class AutoContainer extends React.Component {
   componentDidMount() {

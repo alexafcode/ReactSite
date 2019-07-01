@@ -10,7 +10,7 @@ import MenuAppBar from "./Components/Layouts/MenuAppBar";
 import NotFound from "./Components/Layouts/NotFound";
 import configureStore from "./store/configureStore";
 import "./App.scss";
-import Auto from "./Components/Auto/AutoContainer";
+import Auto from "./Components/Auto/AutoList/AutoContainer";
 import PrivateRoute from "./Components/Layouts/PrivateRoute";
 
 const store = configureStore();
