@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getWeatherForCity} from "./helperActions"
+import { getWeatherForCity } from "./helperActions"
 export const FETCH_DATA = "FETCH_DATA";
 export const CITY_IS_LOADING = "CITY_IS_LOADING";
 export const SEARCH_CLICK = "SEARCH_CLICK";
@@ -7,6 +7,8 @@ export const SEARCH_CITY = "SEARCH_CITY";
 export const SHOW_SEARCH_RESULT = "SHOW_SEARCH_RESULT";
 export const SHOW_FORECAST = "SHOW_FORECAST";
 export const FORECAST_WEATHER = "FORECAST_WEATHER";
+export const ERROR_FETCH_DATA = "ERROR_FETCH_DATA";
+export const ERROR_MESSAGE = "ERROR_MESSAGE";
 
 export const key = "";
 
@@ -21,6 +23,7 @@ export const fetchData = () => async (dispatch) => {
     arr.forEach(async (el) => {
       try {
         const city = await getWeatherForCity(el)
+        dispatch({ type: ERROR_FETCH_DATA, payload: false });
         dispatch({ type: FETCH_DATA, payload: city });
         dispatch({ type: CITY_IS_LOADING, payload: false });
       } catch (e) {
@@ -50,7 +53,12 @@ export const fetchData = () => async (dispatch) => {
               console.error("Error Fetch", e)
             }
           })
-          .catch(error => console.error("Erorr", error.message));
+          .catch(error => {
+            console.error("Erorr", error.message)
+            dispatch({ type: CITY_IS_LOADING, payload: false });
+            dispatch({ type: ERROR_FETCH_DATA, payload: true });
+            dispatch({ type: ERROR_MESSAGE, payload: error.message });
+          });
         //ToDo error
       },
       () => {
@@ -66,6 +74,7 @@ export const fetchData = () => async (dispatch) => {
 };
 
 export const searchClick = input => dispatch => {
+  dispatch({ type: ERROR_FETCH_DATA, payload: false });
   dispatch({ type: SEARCH_CLICK, payload: true });
   const url = `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${key}&q=${input}&language=ru-ru`;
   let items = [];
@@ -94,6 +103,8 @@ export const searchClick = input => dispatch => {
     .catch(error => {
       console.error(error);
       dispatch({ type: SEARCH_CLICK, payload: false });
+      dispatch({ type: ERROR_FETCH_DATA, payload: true });
+      dispatch({ type: ERROR_MESSAGE, payload: error.message });
     });
 };
 

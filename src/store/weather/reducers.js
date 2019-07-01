@@ -5,7 +5,9 @@ const defaultState = {
   showSearchResult: false,
   searchCities: [],
   showForecast: false,
-  forecastWeather: []
+  forecastWeather: [],
+  error: false,
+  errorMessage: null
 };
 
 export default (state = defaultState, action) => {
@@ -21,6 +23,16 @@ export default (state = defaultState, action) => {
         ...state,
         loading: action.payload
       };
+    case "ERROR_FETCH_DATA":
+      return {
+        ...state,
+        error: action.payload
+      };
+    case "ERROR_MESSAGE":
+      return {
+        ...state,
+        errorMessage: action.payload
+      }
     case "SEARCH_CLICK":
       return {
         ...state,

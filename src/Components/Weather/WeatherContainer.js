@@ -24,6 +24,8 @@ class WeatherContainer extends React.Component {
         searchPanelHide={this.props.searchPanelHide}
         showSearchResult={this.props.showSearchResult}
         getForecast={this.props.getForecast}
+        error={this.props.error}
+        errorMessage={this.props.errorMessage}
       />
     );
   }
@@ -39,7 +41,9 @@ const mapStateToProps = state => {
     loading: state.weatherRedusers.loading,
     showSearchLoad: state.weatherRedusers.showSearchLoad,
     searchCities: state.weatherRedusers.searchCities,
-    showSearchResult: state.weatherRedusers.showSearchResult
+    showSearchResult: state.weatherRedusers.showSearchResult,
+    error: state.weatherRedusers.error,
+    errorMessage: state.weatherRedusers.errorMessage
   };
 };
 
