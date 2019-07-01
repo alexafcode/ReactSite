@@ -8,6 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 // import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import Comment from "./Comment"
 
 const useStyles = makeStyles({
   card: {
@@ -60,6 +61,7 @@ function AutoItem(props) {
           Learn More
         </Button> */}
       </CardActions>
+      {car.comment && car.comment.map((el, index) => <Comment comment={el} key={index} />)}
     </Card>
   );
 }
