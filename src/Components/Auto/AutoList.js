@@ -39,9 +39,10 @@ function AutoList(props) {
         filters={uniqAuto()}
         changeLimit={changeLimit}
         className="filter"
+        changeFilter={props.changeFilter}
       />
       <div className="cars">
-        {props.cars
+        {props.filterCars
           .slice(
             state.offset,
             state.offset === 0 ? state.limit : state.offset * 2
@@ -56,7 +57,7 @@ function AutoList(props) {
           className="pagination"
           limit={state.limit}
           offset={state.offset}
-          total={props.cars.length}
+          total={props.filterCars.length}
           onClick={(e, offset) => handleClick(offset)}
           centerRipple={true}
         />

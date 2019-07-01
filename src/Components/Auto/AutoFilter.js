@@ -43,9 +43,11 @@ export default function CheckboxLabels(props) {
       let newFilters = state.selectedFilters;
       newFilters.push(name);
       setState({ ...state, selectedFilters: newFilters });
+      props.changeFilter(newFilters);
     } else {
       const newFilters = state.selectedFilters.filter(el => el !== name);
       setState({ ...state, selectedFilters: newFilters });
+      props.changeFilter(newFilters);
     }
   };
 
@@ -54,6 +56,7 @@ export default function CheckboxLabels(props) {
     init.map(el => (el.checked = false));
     // init.forEach(e => (e.checked = false));
     setState({ initial: init, selectedFilters: [] });
+    props.changeFilter([]);
   };
 
   const stylus = {
@@ -75,7 +78,6 @@ export default function CheckboxLabels(props) {
     }
   }));
   const classes = useStyles();
-
 
   return (
     <div>
