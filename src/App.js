@@ -11,6 +11,7 @@ import NotFound from "./Components/Layouts/NotFound";
 import configureStore from "./store/configureStore";
 import "./App.scss";
 import Auto from "./Components/Auto/AutoList/AutoContainer";
+import AutoItem from "./Components/Auto/AutoItem/AutoItem"
 import PrivateRoute from "./Components/Layouts/PrivateRoute";
 
 const store = configureStore();
@@ -22,6 +23,7 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={StartPage} />
         <PrivateRoute path="/weather" component={WeatherContainer} />
+        <Route path="/auto/:id"  component={AutoItem} />
         <PrivateRoute path="/auto" component={Auto} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
