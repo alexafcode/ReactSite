@@ -17,6 +17,9 @@ function AutoList(props) {
   const handleClick = offset => {
     setState({ ...state, offset });
   };
+  const goToFirstPage = () => {
+    setState({ ...state, offset: 0 });
+  };
 
   const changeLimit = lim => {
     setState({ ...state, limit: lim });
@@ -40,6 +43,7 @@ function AutoList(props) {
         changeLimit={changeLimit}
         className="filter"
         changeFilter={props.changeFilter}
+        goToFirstPage={goToFirstPage}
       />
       <div className="cars">
         {props.filterCars

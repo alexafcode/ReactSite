@@ -49,14 +49,15 @@ export default function CheckboxLabels(props) {
       setState({ ...state, selectedFilters: newFilters });
       props.changeFilter(newFilters);
     }
+    props.goToFirstPage();
   };
 
   const resetFilters = () => {
     let init = state.initial;
     init.map(el => (el.checked = false));
-    // init.forEach(e => (e.checked = false));
     setState({ initial: init, selectedFilters: [] });
     props.changeFilter([]);
+    props.goToFirstPage();
   };
 
   const stylus = {
