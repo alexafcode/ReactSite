@@ -8,7 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 // import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Comment from "./Comment"
+import Comment from "./Comment";
 
 const useStyles = makeStyles({
   card: {
@@ -28,8 +28,7 @@ const useStyles = makeStyles({
 
 function AutoItem(props) {
   const classes = useStyles();
-  console.log(props);
-  const car = props.location.state.car;
+  const { car } = props.location.state;
 
   return (
     <Card className={classes.card}>
@@ -55,14 +54,18 @@ function AutoItem(props) {
       </CardActionArea>
       <CardActions>
         {/* <Button size="small" color="primary">
-          Open
+          Комментировать
         </Button> */}
         {/* <Button size="small" color="primary">
           Learn More
         </Button> */}
       </CardActions>
-      {car.comment && car.comment.map((el, index) => <Comment comment={el} key={index} />)}
+      <Typography variant="h6" component="h6" style={{ marginLeft: "2%" }}>
+        {car.comment ? "Комментарии:" : "Пока Комментариев Нет"}
+      </Typography>
+      {car.comment &&
+        car.comment.map((el, index) => <Comment comment={el} key={index} />)}
     </Card>
   );
 }
-export default withRouter(AutoItem)
+export default withRouter(AutoItem);

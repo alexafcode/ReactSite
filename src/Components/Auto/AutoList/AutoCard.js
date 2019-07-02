@@ -26,16 +26,6 @@ const useStyles = makeStyles({
 export default function AutoCard(props) {
   const classes = useStyles();
 
-  const test = () => {
-    history.push({
-      pathname: `/auto/${props.car.id}`,
-      key: props.car.id,
-      state: {
-        props: props.car
-      }
-    });
-  };
-
   return (
     <Card className={classes.card}>
         <CardActionArea onClick={() => history.push(`/auto/${props.car.id}`, props)}>

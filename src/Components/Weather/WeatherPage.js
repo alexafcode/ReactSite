@@ -25,7 +25,7 @@ function WeatherPage(props) {
         error
         id="standard-error"
         label="Error"
-        value={props.errorMessage}
+        value={props.errorMessage ? props.errorMessage : ""}
         margin="normal"
         InputProps={{
           readOnly: true,
