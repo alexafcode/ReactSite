@@ -24,7 +24,7 @@ class WeatherCard extends React.Component {
   render() {
     const icon = require(`../../assets/weather-icons/${
       this.props.city.WeatherIcon
-      }.png`);
+    }.png`);
 
     const styles = {
       root: {
@@ -52,12 +52,12 @@ class WeatherCard extends React.Component {
 
     const saveLS = () => {
       if (!this.state.save) {
-        saveToLS(this.props.city)
+        saveToLS(this.props.city);
         this.setState(state => {
           return { save: !state.save };
         });
       } else {
-        deleteToLS(this.props.city)
+        deleteToLS(this.props.city);
         this.setState(state => {
           return { save: !state.save };
         });
@@ -142,7 +142,7 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-const mapDispatchToProps = {
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(WeatherCard);
+export default connect(
+  mapStateToProps,
+  null
+)(WeatherCard);

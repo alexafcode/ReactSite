@@ -4,6 +4,7 @@ export const LOAD_AUTO_DB = "LOAD_AUTO_DB";
 export const CARS_IS_LOADING = "CARS_IS_LOADING";
 export const ERROR_MESSAGE = "ERROR_MESSAGE";
 export const ERROR = "ERROR";
+// export const ADD_COMMENT = "ADD_COMMENT";
 
 export const loadCars = () => async dispatch => {
   let tempDB = [];
@@ -32,5 +33,19 @@ export const loadCars = () => async dispatch => {
       console.error(error.message);
       dispatch({ type: ERROR, payload: true });
       dispatch({ type: ERROR_MESSAGE, payload: error.message });
+    });
+};
+
+export const addComment = (id, newComment) => async dispatch => {
+  const change = await autoDb.doc(id);
+  await change
+    .update({
+      comment: newComment
+    })
+    .then(() => {
+      console.log("Document successfully updated!");
+    })
+    .catch(error => {
+      console.error("Error updating document: ", error.message);
     });
 };
