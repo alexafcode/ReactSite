@@ -44,7 +44,8 @@ function AutoItem(props) {
     let arr = comment ? comment : [];
     let obj = {
       comment: input,
-      name: user
+      name: user,
+      photoURL: props.user.photoURL ? props.user.photoURL : ""
     };
     arr.push(obj);
     props.addComment(car.id, arr);
