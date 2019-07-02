@@ -16,9 +16,10 @@ const useStyles = makeStyles({
     padding: "2px 4px",
     display: "flex",
     alignItems: "center",
-    width: 400,
+    width: "80%",
     margin: "auto",
-    marginTop: 1 + "rem"
+    marginTop: 1 + "rem",
+    marginBottom: 1 + "rem"
   },
   input: {
     marginLeft: 8,
@@ -31,7 +32,7 @@ const useStyles = makeStyles({
     left: 0,
     right: 0,
     zIndex: 1,
-    width: 20 + "%",
+    width: "80%",
     overflow: "auto",
     cursor: "pointer",
     marginTop: 0.25 + "rem",

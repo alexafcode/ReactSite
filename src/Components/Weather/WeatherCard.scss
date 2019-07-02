@@ -103,8 +103,13 @@
       font-size: 12px;
       .card__center-icon {
         width: 45vw;
-        height: 25vh;
+        // height: 25vh;
         background-position: center;
+      }
+      .card__center-text {
+        .card__center-temp {
+          font-size: 1.5rem;
+        }
       }
       .card__center-wind {
         // font-size: 1.25rem;
@@ -119,10 +124,6 @@
         text-align: center;
       }
     }
-  }
-  .card__datails {
-    width: 90%;
-    margin: auto;
   }
   .card__datails {
     width: 90%;

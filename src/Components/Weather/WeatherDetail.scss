@@ -1,8 +1,8 @@
 .detail {
   margin: 0.25rem;
-  width: 90px;
+  width: 100px;
   height: 250px;
-  min-height: 240px;
+  min-height: 200px;
   border-radius: 1rem;
   text-align: center;
   &:hover {
@@ -12,7 +12,7 @@
     color: white;
   }
   .detail__day-icon {
-    width: 80px;
+    width: 90px;
     height: 50px;
     min-height: 50px;
     background-size: contain;
@@ -24,11 +24,11 @@
   }
   .detail__day-value {
     color: white;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 400;
   }
   .detail__night-icon {
-    width: 80px;
+    width: 90px;
     height: 50px;
     min-height: 50px;
     background-size: contain;
@@ -40,7 +40,7 @@
   }
   .detail__night-value {
     color: white;
-    font-size: 1rem;
+    font-size: 1.25rem;
     font-weight: 400;
   }
   .detail__text {
@@ -52,9 +52,12 @@
 }
 @media screen and (max-width: 800px) {
   .detail {
-    width: 16vw;
+    // width: 16vw;
     .detail__day-icon {
       width: 15vw;
+    }
+    .detail__day-value {
+      font-size: 1.25rem;
     }
     .detail__night-icon {
       width: 15vw;
