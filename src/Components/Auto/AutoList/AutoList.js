@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import AutoCard from "./AutoCard";
 import AutoFilter from "./AutoFilter";
 import "./AutoList.scss";
@@ -69,4 +70,11 @@ function AutoList(props) {
     </div>
   );
 }
+
+AutoList.propTypes = {
+  cars: PropTypes.array.isRequired,
+  changeFilter: PropTypes.func.isRequired,
+  filterCars: PropTypes.array.isRequired
+};
+
 export default AutoList;

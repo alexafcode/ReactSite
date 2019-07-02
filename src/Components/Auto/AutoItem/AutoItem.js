@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -87,6 +88,11 @@ function AutoItem(props) {
     </Card>
   );
 }
+
+AutoItem.propTypes = {
+  user: PropTypes.object.isRequired,
+  addComment: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
   return {

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -18,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CommentList(props) {
+function CommentList(props) {
   const classes = useStyles();
 
   return (
@@ -43,3 +44,8 @@ export default function CommentList(props) {
     </List>
   );
 }
+
+CommentList.propTypes = {
+  comment: PropTypes.object.isRequired
+};
+export default CommentList

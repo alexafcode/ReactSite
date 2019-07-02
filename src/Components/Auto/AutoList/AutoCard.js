@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -8,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import history from "../../../history";
 import "./AutoCard.scss"
 
-export default function AutoCard(props) {
+function AutoCard(props) {
 
   return (
     <Card className="card__item">
@@ -42,3 +43,9 @@ export default function AutoCard(props) {
     </Card>
   );
 }
+
+AutoCard.propTypes = {
+  car: PropTypes.object.isRequired,
+};
+
+export default AutoCard

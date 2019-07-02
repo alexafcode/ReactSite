@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loadCars } from "../../../store/auto/actions";
 import TextField from "@material-ui/core/TextField";
@@ -65,6 +66,13 @@ class AutoContainer extends React.Component {
     );
   }
 }
+
+AutoContainer.propTypes = {
+  cars: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  loadCars: PropTypes.func.isRequired
+};
+
 const mapStateToProps = state => {
   return {
     cars: state.AutoReducers.cars,

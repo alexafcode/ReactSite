@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -9,7 +10,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 
-export default function CheckboxLabels(props) {
+function CheckboxLabels(props) {
   const initial = props.filters.map(filter => {
     return {
       name: filter,
@@ -126,3 +127,11 @@ export default function CheckboxLabels(props) {
     </div>
   );
 }
+
+CheckboxLabels.propTypes = {
+  filters: PropTypes.array.isRequired,
+  changeFilter: PropTypes.func.isRequired,
+  goToFirstPage: PropTypes.func.isRequired
+};
+
+export default CheckboxLabels
