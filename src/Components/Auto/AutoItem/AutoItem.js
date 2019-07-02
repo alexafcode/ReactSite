@@ -14,6 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import Comment from "./Comment";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import Rating from "material-ui-rating";
 
 const useStyles = makeStyles({
   card: {
@@ -75,6 +76,7 @@ function AutoItem(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
+      <Rating value={car.rating} max={5} disabled={true} />
       <CardActions>
         <div className="comment__add">
           <Input
