@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { addComment } from "../../../store/auto/actions";
-import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -15,25 +14,10 @@ import Comment from "./Comment";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Rating from "material-ui-rating";
+import "./AutoItem.scss"
 
-const useStyles = makeStyles({
-  card: {
-    maxWidth: "60%",
-    marginBottom: "2%",
-    marginTop: "2%",
-    margin: "auto"
-  },
-  media: {
-    height: 600
-  },
-  desc: {
-    // height: 260,
-    // overflow: "hidden"
-  }
-});
 
 function AutoItem(props) {
-  const classes = useStyles();
   const { car } = props.location.state;
   const [comment, setComment] = useState(car.comment);
   const [input, setInput] = useState("");
@@ -55,10 +39,10 @@ function AutoItem(props) {
   };
 
   return (
-    <Card className={classes.card}>
+    <Card className="car">
       <CardActionArea>
         <CardMedia
-          className={classes.media}
+          className="car__media"
           image={car.imageUrl}
           title={car.name}
         />
@@ -70,18 +54,18 @@ function AutoItem(props) {
             variant="body2"
             color="textSecondary"
             component="p"
-            className={classes.desc}
+            className="car__desc"
           >
             {car.descriptions}
           </Typography>
         </CardContent>
       </CardActionArea>
-      <Rating value={car.rating} max={5} disabled={true} />
+      <Rating className="comment__rating" value={car.rating} max={5} disabled={true} />
       <CardActions>
         <div className="comment__add">
           <Input
             placeholder="Add Comment"
-            className={classes.input}
+            className="comment__input"
             onChange={e => setInput(e.target.value)}
             value={input}
           />

@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-// import { Redirect } from "react-router-dom";
 import { loadCars } from "../../../store/auto/actions";
 import TextField from "@material-ui/core/TextField";
 import AutoList from "./AutoList";
@@ -15,7 +14,6 @@ class AutoContainer extends React.Component {
   };
   render() {
     const filteredAuto = () => {
-      // goToFirstPage();
       // ToDo Easy
       let arr = [];
       let fa = this.state.filteredAuto;

@@ -1,6 +1,5 @@
 .autolist {
   margin-top: 2%;
-  min-width: 900px;
   .filter {
     margin-left: 2%;
   }
@@ -14,6 +13,17 @@
   .pagination {
     margin: auto;
     width: max-content;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .autolist {
+    .cars {
+      width: 100%;
+    }
+    .filter {
+      display: contents;
+    }
   }
 }
 

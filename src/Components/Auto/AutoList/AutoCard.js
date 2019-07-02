@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -7,30 +6,15 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import history from "../../../history";
-
-const useStyles = makeStyles({
-  card: {
-    maxWidth: "45%",
-    marginBottom: "2%",
-    margin: "auto"
-  },
-  media: {
-    height: 250
-  },
-  desc: {
-    height: 160,
-    overflow: "hidden"
-  }
-});
+import "./AutoCard.scss"
 
 export default function AutoCard(props) {
-  const classes = useStyles();
 
   return (
-    <Card className={classes.card}>
+    <Card className="card__item">
         <CardActionArea onClick={() => history.push(`/auto/${props.car.id}`, props)}>
         <CardMedia
-          className={classes.media}
+          className="card__media"
           image={
             props.car.imageUrlPrev ? props.car.imageUrlPrev : props.car.imageUrl
           }
@@ -44,7 +28,7 @@ export default function AutoCard(props) {
             variant="body2"
             color="textSecondary"
             component="p"
-            className={classes.desc}
+            className="card__desc"
           >
             {props.car.descriptions}
           </Typography>

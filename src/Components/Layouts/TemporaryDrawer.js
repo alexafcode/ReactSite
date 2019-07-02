@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import Home from "@material-ui/icons/Home"; // wb_cloudy
 import Cloud from "@material-ui/icons/Cloud";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import Car from "@material-ui/icons/DirectionsCar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Drawer } from "@material-ui/core";
@@ -51,6 +52,14 @@ class TemporaryDrawer extends React.Component {
                 </ListItemIcon>
                 <Link to="/weather" className={classes.link}>
                   <ListItemText primary="Weather" />
+                </Link>
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <Car />
+                </ListItemIcon>
+                <Link to="/auto" className={classes.link}>
+                  <ListItemText primary="Cars" />
                 </Link>
               </ListItem>
               <Button

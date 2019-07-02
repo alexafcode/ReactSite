@@ -1,0 +1,25 @@
+.car {
+  width: 60%;
+  margin: auto;
+  margin-bottom: 2%;
+  margin-top: 2%;
+  .car__media {
+    height:30vw;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .car {
+    width: 70%;
+  }
+}
+@media screen and (max-width: 1150px) {
+  .car {
+    width: 75%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .car{
+    width: 80%;
+  }
+}
