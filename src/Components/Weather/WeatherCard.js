@@ -65,7 +65,7 @@ class WeatherCard extends React.Component {
     };
 
     return (
-      <div className="card__cantainer">
+      <div className="card__container">
         <div className="card" style={styles.root}>
           <div className="card__title">
             <div className="card__title-time">{this.props.city.time}</div>

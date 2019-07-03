@@ -52,16 +52,21 @@
 }
 @media screen and (max-width: 800px) {
   .detail {
+    width: 90px;
+    margin: 1px;
     // width: 16vw;
     .detail__day-icon {
       width: 15vw;
     }
     .detail__day-value {
-      font-size: 1.25rem;
+      font-size: 1rem;
     }
     .detail__night-icon {
       width: 15vw;
       display: none;
+    }
+    .detail__night-value {
+      font-size: 1rem;
     }
     .detail__text {
       word-break: break-word;
