@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import AutoCard from "./AutoCard";
 import AutoFilter from "./AutoFilter";
@@ -6,13 +6,16 @@ import "./AutoList.scss";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Pagination from "material-ui-flat-pagination";
+import OpenInBrowser from "@material-ui/icons/OpenInBrowser";
+import Fab from "@material-ui/core/Fab";
 
 const theme = createMuiTheme();
 
 function AutoList(props) {
   const [state, setState] = useState({
     offset: 0,
-    limit: 4
+    limit: 4,
+    visible: false
   });
 
   const handleClick = offset => {
@@ -26,6 +29,10 @@ function AutoList(props) {
     setState({ ...state, limit: lim });
   };
 
+  const toggleDrawer = () => {
+    setState({ ...state, visible: !state.visible });
+  }
+
   const uniqAuto = () => {
     if (props.cars) {
       let setAuto = new Set();
@@ -37,15 +44,50 @@ function AutoList(props) {
     }
   };
 
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, false);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, false);
+    };
+  });
+
+  const handleClickOutside = event => {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      toggleDrawer();
+    }
+  };
+
   return (
     <div className="autolist">
-      <AutoFilter
-        filters={uniqAuto()}
-        changeLimit={changeLimit}
-        className="filter"
-        changeFilter={props.changeFilter}
-        goToFirstPage={goToFirstPage}
-      />
+      <div className="filter__mobile">
+        <Fab
+          color="primary"
+          aria-label="Add"
+          size="small"
+          onClick={toggleDrawer}
+        >
+          <OpenInBrowser />
+        </Fab>
+        <div style={{ visibility: !state.visible ? 'hidden' : 'visible' }} ref={wrapperRef}>
+          <AutoFilter
+            filters={uniqAuto()}
+            changeLimit={changeLimit}
+            className="filter"
+            changeFilter={props.changeFilter}
+            goToFirstPage={goToFirstPage}
+          /></div>
+      </div>
+      <div className="filter__full">
+        <AutoFilter
+          filters={uniqAuto()}
+          changeLimit={changeLimit}
+          className="filter"
+          changeFilter={props.changeFilter}
+          goToFirstPage={goToFirstPage}
+        />
+      </div>
       <div className="cars">
         {props.filterCars
           .slice(

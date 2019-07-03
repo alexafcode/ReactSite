@@ -1,5 +1,8 @@
 .autolist {
   margin-top: 2%;
+  .filter__mobile {
+    visibility: hidden;
+  }
   .filter {
     margin-left: 2%;
   }
@@ -18,11 +21,18 @@
 
 @media screen and (max-width: 1000px) {
   .autolist {
+    .filter__full {
+      visibility: hidden;
+    }
+    .filter__mobile {
+      visibility: visible;
+    }
     .cars {
       width: 100%;
     }
     .filter {
-      display: contents;
+      z-index: 1;
+      background-color: white;
     }
   }
 }

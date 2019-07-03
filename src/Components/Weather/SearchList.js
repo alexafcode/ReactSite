@@ -4,15 +4,6 @@ import { connect } from "react-redux";
 import { getWeatherCity } from "../../store/weather/actions";
 import "./SearchList.scss";
 
-// const styles = {
-//   item: {
-//     ':hover': {
-//       fontWeight: "bold",
-//       color: 'grey'
-//     }
-//   }
-// }
-
 const SearchList = props => (
   <div className="search-list__item" onClick={() => props.getWeatherCity(props)}>
     <div className="search-list__city">{props.city}</div>
