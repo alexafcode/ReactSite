@@ -14,10 +14,15 @@
     .model__input {
       height: 5rem;
     }
-    .desc__input {
-    }
+    // .desc__input {
+    // }
     .rating {
       margin: auto;
+      margin-bottom: 1%;
+    }
+    .loader {
+      width: 50%;
+      margin-bottom: 1%;
     }
   }
 }
