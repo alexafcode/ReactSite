@@ -26,6 +26,8 @@
     }
     .filter__mobile {
       visibility: visible;
+      position: absolute;
+      z-index: 2;
     }
     .cars {
       width: 100%;

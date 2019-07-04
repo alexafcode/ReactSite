@@ -1,0 +1,23 @@
+.create {
+  width: 60%;
+  margin: auto;
+  background-color: rgb(216, 212, 212);
+  padding: 2rem;
+  margin-top: 1%;
+  .create__section {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    .man__input {
+      height: 5rem;
+    }
+    .model__input {
+      height: 5rem;
+    }
+    .desc__input {
+    }
+    .rating {
+      margin: auto;
+    }
+  }
+}

@@ -9,6 +9,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import history from "../../../history";
 
 function CheckboxLabels(props) {
   const initial = props.filters.map(filter => {
@@ -123,6 +126,15 @@ function CheckboxLabels(props) {
             <MenuItem value={8}>8</MenuItem>
           </Select>
         </FormControl>
+        <div className="autolist__add" style={{margin: "auto"}}>
+          <Fab
+            color="primary"
+            aria-label="Add"
+            onClick={() => history.push(`/auto/add`)}
+          >
+            <AddIcon />
+          </Fab>
+        </div>
       </FormGroup>
     </div>
   );

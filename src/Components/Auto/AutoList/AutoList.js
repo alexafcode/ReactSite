@@ -31,7 +31,7 @@ function AutoList(props) {
 
   const toggleDrawer = () => {
     setState({ ...state, visible: !state.visible });
-  }
+  };
 
   const uniqAuto = () => {
     if (props.cars) {
@@ -70,14 +70,18 @@ function AutoList(props) {
         >
           <OpenInBrowser />
         </Fab>
-        <div style={{ visibility: !state.visible ? 'hidden' : 'visible' }} ref={wrapperRef}>
+        <div
+          style={{ visibility: !state.visible ? "hidden" : "visible" }}
+          ref={wrapperRef}
+        >
           <AutoFilter
             filters={uniqAuto()}
             changeLimit={changeLimit}
             className="filter"
             changeFilter={props.changeFilter}
             goToFirstPage={goToFirstPage}
-          /></div>
+          />
+        </div>
       </div>
       <div className="filter__full">
         <AutoFilter
