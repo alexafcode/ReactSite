@@ -1,4 +1,4 @@
-const resizeImage = function (settings) {
+export const resizeImage = function (settings) {
   let file = settings.file;
   let maxSize = settings.maxSize;
   let reader = new FileReader();
@@ -48,5 +48,4 @@ const resizeImage = function (settings) {
   });
 }
 
-export default resizeImage
 

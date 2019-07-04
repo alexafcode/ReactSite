@@ -14,8 +14,6 @@
     .model__input {
       height: 5rem;
     }
-    // .desc__input {
-    // }
     .rating {
       margin: auto;
       margin-bottom: 1%;
@@ -23,6 +21,21 @@
     .loader {
       width: 50%;
       margin-bottom: 1%;
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .create {
+    width: 80%;
+    .create__section {
+      .loader {
+        width: 70%;
+        margin-bottom: 1%;
+        .PreviewList-imageContainer {
+          max-width: 100%;
+        }
+      }
     }
   }
 }
