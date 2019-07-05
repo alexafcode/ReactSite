@@ -127,6 +127,7 @@ function SignIn(props) {
               e.preventDefault();
               if (state.email && state.password && !state.emailError) {
                 props.signInAction(state.email, state.password);
+                setState({ ...state, password: "" });
               }
             }}
           >
