@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import Hidden from "@material-ui/core/Hidden";
 import Button from "@material-ui/core/Button";
+import { prototype } from "stream";
 
 const styles = {
   root: {
@@ -40,6 +41,20 @@ class MenuAppBar extends React.Component {
   render() {
     const { classes } = this.props;
     const { drawerOpen } = this.state;
+    const links = [
+      {
+        link: "/",
+        name: "Home"
+      },
+      {
+        link: "/weather",
+        name: "Weather"
+      },
+      {
+        link: "/auto",
+        name: "Cars"
+      }
+    ];
 
     return (
       <div className={classes.root}>
@@ -58,15 +73,11 @@ class MenuAppBar extends React.Component {
               {this.props.isAuthenticated ? (
                 <>
                   <Typography variant="h6">
-                    <Link to="/" className={classes.link}>
-                      Home
-                    </Link>
-                    <Link to="/weather" className={classes.link}>
-                      Weather
-                    </Link>
-                    <Link to="/auto" className={classes.link}>
-                      Cars
-                    </Link>
+                    {links.map((route, index) => (
+                      <Link key={index} to={route.link} className={classes.link}>
+                        {route.name}
+                      </Link>
+                    ))}
                   </Typography>
                   <Button
                     color="inherit"
@@ -86,7 +97,6 @@ class MenuAppBar extends React.Component {
                   </Link>
                 </Typography>
               )}
-              {/* <button onClick={() => console.log(this.props.AuthReducers)} /> */}
             </Hidden>
           </Toolbar>
         </AppBar>
@@ -96,9 +106,11 @@ class MenuAppBar extends React.Component {
 }
 
 MenuAppBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool,
+  singOutAction: PropTypes.func.isRequired
 };
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = state => ({
   ...state,
   isAuthenticated: state.AuthReducers.isAuthenticated
 });

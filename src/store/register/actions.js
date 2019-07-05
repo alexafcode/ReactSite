@@ -10,7 +10,6 @@ export const signInAction = (email, password) => async dispatch => {
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(user => {
-      console.log(user);
       dispatch({ type: SIGNIN, payload: true });
       dispatch({ type: USER, payload: user.user });
       history.push("/");
@@ -31,7 +30,6 @@ export const singOutAction = () => async dispatch => {
 
 export const verifyAuth = () => async dispatch => {
   await firebaseApp.auth().onAuthStateChanged(user => {
-    console.log("user actions", user);
     if (user) {
       dispatch({ type: SIGNIN, payload: true });
       dispatch({ type: USER, payload: user });

@@ -142,7 +142,10 @@ function CreateAuto(props) {
   );
 }
 
-CreateAuto.propTypes = {};
+CreateAuto.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  uploadAuto: PropTypes.func.isRequired
+}
 
 const mapStateToProps = state => {
   return {
@@ -153,6 +156,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   uploadAuto
 };
+
 
 export default connect(
   mapStateToProps,
