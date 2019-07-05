@@ -11,6 +11,7 @@ export const ERROR_FETCH_DATA = "ERROR_FETCH_DATA";
 export const ERROR_MESSAGE = "ERROR_MESSAGE";
 
 export const key = "";
+export const startUrl = "https://dataservice.accuweather.com";
 
 export const fetchData = () => async (dispatch) => {
   let arr = [];
@@ -37,16 +38,14 @@ export const fetchData = () => async (dispatch) => {
       position => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
-        const baseUrl = `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${key}&q=${latitude},${longitude}&language=ru-ru`;
+        const baseUrl = `${startUrl}/locations/v1/cities/geoposition/search?apikey=${key}&q=${latitude},${longitude}&language=ru-ru`;
         axios
           .get(baseUrl)
           .then(async (response) => {
             // ToDo
-            console.log(response.data);
             const data = response.data;
             try {
               const city = await getWeatherForCity(data)
-              console.log("city", city)
               dispatch({ type: FETCH_DATA, payload: city });
               dispatch({ type: CITY_IS_LOADING, payload: false });
             } catch (e) {
@@ -76,7 +75,7 @@ export const fetchData = () => async (dispatch) => {
 export const searchClick = input => dispatch => {
   dispatch({ type: ERROR_FETCH_DATA, payload: false });
   dispatch({ type: SEARCH_CLICK, payload: true });
-  const url = `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${key}&q=${input}&language=ru-ru`;
+  const url = `${startUrl}/locations/v1/cities/autocomplete?apikey=${key}&q=${input}&language=ru-ru`;
   let items = [];
   let cities = {};
   axios
@@ -113,7 +112,7 @@ export const searchPanelHide = () => dispatch => {
 };
 
 export const getWeatherCity = (data) => dispatch => {
-  const url = `https://dataservice.accuweather.com/currentconditions/v1/${data.keyCity}?apikey=${key}&language=ru-ru&details=true`;
+  const url = `${startUrl}/currentconditions/v1/${data.keyCity}?apikey=${key}&language=ru-ru&details=true`;
   let city = {};
   axios
     .get(url)
@@ -160,7 +159,7 @@ export const getWeatherCity = (data) => dispatch => {
 
 export const getForecast = (queryKey) => dispatch => {
   let arr = [];
-  const url = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${
+  const url = `${startUrl}/forecasts/v1/daily/5day/${
     queryKey
     }?apikey=${key}&language=ru-ru&metric=true`;
   axios
