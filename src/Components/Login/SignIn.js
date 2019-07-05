@@ -1,16 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useState } from "react";
+import PropTypes from "prop-types";
 import { signInAction } from "../../store/register/actions";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
-// import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-// import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -160,6 +157,13 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = {
   signInAction
+};
+
+SignIn.propTypes = {
+  error: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
+  signInAction: PropTypes.func.isRequired
 };
 
 export default connect(

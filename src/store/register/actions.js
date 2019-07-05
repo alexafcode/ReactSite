@@ -45,14 +45,25 @@ export const verifyAuth = () => async dispatch => {
   });
 };
 
-// ToDo
 export const createUserAction = (email, pw) => async dispatch => {
+  dispatch({ type: LOADING, payload: true });
   await firebaseApp
     .auth()
     .createUserWithEmailAndPassword(email, pw)
-    .then(user => console.log(user));
+    .then(user => {
+      dispatch({ type: SIGNIN, payload: true });
+      dispatch({ type: USER, payload: user.user });
+      dispatch({ type: LOADING, payload: false });
+      history.push("/");
+    })
+    .catch(error => {
+      dispatch({ type: ERROR, payload: true });
+      dispatch({ type: ERROR_MESSAGE, payload: error.message });
+      dispatch({ type: LOADING, payload: false });
+    });
 };
 
+// ToDo
 export const resetPasswordAction = email => async dispatch => {
   await firebaseApp.auth().sendPasswordResetEmail(email);
 };
