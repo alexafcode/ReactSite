@@ -42,10 +42,34 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function SignIn(props) {
-  let initialState = "";
-  const [email, setInputEmail] = useState(initialState);
-  const [password, setInputPassword] = useState(initialState);
   const classes = useStyles();
+  const [state, setState] = useState({
+    email: "",
+    password: "",
+    emailError: false,
+    // passwordError: false,
+    emailErrorText: "",
+    // passwordErrorText: ""
+  });
+
+  const emailValidation = email => {
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (reg.test(email)) {
+      setState({
+        ...state,
+        email: email,
+        emailError: false,
+        emailErrorText: ""
+      });
+    } else {
+      setState({
+        ...state,
+        email: email,
+        emailError: true,
+        emailErrorText: "Email not Corrected"
+      });
+    }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -59,18 +83,21 @@ function SignIn(props) {
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
+            error={state.emailError}
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="email"
             label="Email Address"
             name="email"
             autoComplete="email"
             autoFocus
-            value={email}
-            onChange={e => setInputEmail(e.target.value)}
+            value={state.email}
+            onChange={e => emailValidation(e.target.value)}
           />
+          {state.emailError && (
+            <p style={{ color: "red" }}>{state.emailErrorText}</p>
+          )}
           <TextField
             variant="outlined"
             margin="normal"
@@ -79,10 +106,9 @@ function SignIn(props) {
             name="password"
             label="Password"
             type="password"
-            id="password"
             autoComplete="current-password"
-            value={password}
-            onChange={e => setInputPassword(e.target.value)}
+            value={state.password}
+            onChange={e => setState({ ...state, password: e.target.value })}
           />
           {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -96,9 +122,12 @@ function SignIn(props) {
             className={classes.submit}
             onClick={e => {
               e.preventDefault();
-              console.log(email, password);
-              if (email && password) {
-                props.signInAction(email, password);
+              if (
+                state.email &&
+                state.password &&
+                !state.emailError
+              ) {
+                props.signInAction(state.email, state.password);
               }
             }}
           >

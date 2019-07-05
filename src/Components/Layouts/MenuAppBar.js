@@ -18,17 +18,13 @@ const styles = {
   flex: {
     flex: 1
   },
-  // menuButton: {
-  //   marginLeft: -12,
-  //   marginRight: 20
-  // },
   link: {
     textDecoration: "none",
     marginRight: 1 + "rem",
-    color: "white",
+    color: "white"
   },
   linkAuth: {
-    left: "80%"
+    left: "80%" // ToDo calc
   }
 };
 
