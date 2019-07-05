@@ -15,6 +15,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -48,7 +49,7 @@ function SignIn(props) {
     password: "",
     emailError: false,
     // passwordError: false,
-    emailErrorText: "",
+    emailErrorText: ""
     // passwordErrorText: ""
   });
 
@@ -114,6 +115,8 @@ function SignIn(props) {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           /> */}
+          {props.loading && <LinearProgress />}
+          {props.error && <p style={{ color: "red" }}>{props.errorMessage}</p>}
           <Button
             type="submit"
             fullWidth
@@ -122,11 +125,7 @@ function SignIn(props) {
             className={classes.submit}
             onClick={e => {
               e.preventDefault();
-              if (
-                state.email &&
-                state.password &&
-                !state.emailError
-              ) {
+              if (state.email && state.password && !state.emailError) {
                 props.signInAction(state.email, state.password);
               }
             }}
@@ -151,11 +150,18 @@ function SignIn(props) {
   );
 }
 
+const mapStateToProps = state => {
+  return {
+    error: state.AuthReducers.error,
+    errorMessage: state.AuthReducers.errorMessage,
+    loading: state.AuthReducers.loading
+  };
+};
 const mapDispatchToProps = {
   signInAction
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SignIn);
