@@ -5,7 +5,7 @@ import WeatherCard from "./WeatherCard";
 import Loading from "../Layouts/Loading";
 import SearchLoading from "../Layouts/SearchLoading";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import TextField from '@material-ui/core/TextField';
+import Message from "../Layouts/Message";
 import "../Layouts/Animate.scss";
 
 function WeatherPage(props) {
@@ -18,19 +18,14 @@ function WeatherPage(props) {
   return (
     <div style={stylus.container} className="container">
       {props.showSearchLoad && <SearchLoading />}
-      <WeatherSearch
-      />
+      <WeatherSearch />
       {props.loading && <Loading />}
-      {props.error && <TextField
-        error
-        id="standard-error"
-        label="Error"
-        value={props.errorMessage ? props.errorMessage : ""}
-        margin="normal"
-        InputProps={{
-          readOnly: true,
-        }}
-      />}
+      {props.error && (
+        <Message
+          type={"error"}
+          text={props.errorMessage ? props.errorMessage : ""}
+        />
+      )}
       <TransitionGroup>
         {props.city &&
           !props.loading &&
