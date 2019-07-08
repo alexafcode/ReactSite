@@ -10,9 +10,10 @@ import MenuAppBar from "./Components/Layouts/MenuAppBar";
 import NotFound from "./Components/Layouts/NotFound";
 import configureStore from "./store/configureStore";
 import Auto from "./Components/Auto/AutoList/AutoContainer";
-import AutoItem from "./Components/Auto/AutoItem/AutoItem"
+import AutoItem from "./Components/Auto/AutoItem/AutoItem";
 import PrivateRoute from "./Components/Layouts/PrivateRoute";
-import CreateAuto from "./Components/Auto/Create/CreateAuto"
+import Currency from "./Components/Currency/CurrencyContainer";
+import CreateAuto from "./Components/Auto/Create/CreateAuto";
 import "./App.scss";
 
 const store = configureStore();
@@ -27,6 +28,7 @@ const App = () => (
         <PrivateRoute path="/auto/add" component={CreateAuto} />
         <PrivateRoute path="/auto/:id" component={AutoItem} />
         <PrivateRoute path="/auto" component={Auto} />
+        <Route path="/currency" component={Currency} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
         <Route component={NotFound} />

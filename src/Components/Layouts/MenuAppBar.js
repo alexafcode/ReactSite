@@ -24,7 +24,7 @@ const styles = {
     color: "white"
   },
   linkAuth: {
-    left: "80%" // ToDo calc
+    left: "75%" // ToDo calc
   }
 };
 
@@ -52,6 +52,10 @@ class MenuAppBar extends React.Component {
       {
         link: "/auto",
         name: "Cars"
+      },
+      {
+        link: "/currency",
+        name: "Currency"
       }
     ];
 
@@ -73,7 +77,11 @@ class MenuAppBar extends React.Component {
                 <>
                   <Typography variant="h6">
                     {links.map((route, index) => (
-                      <Link key={index} to={route.link} className={classes.link}>
+                      <Link
+                        key={index}
+                        to={route.link}
+                        className={classes.link}
+                      >
                         {route.name}
                       </Link>
                     ))}
