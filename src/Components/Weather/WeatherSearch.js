@@ -3,50 +3,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { searchClick, searchPanelHide } from "../../store/weather/actions";
 import { useState, useRef, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import SearchList from "./SearchList";
-
-const useStyles = makeStyles({
-  root: {
-    padding: "2px 4px",
-    display: "flex",
-    alignItems: "center",
-    width: "80%",
-    margin: "auto",
-    marginTop: 1 + "rem",
-    marginBottom: 1 + "rem"
-  },
-  input: {
-    marginLeft: 8,
-    flex: 1
-  },
-  iconButton: {
-    padding: 10
-  },
-  searchList: {
-    left: 0,
-    right: 0,
-    zIndex: 1,
-    width: "80%",
-    overflow: "auto",
-    cursor: "pointer",
-    marginTop: 0.25 + "rem",
-    marginLeft: "auto",
-    marginRight: "auto",
-    position: "absolute",
-    backgroundColor: "whitesmoke"
-  }
-});
+import "./WeatherSearch.scss"
 
 function WeatherSearch(props) {
   let initialState = "";
   const [input, setInput] = useState(initialState);
-  const classes = useStyles();
 
   const searchList = props.searchCities.map((item, index) => (
     <SearchList
@@ -74,16 +41,16 @@ function WeatherSearch(props) {
 
   return (
     <div className="search">
-      <Paper className={classes.root}>
+      <Paper className="search__paper">
         <InputBase
-          className={classes.input}
+        className="search__input"
           placeholder="Search City"
           inputProps={{ "aria-label": "Search" }}
           value={input}
           onChange={e => setInput(e.target.value)}
         />
         <IconButton
-          className={classes.iconButton}
+          className="search__icon"
           aria-label="Search"
           onClick={() => {
             props.searchClick(input);
@@ -96,7 +63,7 @@ function WeatherSearch(props) {
       <TransitionGroup>
         {props.showSearchResult && (
           <CSSTransition timeout={500} classNames="transition">
-            <div className={classes.searchList} ref={wrapperRef}>
+            <div className="search__result" ref={wrapperRef}>
               {searchList}
             </div>
           </CSSTransition>
@@ -107,10 +74,10 @@ function WeatherSearch(props) {
 }
 
 WeatherSearch.propTypes = {
+  searchClick: PropTypes.array.isRequired,
   searchCities: PropTypes.array.isRequired,
   searchPanelHide: PropTypes.func.isRequired,
   showSearchResult: PropTypes.bool.isRequired
-  // ToDo
 };
 
 const mapStateToProps = state => {

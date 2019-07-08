@@ -1,0 +1,45 @@
+.search {
+  .search__paper {
+    padding: 2px 4px;
+    display: flex;
+    align-items: center;
+    width: 30%;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .search__input {
+    margin-left: 0.5rem;
+    flex: 1;
+    input {
+      font-size: 1.25rem;
+    }
+  }
+  .search__icon {
+    padding: 10;
+  }
+  .search__result {
+    left: 0;
+    right: 0;
+    z-index: 1;
+    width: 30%;
+    overflow: auto;
+    cursor: pointer;
+    margin-top: 0.25rem;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    background-color: whitesmoke;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .search {
+    .search__paper {
+      width: 80%;
+    }
+    .search__result {
+      width: 80%;
+    }
+  }
+}

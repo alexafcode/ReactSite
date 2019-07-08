@@ -54,7 +54,9 @@
   .detail {
     width: 90px;
     margin: 1px;
-    // width: 16vw;
+    .detail__date {
+      font-size: 0.75rem;
+    }
     .detail__day-icon {
       width: 15vw;
     }
