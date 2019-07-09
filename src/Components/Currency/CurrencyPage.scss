@@ -1,0 +1,31 @@
+.form {
+  .input__from {
+    width: 25%;
+  }
+  .input__container {
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    .input__value {
+      display: flex;
+    }
+    .input__price {
+      font-weight: bold;
+      display: flex;
+    }
+    .input__unit {
+      display: flex;
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .form {
+    .input__from {
+      width: 85%;
+    }
+    .input__container {
+      width: 65%;
+    }
+  }
+}
