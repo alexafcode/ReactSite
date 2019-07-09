@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
 import TextField from "@material-ui/core/TextField";
-import "./CurrencyPage.scss";
+import Typography from "@material-ui/core/Typography";
 import amountLogo from "../../assets/icons_amount.png";
+import "./CurrencyPage.scss";
 
 const CurrencyPage = props => {
   const [state, setState] = useState({
@@ -38,23 +39,29 @@ const CurrencyPage = props => {
           <>
             <div className="input__price">
               <img src={amountLogo} alt="amount" />
-              <TextField
-                disabled
-                label="Price"
-                value={result()}
-                margin="normal"
-              />
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="h5"
+                style={{ lineHeight: 2.5 }}
+              >
+                {result()} рублей
+              </Typography>
             </div>
             <div className="input__unit">
               <img src={amountLogo} alt="amount" />
-              <TextField
-                disabled
-                label="Price on Unit"
-                value={state.fromValue.value}
-                className="input__unit"
-                margin="normal"
-              />
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="h5"
+                style={{ lineHeight: 2.5 }}
+              >
+                {state.fromValue.value} рублей
+              </Typography>
             </div>
+            <Typography gutterBottom variant="h5" component="h5">
+              Данные на дату: {props.date}
+            </Typography>
           </>
         )}
       </div>
