@@ -46,7 +46,12 @@ const CurrencyContainer = () => {
         setState({ ...state, currencies: arr, loading: false, date });
       })
       .catch(e => {
-        setState({ ...state, error: true, errorMessage: e.message, loading: false }) // check
+        setState({
+          ...state,
+          error: true,
+          errorMessage: e.message,
+          loading: false
+        }); // check
       });
   };
 
@@ -62,7 +67,7 @@ const CurrencyContainer = () => {
       ) : (
         <CurrencyPage currencies={state.currencies} date={state.date} />
       )}
-      {state.error && <Message type={"error"} text={state.errorMessage}/>}
+      {state.error && <Message type={"error"} text={state.errorMessage} />}
     </div>
   );
 };

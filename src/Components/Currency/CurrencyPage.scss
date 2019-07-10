@@ -16,6 +16,11 @@
     .input__unit {
       display: flex;
     }
+    .form__button {
+      margin: auto;
+      margin-top: 1rem;
+      width: 30%;
+    }
   }
 }
 
@@ -26,6 +31,9 @@
     }
     .input__container {
       width: 95%;
+      .form__button {
+        width: 60%;
+      }
     }
   }
 }
