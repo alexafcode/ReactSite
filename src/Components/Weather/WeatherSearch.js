@@ -74,7 +74,7 @@ function WeatherSearch(props) {
 }
 
 WeatherSearch.propTypes = {
-  searchClick: PropTypes.array.isRequired,
+  searchClick: PropTypes.func.isRequired,
   searchCities: PropTypes.array.isRequired,
   searchPanelHide: PropTypes.func.isRequired,
   showSearchResult: PropTypes.bool.isRequired
