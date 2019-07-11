@@ -18,6 +18,7 @@ const store = configureStore();
 const Weather = lazy(() => import("./Components/Weather/WeatherContainer"));
 const Currency = lazy(() => import("./Components/Currency/CurrencyContainer"));
 const Auto = lazy(() => import("./Components/Auto/AutoList/AutoContainer"));
+const News = lazy(() => import("./Components/News/NewsContainer"));
 
 const App = () => (
   <Provider store={store}>
@@ -30,6 +31,7 @@ const App = () => (
           <PrivateRoute path="/auto/add" component={CreateAuto} />
           <PrivateRoute path="/auto/:id" component={AutoItem} />
           <PrivateRoute path="/auto" component={Auto} />
+          <PrivateRoute path="/news" component={News} />
           <Route path="/currency" component={Currency} />
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />

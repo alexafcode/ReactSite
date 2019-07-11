@@ -47,6 +47,11 @@ const links = [
   },
   {
     icon: <Euro />,
+    link: "/news",
+    text: "News"
+  },
+  {
+    icon: <Euro />,
     link: "/currency",
     text: "Currency"
   }

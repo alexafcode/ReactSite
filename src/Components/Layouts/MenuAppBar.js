@@ -56,6 +56,10 @@ class MenuAppBar extends React.Component {
       {
         link: "/currency",
         name: "Currency"
+      },
+      {
+        link: "/news",
+        name: "News"
       }
     ];
 
