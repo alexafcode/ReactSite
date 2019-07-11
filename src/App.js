@@ -11,8 +11,12 @@ import configureStore from "./store/configureStore";
 import AutoItem from "./Components/Auto/AutoItem/AutoItem";
 import PrivateRoute from "./Components/Layouts/PrivateRoute";
 import CreateAuto from "./Components/Auto/Create/CreateAuto";
-import Loading from "./Components/Layouts/Loading"
+import Loading from "./Components/Layouts/Loading";
 import "./App.scss";
+// import Weather from "./Components/Weather/WeatherContainer"
+// import Currency from "./Components/Currency/CurrencyContainer"
+// import Auto from "./Components/Auto/AutoList/AutoContainer"
+// import News from "./Components/News/NewsContainer"
 
 const store = configureStore();
 const Weather = lazy(() => import("./Components/Weather/WeatherContainer"));
@@ -24,8 +28,8 @@ const App = () => (
   <Provider store={store}>
     <Router history={history}>
       {/* ToDo fallback */}
-      <Suspense fallback={<div><Loading /></div>}>
-        <MenuAppBar />
+      <MenuAppBar />
+      <Suspense fallback={<div>Loading...</div>}>
         <Switch>
           <Route exact path="/" component={StartPage} />
           <PrivateRoute path="/weather" component={Weather} />

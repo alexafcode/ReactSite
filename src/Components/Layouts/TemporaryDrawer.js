@@ -12,6 +12,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import Car from "@material-ui/icons/DirectionsCar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Dvr from "@material-ui/icons/Dvr";
 import { Drawer } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
@@ -46,7 +47,7 @@ const links = [
     text: "Cars"
   },
   {
-    icon: <Euro />,
+    icon: <Dvr />,
     link: "/news",
     text: "News"
   },
