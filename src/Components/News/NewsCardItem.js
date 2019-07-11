@@ -53,7 +53,7 @@ const NewsCardItem = props => {
   );
 };
 
-// ToDo
-// NewsCardItem.propTypes = {
-// };
+NewsCardItem.propTypes = {
+  news: PropTypes.object.isRequired
+};
 export default NewsCardItem;

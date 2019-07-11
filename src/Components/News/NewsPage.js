@@ -16,6 +16,8 @@ const NewsPage = props => {
 };
 
 // ToDo
-// NewsPage.propTypes = {
-// };
+NewsPage.propTypes = {
+  news: PropTypes.array.isRequired
+  // func.isRequired
+};
 export default NewsPage;

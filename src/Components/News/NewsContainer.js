@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchData } from "../../store/news/actions";
 import NewsPage from "./NewsPage";
@@ -35,6 +36,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   fetchData
+};
+
+NewsContainer.propTypes = {
+  news: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string
 };
 
 export default connect(
