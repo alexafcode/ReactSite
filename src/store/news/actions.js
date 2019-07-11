@@ -8,11 +8,11 @@ const key = "";
 const startUrl = "https://newsapi.org/v2/top-headlines?country=ru&category=";
 
 export const fetchData = (category = "") => async dispatch => {
+  dispatch({ type: ERROR_FETCH_DATA, payload: false });
   const url = `${startUrl}${category}&apiKey=${key}`;
   axios
     .get(url)
     .then(response => {
-      dispatch({ type: ERROR_FETCH_DATA, payload: false });
       dispatch({ type: FETCH_DATA, payload: response.data.articles });
       dispatch({ type: NEWS_LOADING, payload: false });
     })

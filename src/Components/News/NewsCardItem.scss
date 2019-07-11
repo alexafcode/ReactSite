@@ -1,24 +1,39 @@
 .card {
   max-width: 60%;
   margin: auto;
-  margin-bottom: 2%;
+  margin-bottom: 2rem;
   .card__media {
     height: 400px;
   }
-  // .card__desc {
-  //   height: 160px;
-  //   overflow: hidden;
-  // }
+  .card__title {
+    .card__text {
+      font-size: 1.5rem;
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+      font-weight: 400;
+      line-height: 1.33;
+      letter-spacing: 0em;
+    }
+  }
 }
 
-
 @media screen and (max-width: 1150px) {
-  .card__item {
+  .card {
     max-width: 70%;
+    .card__media {
+      height: 20vh;
+    }
+    .card__title {
+      .card__text {
+        font-size: 1rem;
+      }
+    }
   }
 }
 @media screen and (max-width: 1000px) {
-  .card__item {
+  .card {
     max-width: 80%;
+    .card__media {
+      height: 20vh;
+    }
   }
 }

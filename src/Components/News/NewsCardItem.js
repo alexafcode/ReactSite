@@ -7,6 +7,10 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import "./NewsCardItem.scss";
 
 const NewsCardItem = props => {
@@ -22,18 +26,18 @@ const NewsCardItem = props => {
           image={news.urlToImage}
           title={news.title}
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+        <CardContent className="card__title">
+          <div className="card__text">
             {news.title}
-          </Typography>
-          {/* <Typography
-            variant="body2"
-            color="textSecondary"
-            component="p"
-            className="card__desc"
-          >
-            {news.descriptions}
-          </Typography> */}
+          </div>
+          <ExpansionPanel style={{ boxShadow: "none" }}>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+            />
+            <ExpansionPanelDetails>
+              <Typography>{news.description}</Typography>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
         </CardContent>
       </CardActionArea>
       <CardActions>
