@@ -5,9 +5,9 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import PropTypes from "prop-types";
-// import InboxIcon from "@material-ui/icons/Inbox";
-import Home from "@material-ui/icons/Home"; // wb_cloudy
+import Home from "@material-ui/icons/Home";
 import Cloud from "@material-ui/icons/Cloud";
+import Euro from "@material-ui/icons/EuroSymbolOutlined";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Car from "@material-ui/icons/DirectionsCar";
 import IconButton from "@material-ui/core/IconButton";
@@ -29,6 +29,41 @@ const styles = {
   }
 };
 
+const links = [
+  {
+    icon: <Home />,
+    link: "/",
+    text: "Home"
+  },
+  {
+    icon: <Cloud />,
+    link: "/weather",
+    text: "Weather"
+  },
+  {
+    icon: <Car />,
+    link: "/auto",
+    text: "Cars"
+  },
+  {
+    icon: <Euro />,
+    link: "/currency",
+    text: "Currency"
+  }
+];
+const linksNotAuth = [
+  {
+    icon: <AccountCircle />,
+    link: "/signin",
+    text: "SignIn"
+  },
+  {
+    icon: <AccountCircle />,
+    link: "/signup",
+    text: "SignUp"
+  }
+];
+
 class TemporaryDrawer extends React.Component {
   render(props) {
     const { classes, toggleDrawer, isOpen } = this.props;
@@ -38,30 +73,14 @@ class TemporaryDrawer extends React.Component {
         <List>
           {this.props.isAuthenticated ? (
             <>
-              <ListItem button>
-                <ListItemIcon>
-                  <Home />
-                </ListItemIcon>
-                <Link to="/" className={classes.link}>
-                  <ListItemText primary="Home" />
-                </Link>
-              </ListItem>
-              <ListItem button>
-                <ListItemIcon>
-                  <Cloud />
-                </ListItemIcon>
-                <Link to="/weather" className={classes.link}>
-                  <ListItemText primary="Weather" />
-                </Link>
-              </ListItem>
-              <ListItem button>
-                <ListItemIcon>
-                  <Car />
-                </ListItemIcon>
-                <Link to="/auto" className={classes.link}>
-                  <ListItemText primary="Cars" />
-                </Link>
-              </ListItem>
+              {links.map((el, index) => (
+                <ListItem button key={index}>
+                  <ListItemIcon>{el.icon}</ListItemIcon>
+                  <Link to={el.link} className={classes.link}>
+                    <ListItemText primary={el.text} />
+                  </Link>
+                </ListItem>
+              ))}
               <Button
                 color="inherit"
                 className={classes.linkAuth}
@@ -72,22 +91,14 @@ class TemporaryDrawer extends React.Component {
             </>
           ) : (
             <>
-              <ListItem button>
-                <ListItemIcon>
-                  <AccountCircle />
-                </ListItemIcon>
-                <Link to="/signin" className={classes.link}>
-                  <ListItemText primary="SignIn" />
-                </Link>
-              </ListItem>
-              <ListItem button>
-                <ListItemIcon>
-                  <AccountCircle />
-                </ListItemIcon>
-                <Link to="/signup" className={classes.link}>
-                  <ListItemText primary="SignUp" />
-                </Link>
-              </ListItem>
+              {linksNotAuth.map((el, index) => (
+                <ListItem button key={index}>
+                  <ListItemIcon>{el.icon}</ListItemIcon>
+                  <Link to={el.link} className={classes.link}>
+                    <ListItemText primary={el.text} />
+                  </Link>
+                </ListItem>
+              ))}
             </>
           )}
         </List>
