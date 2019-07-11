@@ -1,0 +1,24 @@
+.card {
+  max-width: 60%;
+  margin: auto;
+  margin-bottom: 2%;
+  .card__media {
+    height: 400px;
+  }
+  // .card__desc {
+  //   height: 160px;
+  //   overflow: hidden;
+  // }
+}
+
+
+@media screen and (max-width: 1150px) {
+  .card__item {
+    max-width: 70%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .card__item {
+    max-width: 80%;
+  }
+}

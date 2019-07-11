@@ -9,7 +9,7 @@ export default (state = defaultState, action) => {
     case "FETCH_DATA":
       return {
         ...state,
-        news: [action.payload]
+        news: [...action.payload]
       };
     case "NEWS_LOADING":
       return {

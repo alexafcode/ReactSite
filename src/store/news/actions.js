@@ -17,7 +17,8 @@ export const fetchData = (category = "") => async dispatch => {
       dispatch({ type: NEWS_LOADING, payload: false });
     })
     .catch(e => {
-      // ToDo
-      console.error(e.message);
+      dispatch({ type: ERROR_FETCH_DATA, payload: true });
+      dispatch({ type: ERROR_MESSAGE, payload: e.message });
+      dispatch({ type: NEWS_LOADING, payload: false });
     });
 };

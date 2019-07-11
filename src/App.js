@@ -23,6 +23,7 @@ const News = lazy(() => import("./Components/News/NewsContainer"));
 const App = () => (
   <Provider store={store}>
     <Router history={history}>
+      {/* ToDo fallback */}
       <Suspense fallback={<div><Loading /></div>}>
         <MenuAppBar />
         <Switch>
