@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -18,22 +18,41 @@ const NewsCardItem = props => {
   const redirectToNewsPage = () => {
     window.open(news.url, "_blank");
   };
+
+  // image on Screen
+  const ref = useRef();
+  const [intersected, setIntersecting] = useState(false);
+  const srcImage = () => {
+    if ("IntersectionObserver" in window) {
+      return intersected ? news.urlToImage : "";
+    } else {
+      return news.urlToImage;
+    }
+  };
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      const image = entries[0];
+      if (image.isIntersecting) {
+        setIntersecting(true);
+        observer.disconnect();
+      }
+    });
+    observer.observe(ref.current);
+  });
+
   return (
     <Card className="card">
       <CardActionArea>
         <CardMedia
+          ref={ref}
           className="card__media"
-          image={news.urlToImage}
+          image={srcImage()}
           title={news.title}
         />
         <CardContent className="card__title">
-          <div className="card__text">
-            {news.title}
-          </div>
+          <div className="card__text">{news.title}</div>
           <ExpansionPanel style={{ boxShadow: "none" }}>
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-            />
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} />
             <ExpansionPanelDetails>
               <Typography>{news.description}</Typography>
             </ExpansionPanelDetails>
