@@ -3,11 +3,12 @@ export const FETCH_DATA = "FETCH_DATA";
 export const NEWS_LOADING = "NEWS_LOADING";
 export const ERROR_FETCH_DATA = "ERROR_FETCH_DATA";
 export const ERROR_MESSAGE = "ERROR_MESSAGE";
+export const SET_INDEX = "SET_INDEX";
 
 const key = "";
 const startUrl = "https://newsapi.org/v2/top-headlines?country=ru&category=";
 
-export const fetchData = (category = "") => async dispatch => {
+export const fetchData = (category = "", index = 0) => async dispatch => {
   dispatch({ type: ERROR_FETCH_DATA, payload: false });
   dispatch({ type: NEWS_LOADING, payload: true });
   const url = `${startUrl}${category}&apiKey=${key}`;
@@ -16,6 +17,7 @@ export const fetchData = (category = "") => async dispatch => {
     .then(response => {
       dispatch({ type: FETCH_DATA, payload: response.data.articles });
       dispatch({ type: NEWS_LOADING, payload: false });
+      dispatch({ type: SET_INDEX, payload: index });
     })
     .catch(e => {
       dispatch({ type: ERROR_FETCH_DATA, payload: true });

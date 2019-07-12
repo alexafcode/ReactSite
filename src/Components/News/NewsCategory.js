@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { fetchData } from "../../store/news/actions";
 import { withStyles } from "@material-ui/core/styles";
@@ -49,7 +49,7 @@ const StyledMenuItem = withStyles(theme => ({
 }))(MenuItem);
 
 function NewsCategoryMenu(props) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
@@ -59,10 +59,11 @@ function NewsCategoryMenu(props) {
     setAnchorEl(null);
   }
 
-  function changeCategory(category) {
-    props.fetchData(category);
+  function changeCategory(category, index) {
+    props.fetchData(category, index);
     handleClose();
   }
+  const activeStyle = { color: "#ff3333" };
 
   return (
     <div>
@@ -85,8 +86,9 @@ function NewsCategoryMenu(props) {
       >
         {categoryMenu.map((el, index) => (
           <StyledMenuItem
+            style={index === props.index ? activeStyle : {}}
             key={index}
-            onClick={() => changeCategory(el.category)}
+            onClick={() => changeCategory(el.category, index)}
           >
             <ListItemIcon>{el.icon}</ListItemIcon>
             <ListItemText primary={el.text} />
@@ -97,11 +99,17 @@ function NewsCategoryMenu(props) {
   );
 }
 
+const mapStateToProps = state => {
+  return {
+    index: state.NewsReducers.index,
+  };
+};
+
 const mapDispatchToProps = {
   fetchData
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(NewsCategoryMenu);

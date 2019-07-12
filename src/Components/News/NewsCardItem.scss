@@ -1,9 +1,10 @@
 .card {
-  max-width: 60%;
+  max-width: 50%;
   margin: auto;
   margin-bottom: 2rem;
   .card__media {
-    height: 400px;
+    height: 500px;
+    width: 100%;
   }
   .card__title {
     .card__text {
@@ -20,7 +21,7 @@
   .card {
     max-width: 70%;
     .card__media {
-      height: 20vh;
+      height: 25vh;
     }
     .card__title {
       .card__text {
@@ -33,7 +34,7 @@
   .card {
     max-width: 80%;
     .card__media {
-      height: 20vh;
+      height: 25vh;
     }
   }
 }

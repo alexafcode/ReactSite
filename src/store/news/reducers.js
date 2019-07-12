@@ -2,7 +2,8 @@ const defaultState = {
   news: [],
   loading: true,
   error: false,
-  errorMessage: null
+  errorMessage: null,
+  index: 0
 };
 export default (state = defaultState, action) => {
   switch (action.type) {
@@ -15,6 +16,11 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         loading: action.payload
+      };
+      case "SET_INDEX":
+      return {
+        ...state,
+        index: action.payload
       };
     case "ERROR_FETCH_DATA":
       return {
