@@ -30,14 +30,16 @@ const NewsCardItem = props => {
     }
   };
   useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      const image = entries[0];
-      if (image.isIntersecting) {
-        setIntersecting(true);
-        observer.disconnect();
-      }
-    });
-    observer.observe(ref.current);
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(entries => {
+        const image = entries[0];
+        if (image.isIntersecting) {
+          setIntersecting(true);
+          observer.disconnect();
+        }
+      });
+      observer.observe(ref.current);
+    }
   });
 
   return (

@@ -11,7 +11,7 @@ const NewsPage = props => {
       paddingTop: "1rem"
     },
     menu: {
-      position: "fixed",
+      position: "absolute",
       padding: "0.5rem",
       zIndex: 1
     },
