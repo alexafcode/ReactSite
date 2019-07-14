@@ -7,7 +7,7 @@ const defaultState = {
 };
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case "FETCH_DATA":
+    case "FETCH_DATA_NEWS":
       return {
         ...state,
         news: [...action.payload]

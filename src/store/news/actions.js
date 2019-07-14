@@ -1,5 +1,5 @@
 import axios from "axios";
-export const FETCH_DATA = "FETCH_DATA";
+export const FETCH_DATA_NEWS = "FETCH_DATA_NEWS";
 export const NEWS_LOADING = "NEWS_LOADING";
 export const ERROR_FETCH_DATA = "ERROR_FETCH_DATA";
 export const ERROR_MESSAGE = "ERROR_MESSAGE";
@@ -15,7 +15,7 @@ export const fetchData = (category = "", index = 0) => async dispatch => {
   axios
     .get(url)
     .then(response => {
-      dispatch({ type: FETCH_DATA, payload: response.data.articles });
+      dispatch({ type: FETCH_DATA_NEWS, payload: response.data.articles });
       dispatch({ type: NEWS_LOADING, payload: false });
       dispatch({ type: SET_INDEX, payload: index });
     })
