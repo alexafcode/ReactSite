@@ -46,6 +46,7 @@ const CurrencyPage = props => {
             <div className="input__value">
               <img src={amountLogo} alt="amount" />
               <TextField
+                type="number"
                 label="Amount Roubles"
                 value={state.amount}
                 onChange={e => setState({ ...state, amount: e.target.value })}

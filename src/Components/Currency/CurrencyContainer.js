@@ -17,47 +17,49 @@ const CurrencyContainer = () => {
       padding: "1rem"
     }
   };
-  const fetchData = async () => {
-    setState({ ...state, loading: true });
-    let url = "https://www.cbr-xml-daily.ru/daily_json.js";
-    await axios
-      .get(url)
-      .then(response => {
-        const time = response.data.Timestamp;
-        const date = new Date(time).toLocaleString("ru", {
-          day: "numeric",
-          month: "long",
-          year: "numeric"
-        });
-        const data = response.data.Valute;
-        const arr = Object.keys(data).map(key => {
-          let e = data[key];
-          return {
-            name: e.Name,
-            value: e.Value,
-            nominal: e.Nominal
-          };
-        });
-        arr.map(c => {
-          c.label = c.name;
-          return c;
-        });
-        arr.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
-        setState({ ...state, currencies: arr, loading: false, date });
-      })
-      .catch(e => {
-        setState({
-          ...state,
-          error: true,
-          errorMessage: e.message,
-          loading: false
-        }); // check
-      });
-  };
 
   useEffect(() => {
+    const fetchData = async () => {
+      setState({ ...state, loading: true });
+      let url = "https://www.cbr-xml-daily.ru/daily_json.js";
+      await axios
+        .get(url)
+        .then(response => {
+          const time = response.data.Timestamp;
+          const date = new Date(time).toLocaleString("ru", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+          });
+          const data = response.data.Valute;
+          const arr = Object.keys(data).map(key => {
+            let e = data[key];
+            return {
+              name: e.Name,
+              value: e.Value,
+              nominal: e.Nominal
+            };
+          });
+          arr.map(c => {
+            c.label = c.name;
+            return c;
+          });
+          arr.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
+          setState({ ...state, currencies: arr, loading: false, date });
+        })
+        .catch(e => {
+          setState({
+            ...state,
+            error: true,
+            errorMessage: e.message,
+            loading: false
+          }); // check
+        });
+    };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <div className="currency" style={stylus.currency}>
       {state.loading ? (

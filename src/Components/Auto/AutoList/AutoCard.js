@@ -7,13 +7,15 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import history from "../../../history";
-import "./AutoCard.scss"
+import "./AutoCard.scss";
 
 function AutoCard(props) {
 
   return (
     <Card className="card__item">
-        <CardActionArea onClick={() => history.push(`/auto/${props.car.id}`, props)}>
+      <CardActionArea
+        onClick={() => history.push(`/auto/${props.car.id}`, props)}
+      >
         <CardMedia
           className="card__media"
           image={
@@ -45,7 +47,7 @@ function AutoCard(props) {
 }
 
 AutoCard.propTypes = {
-  car: PropTypes.object.isRequired,
+  car: PropTypes.object.isRequired
 };
 
-export default AutoCard
+export default AutoCard;

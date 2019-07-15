@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -15,8 +15,7 @@ import Comment from "./Comment";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Rating from "material-ui-rating";
-import "./AutoItem.scss"
-
+import "./AutoItem.scss";
 
 function AutoItem(props) {
   const { car } = props.location.state;
@@ -38,6 +37,15 @@ function AutoItem(props) {
     setComment(arr);
     setInput("");
   };
+
+  const onTop = () => {
+    window.scrollTo({
+      top: 0
+    });
+  };
+  useEffect(() => {
+    onTop();
+  }, []);
 
   return (
     <Card className="car">
@@ -61,7 +69,12 @@ function AutoItem(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <Rating className="comment__rating" value={car.rating} max={5} disabled={true} />
+      <Rating
+        className="comment__rating"
+        value={car.rating}
+        max={5}
+        disabled={true}
+      />
       <CardActions>
         <div className="comment__add">
           <Input
