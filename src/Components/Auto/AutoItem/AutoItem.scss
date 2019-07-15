@@ -4,7 +4,10 @@
   margin-bottom: 2%;
   margin-top: 2%;
   .car__media {
-    height:30vw;
+    height: 30vw;
+  }
+  .button__back {
+    margin: 0.25rem;
   }
 }
 
@@ -19,7 +22,10 @@
   }
 }
 @media screen and (max-width: 1000px) {
-  .car{
+  .car {
     width: 80%;
+    .car__media {
+      height: 40vw;
+    }
   }
 }

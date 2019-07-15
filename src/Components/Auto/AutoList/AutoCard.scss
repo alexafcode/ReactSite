@@ -14,6 +14,9 @@
 @media screen and (max-width: 1400px) {
   .card__item {
     max-width: 40%;
+    .card__media {
+      height: 24vh;
+    }
   }
 }
 @media screen and (max-width: 1150px) {

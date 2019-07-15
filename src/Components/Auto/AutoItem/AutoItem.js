@@ -15,6 +15,7 @@ import Comment from "./Comment";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Rating from "material-ui-rating";
+import Button from "@material-ui/core/Button";
 import "./AutoItem.scss";
 
 function AutoItem(props) {
@@ -69,12 +70,15 @@ function AutoItem(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <Rating
-        className="comment__rating"
-        value={car.rating}
-        max={5}
-        disabled={true}
-      />
+      <Rating className="rating" value={car.rating} max={5} disabled={true} />
+      <Button
+        size="small"
+        color="primary"
+        variant="contained"
+        className="button__back"
+      >
+        To List Cars
+      </Button>
       <CardActions>
         <div className="comment__add">
           <Input
