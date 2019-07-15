@@ -33,7 +33,7 @@ export const categoryMenu = [
     icon: <SendIcon />
   },
   {
-    category: category.technology,
+    category: category.tech,
     text: "Technology",
     icon: <SendIcon />
   },

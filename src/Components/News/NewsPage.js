@@ -4,6 +4,8 @@ import NewsCardItem from "./NewsCardItem";
 import NewsCategoryMenu from "./NewsCategory";
 import Fab from "@material-ui/core/Fab";
 import ArrowUp from "@material-ui/icons/KeyboardArrowUp";
+import NewsCategoryHeader from "./NewsCategoryHeader";
+import Hidden from "@material-ui/core/Hidden";
 
 const NewsPage = props => {
   const stylus = {
@@ -49,9 +51,14 @@ const NewsPage = props => {
 
   return (
     <div className="container" style={stylus.container}>
-      <div className="menu" style={stylus.menu}>
-        <NewsCategoryMenu />
-      </div>
+      <Hidden only={["xs", "sm"]}>
+        <NewsCategoryHeader />
+      </Hidden>
+      <Hidden only={["md", "xl", "lg"]}>
+        <div className="menu" style={stylus.menu}>
+          <NewsCategoryMenu />
+        </div>
+      </Hidden>
       <div className="up" style={stylus.button}>
         {onTopButton && (
           <Fab color="primary" aria-label="Up" onClick={() => onTop()}>
