@@ -17,9 +17,9 @@ class AutoContainer extends React.Component {
     const filteredAuto = () => {
       // ToDo Easy
       let arr = [];
-      let fa = this.state.filteredAuto;
+      const fa = this.state.filteredAuto;
       if (fa.length) {
-        this.state.filteredAuto.forEach(r => {
+        fa.forEach(r => {
           this.props.cars.forEach(el => {
             if (el.manufacturer === r) {
               arr.push(el);
