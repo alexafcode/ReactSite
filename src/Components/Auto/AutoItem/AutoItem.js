@@ -16,6 +16,7 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Rating from "material-ui-rating";
 import Button from "@material-ui/core/Button";
+import history from "../../../history"
 import "./AutoItem.scss";
 
 function AutoItem(props) {
@@ -76,6 +77,7 @@ function AutoItem(props) {
         color="primary"
         variant="contained"
         className="button__back"
+        onClick={() => history.push("/auto")}
       >
         To List Cars
       </Button>
