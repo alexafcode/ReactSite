@@ -16,6 +16,7 @@ export const signInAction = (email, password) => async dispatch => {
       dispatch({ type: SIGNIN, payload: true });
       dispatch({ type: USER, payload: user.user });
       dispatch({ type: LOADING, payload: false });
+      localStorage.setItem("authUser", JSON.stringify(user.user));
       history.push("/");
     })
     .catch(error => {
@@ -30,6 +31,7 @@ export const singOutAction = () => async dispatch => {
     .auth()
     .signOut()
     .then(() => {
+      localStorage.removeItem("authUser")
       dispatch({ type: SIGNIN, payload: false });
       dispatch({ type: USER, payload: null });
       history.push("/");
@@ -37,12 +39,18 @@ export const singOutAction = () => async dispatch => {
 };
 
 export const verifyAuth = () => async dispatch => {
-  await firebaseApp.auth().onAuthStateChanged(user => {
-    if (user) {
-      dispatch({ type: SIGNIN, payload: true });
-      dispatch({ type: USER, payload: user });
-    }
-  });
+  if (localStorage.getItem("authUser")) {
+    const user = JSON.parse(localStorage.getItem("authUser"))
+    dispatch({ type: SIGNIN, payload: true });
+    dispatch({ type: USER, payload: user });
+  } else {
+    await firebaseApp.auth().onAuthStateChanged(user => {
+      if (user) {
+        dispatch({ type: SIGNIN, payload: true });
+        dispatch({ type: USER, payload: user });
+      }
+    });
+  }
 };
 
 export const createUserAction = (email, pw) => async dispatch => {
