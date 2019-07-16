@@ -114,6 +114,7 @@ class TemporaryDrawer extends React.Component {
     return (
       <div>
         <IconButton
+          aria-label="Menu"
           className={classes.menuButton}
           color="inherit"
           onClick={toggleDrawer}
