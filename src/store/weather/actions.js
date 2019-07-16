@@ -1,5 +1,6 @@
 import axios from "axios";
-import { getWeatherForCity } from "./helperActions"
+import keys from "../../keys";
+import { getWeatherForCity } from "./helperActions";
 export const FETCH_DATA = "FETCH_DATA";
 export const CITY_IS_LOADING = "CITY_IS_LOADING";
 export const SEARCH_CLICK = "SEARCH_CLICK";
@@ -10,25 +11,25 @@ export const FORECAST_WEATHER = "FORECAST_WEATHER";
 export const ERROR_FETCH_DATA = "ERROR_FETCH_DATA";
 export const ERROR_MESSAGE = "ERROR_MESSAGE";
 
-export const key = "";
+export const key = keys.weather;
 export const startUrl = "https://dataservice.accuweather.com";
 
-export const fetchData = () => async (dispatch) => {
+export const fetchData = () => async dispatch => {
   let arr = [];
   if (localStorage.getItem("city") != null) {
     try {
       arr = JSON.parse(localStorage.getItem("city"));
     } catch (e) {
-      return console.error(e)
+      return console.error(e);
     }
-    arr.forEach(async (el) => {
+    arr.forEach(async el => {
       try {
-        const city = await getWeatherForCity(el)
+        const city = await getWeatherForCity(el);
         dispatch({ type: ERROR_FETCH_DATA, payload: false });
         dispatch({ type: FETCH_DATA, payload: city });
         dispatch({ type: CITY_IS_LOADING, payload: false });
       } catch (e) {
-        console.error("Error Fetch", e)
+        console.error("Error Fetch", e);
       }
     });
   }
@@ -41,19 +42,19 @@ export const fetchData = () => async (dispatch) => {
         const baseUrl = `${startUrl}/locations/v1/cities/geoposition/search?apikey=${key}&q=${latitude},${longitude}&language=ru-ru`;
         axios
           .get(baseUrl)
-          .then(async (response) => {
+          .then(async response => {
             // ToDo
             const data = response.data;
             try {
-              const city = await getWeatherForCity(data)
+              const city = await getWeatherForCity(data);
               dispatch({ type: FETCH_DATA, payload: city });
               dispatch({ type: CITY_IS_LOADING, payload: false });
             } catch (e) {
-              console.error("Error Fetch", e)
+              console.error("Error Fetch", e);
             }
           })
           .catch(error => {
-            console.error("Erorr", error.message)
+            console.error("Erorr", error.message);
             dispatch({ type: CITY_IS_LOADING, payload: false });
             dispatch({ type: ERROR_FETCH_DATA, payload: true });
             dispatch({ type: ERROR_MESSAGE, payload: error.message });
@@ -111,16 +112,16 @@ export const searchPanelHide = () => dispatch => {
   dispatch({ type: SHOW_SEARCH_RESULT, payload: false });
 };
 
-export const getWeatherCity = (data) => dispatch => {
-  const url = `${startUrl}/currentconditions/v1/${data.keyCity}?apikey=${key}&language=ru-ru&details=true`;
+export const getWeatherCity = data => dispatch => {
+  const url = `${startUrl}/currentconditions/v1/${
+    data.keyCity
+  }?apikey=${key}&language=ru-ru&details=true`;
   let city = {};
   axios
     .get(url)
     .then(result => {
       const res = result.data[0];
-      const time = new Date(
-        res.LocalObservationDateTime
-      ).toLocaleString("ru", {
+      const time = new Date(res.LocalObservationDateTime).toLocaleString("ru", {
         day: "numeric",
         month: "long",
         year: "numeric"
@@ -132,18 +133,18 @@ export const getWeatherCity = (data) => dispatch => {
         country: data.country,
         temp: `${res.Temperature.Metric.Value.toFixed()}°  ${
           res.Temperature.Metric.Unit
-          }`,
+        }`,
         windDirect: res.Wind.Direction.Localized,
         windSpeed: `${res.Wind.Speed.Metric.Value}  ${
           res.Wind.Speed.Metric.Unit
-          }`,
+        }`,
         weatherText: res.WeatherText,
         realFeelTemperature: `${res.RealFeelTemperature.Metric.Value.toFixed()}° ${
           res.RealFeelTemperature.Metric.Unit
-          }`,
+        }`,
         visibility: `${res.Visibility.Metric.Value} ${
           res.Visibility.Metric.Unit
-          }`,
+        }`,
         WeatherIcon: res.WeatherIcon,
         IsDayTime: res.IsDayTime,
         time: time,
@@ -155,13 +156,11 @@ export const getWeatherCity = (data) => dispatch => {
     })
     .catch(error => console.error(error.message));
   dispatch({ type: SHOW_SEARCH_RESULT, payload: false });
-}
+};
 
-export const getForecast = (queryKey) => dispatch => {
+export const getForecast = queryKey => dispatch => {
   let arr = [];
-  const url = `${startUrl}/forecasts/v1/daily/5day/${
-    queryKey
-    }?apikey=${key}&language=ru-ru&metric=true`;
+  const url = `${startUrl}/forecasts/v1/daily/5day/${queryKey}?apikey=${key}&language=ru-ru&metric=true`;
   axios
     .get(url)
     .then(result => {
@@ -184,4 +183,4 @@ export const getForecast = (queryKey) => dispatch => {
     })
     .catch(error => console.error(error.message));
   return arr;
-}
+};

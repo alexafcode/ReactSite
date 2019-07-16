@@ -1,11 +1,12 @@
 import axios from "axios";
+import keys from "../../keys";
 export const FETCH_DATA_NEWS = "FETCH_DATA_NEWS";
 export const NEWS_LOADING = "NEWS_LOADING";
 export const ERROR_FETCH_DATA = "ERROR_FETCH_DATA";
 export const ERROR_MESSAGE = "ERROR_MESSAGE";
 export const SET_INDEX = "SET_INDEX";
 
-const key = "";
+const key = keys.news;
 const startUrl = "https://newsapi.org/v2/top-headlines?country=ru&category=";
 
 export const fetchData = (category = "", index = 0) => async dispatch => {
