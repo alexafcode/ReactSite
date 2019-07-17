@@ -57,9 +57,9 @@ function CheckboxLabels(props) {
   };
 
   const resetFilters = () => {
-    let init = state.initial;
-    init.map(el => (el.checked = false));
-    setState({ initial: init, selectedFilters: [] });
+    let initial = state.initial;
+    initial.map(el => (el.checked = false));
+    setState({ initial, selectedFilters: [] });
     props.changeFilter([]);
     props.goToFirstPage();
   };
@@ -126,7 +126,7 @@ function CheckboxLabels(props) {
             <MenuItem value={8}>8</MenuItem>
           </Select>
         </FormControl>
-        <div className="autolist__add" style={{margin: "auto"}}>
+        <div className="autolist__add" style={{ margin: "auto" }}>
           <Fab
             color="primary"
             aria-label="Add"
@@ -146,4 +146,4 @@ CheckboxLabels.propTypes = {
   goToFirstPage: PropTypes.func.isRequired
 };
 
-export default CheckboxLabels
+export default CheckboxLabels;

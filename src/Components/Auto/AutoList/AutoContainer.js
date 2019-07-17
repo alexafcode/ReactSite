@@ -33,8 +33,7 @@ class AutoContainer extends React.Component {
     };
 
     const changeFilter = filter => {
-      let arr = filter;
-      this.setState({ filteredAuto: arr });
+      this.setState({ filteredAuto: filter });
     };
 
     return (
