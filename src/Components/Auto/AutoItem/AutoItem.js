@@ -16,7 +16,7 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Rating from "material-ui-rating";
 import Button from "@material-ui/core/Button";
-import history from "../../../history"
+import history from "../../../history";
 import "./AutoItem.scss";
 
 function AutoItem(props) {
@@ -40,6 +40,10 @@ function AutoItem(props) {
     setInput("");
   };
 
+  const openImageSrc = () => {
+    window.open(car.imageUrl, "_blank");
+  };
+
   const onTop = () => {
     window.scrollTo({
       top: 0
@@ -56,6 +60,7 @@ function AutoItem(props) {
           className="car__media"
           image={car.imageUrl}
           title={car.name}
+          onClick={() => openImageSrc()}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

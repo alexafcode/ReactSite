@@ -20,6 +20,9 @@ function AutoList(props) {
 
   const handleClick = offset => {
     setState({ ...state, offset });
+    window.scrollTo({
+      top: 0
+    });
   };
   const goToFirstPage = () => {
     setState({ ...state, offset: 0 });
@@ -39,7 +42,7 @@ function AutoList(props) {
       props.cars.forEach(a => {
         setAuto.add(a.manufacturer);
       });
-      let arrSet = Array.from(setAuto);
+      const arrSet = Array.from(setAuto);
       return arrSet;
     }
   };
