@@ -33,7 +33,7 @@ function AutoList(props) {
   };
 
   const changeLimit = limit => {
-    setState({ ...state, limit, to: limit });
+    setState({ ...state, limit, to: limit, offset: 0 });
   };
 
   const toggleDrawer = () => {
