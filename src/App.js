@@ -11,18 +11,14 @@ import configureStore from "./store/configureStore";
 import AutoItem from "./Components/Auto/AutoItem/AutoItem";
 import PrivateRoute from "./Components/Layouts/PrivateRoute";
 import CreateAuto from "./Components/Auto/Create/CreateAuto";
-import Loading from "./Components/Layouts/Loading";
 import "./App.scss";
-// import Weather from "./Components/Weather/WeatherContainer"
-// import Currency from "./Components/Currency/CurrencyContainer"
-// import Auto from "./Components/Auto/AutoList/AutoContainer"
-// import News from "./Components/News/NewsContainer"
 
 const store = configureStore();
 const Weather = lazy(() => import("./Components/Weather/WeatherContainer"));
 const Currency = lazy(() => import("./Components/Currency/CurrencyContainer"));
 const Auto = lazy(() => import("./Components/Auto/AutoList/AutoContainer"));
 const News = lazy(() => import("./Components/News/NewsContainer"));
+const PC = lazy(() => import("./Components/PersonalCabinet/PersonalCabinet"));
 
 const App = () => (
   <Provider store={store}>
@@ -40,6 +36,7 @@ const App = () => (
           <Route path="/currency" component={Currency} />
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
+          <Route path="/pc" component={PC} />
           <Route component={NotFound} />
         </Switch>
       </Suspense>

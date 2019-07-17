@@ -24,7 +24,7 @@ const styles = {
     color: "white"
   },
   linkAuth: {
-    left: "75%" // ToDo calc
+    left: "70%" // ToDo calc
   }
 };
 
@@ -60,6 +60,10 @@ class MenuAppBar extends React.Component {
       {
         link: "/news",
         name: "News"
+      },
+      {
+        link: "/pc",
+        name: "PC"
       }
     ];
 

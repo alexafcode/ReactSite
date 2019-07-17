@@ -1,0 +1,45 @@
+.cabinet {
+  margin: auto;
+  margin-top: 2rem;
+  width: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  .cabinet__media {
+    width: 30%;
+    height: 30vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  .cabinet__text {
+    display: flex;
+    width: 40%;
+    flex-direction: column;
+    .button__container {
+      display: none; // ToDo
+      // .button__change {
+      // }
+      .button__submit {
+        .button__save {
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .cabinet {
+    width: 80%;
+    margin: 1rem auto;
+    flex-direction: column;
+    .cabinet__media {
+      width: 90%;
+    }
+    .cabinet__text {
+      width: 80%;
+    }
+  }
+}
