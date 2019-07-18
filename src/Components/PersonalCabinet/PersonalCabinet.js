@@ -135,7 +135,6 @@ PersonalCabinet.propTypes = {
 };
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     user: state.AuthReducers.user,
     loading: state.AuthReducers.loading
