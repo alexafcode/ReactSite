@@ -39,7 +39,7 @@ export const singOutAction = () => async dispatch => {
 };
 
 export const verifyAuth = () => async dispatch => {
-  if (localStorage.getItem("authUser")) {
+  if (localStorage.getItem("authUser") != null) {
     const user = JSON.parse(localStorage.getItem("authUser"));
     dispatch({ type: SIGNIN, payload: true });
     dispatch({ type: USER, payload: user });
@@ -78,6 +78,9 @@ export const updateUserProfile = (
   changePhoto
 ) => async dispatch => {
   dispatch({ type: LOADING, payload: true });
+  if (localStorage.getItem("authUser") != null) {
+    localStorage.removeItem("authUser");
+  }
   const user = firebaseApp.auth().currentUser;
   let urlPath = null;
   if (changePhoto) {
@@ -100,19 +103,17 @@ export const updateUserProfile = (
     })
     .then(async () => {
       console.log("Update successful");
-      if (localStorage.getItem("authUser")) {
-        localStorage.removeItem("authUser");
-      }
+      history.push("/");
       await firebaseApp.auth().onAuthStateChanged(user => {
         if (user) {
-          localStorage.setItem("authUser", JSON.stringify(user.user));
+          localStorage.setItem("authUser", JSON.stringify(user));
           dispatch({ type: SIGNIN, payload: true });
           dispatch({ type: USER, payload: user });
         }
       });
       dispatch({ type: LOADING, payload: false });
-      history.push("/");
-    });
+    })
+    .catch(error => console.error(error.message));
 };
 
 // ToDo
