@@ -6,19 +6,25 @@
   flex-wrap: wrap;
   justify-content: space-around;
   .cabinet__media {
-    width: 30%;
-    height: 30vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    overflow: hidden;
+    .image {
+      width: 15vw;
+      height: 30vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      overflow: hidden;
+    }
+    .loader {
+      width: 60%;
+      margin: 1rem 0;
+    }
   }
   .cabinet__text {
     display: flex;
     width: 40%;
     flex-direction: column;
     .button__container {
-      display: none; // ToDo
+      // display: none; // ToDo
       // .button__change {
       // }
       .button__submit {
@@ -36,7 +42,12 @@
     margin: 1rem auto;
     flex-direction: column;
     .cabinet__media {
-      width: 90%;
+      .image {
+        width: 90%;
+      }
+      .loader {
+        width: 60%;
+      }
     }
     .cabinet__text {
       width: 80%;
