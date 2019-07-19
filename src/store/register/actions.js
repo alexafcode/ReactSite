@@ -16,7 +16,11 @@ export const signInAction = (email, password) => async dispatch => {
       dispatch({ type: SIGNIN, payload: true });
       dispatch({ type: USER, payload: user.user });
       dispatch({ type: LOADING, payload: false });
-      localStorage.setItem("authUser", JSON.stringify(user.user));
+      try {
+        localStorage.setItem("authUser", JSON.stringify(user.user));
+      } catch (e) {
+        console.error(e);
+      }
       history.push("/");
     })
     .catch(error => {
@@ -32,7 +36,9 @@ export const singOutAction = () => async dispatch => {
     .signOut()
     .then(() => {
       history.push("/");
-      localStorage.removeItem("authUser");
+      if (localStorage.getItem("authUser") != null) {
+        localStorage.removeItem("authUser");
+      }
       dispatch({ type: SIGNIN, payload: false });
       dispatch({ type: USER, payload: null });
     });
@@ -59,6 +65,11 @@ export const createUserAction = (email, pw) => async dispatch => {
     .auth()
     .createUserWithEmailAndPassword(email, pw)
     .then(user => {
+      try {
+        localStorage.setItem("authUser", JSON.stringify(user.user));
+      } catch (e) {
+        console.error(e);
+      }
       dispatch({ type: SIGNIN, payload: true });
       dispatch({ type: USER, payload: user.user });
       dispatch({ type: LOADING, payload: false });
@@ -106,7 +117,11 @@ export const updateUserProfile = (
       history.push("/");
       await firebaseApp.auth().onAuthStateChanged(user => {
         if (user) {
-          localStorage.setItem("authUser", JSON.stringify(user));
+          try {
+            localStorage.setItem("authUser", JSON.stringify(user));
+          } catch (e) {
+            console.error(e);
+          }
           dispatch({ type: SIGNIN, payload: true });
           dispatch({ type: USER, payload: user });
         }

@@ -57,11 +57,6 @@ const links = [
     text: "Currency"
   },
   {
-    icon: <Euro />,
-    link: "/currency",
-    text: "Currency"
-  },
-  {
     icon: <AccountCircle />,
     link: "/pc",
     text: "PC"

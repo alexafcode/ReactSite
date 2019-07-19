@@ -51,6 +51,18 @@
     }
     .cabinet__text {
       width: 80%;
+      .button__container {
+        .button__submit {
+          .button__save {
+            margin-bottom: 1rem;
+            min-width: 8rem;
+          }
+          .button__cancel {
+            margin-bottom: 1rem;
+            min-width: 8rem;
+          }
+        }
+      }
     }
   }
 }
