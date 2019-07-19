@@ -4,7 +4,8 @@ const initialState = {
   user: null,
   error: false,
   errorMessage: "",
-  loading: false
+  loading: false,
+  favariteCars: null
 };
 
 export default (state = initialState, action) => {
@@ -33,6 +34,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: action.payload
+      };
+    case "LOAD_FAV_CARS":
+      return {
+        ...state,
+        favariteCars: action.payload
       };
     default:
       return state;

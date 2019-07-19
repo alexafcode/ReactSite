@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { DropzoneArea } from "material-ui-dropzone";
 import { resizeImage } from "../Helpers/Helper";
-import { updateUserProfile } from "../../store/register/actions";
+import { updateUserProfile, loadFavCars } from "../../store/register/actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import history from "../../history";
 import "./PersonalCabinet.scss";
 
 const PersonalCabinet = props => {
@@ -55,6 +56,9 @@ const PersonalCabinet = props => {
       state.changePhoto
     );
   };
+  useEffect(() => {
+    props.loadFavCars(props.user.email);
+  }, []);
 
   return (
     <div className="cabinet">
@@ -124,6 +128,13 @@ const PersonalCabinet = props => {
           )}
         </div>
         {props.loading && <LinearProgress />}
+        <div className="favorite">
+          {props.favariteCars &&
+            props.favariteCars.map((el, index) => (
+              // <li key={index} onClick={() => history.push(`/auto/${el.id}`)}>
+              <li key={index}>{el.name}</li>
+            ))}
+        </div>
       </div>
     </div>
   );
@@ -131,18 +142,21 @@ const PersonalCabinet = props => {
 
 PersonalCabinet.propTypes = {
   user: PropTypes.object.isRequired,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  favariteCars: PropTypes.array
 };
 
 const mapStateToProps = state => {
   return {
     user: state.AuthReducers.user,
-    loading: state.AuthReducers.loading
+    loading: state.AuthReducers.loading,
+    favariteCars: state.AuthReducers.favariteCars
   };
 };
 
 const mapDispatchToProps = {
-  updateUserProfile
+  updateUserProfile,
+  loadFavCars
 };
 
 export default connect(

@@ -1,10 +1,11 @@
-import { firebaseApp } from "../../firebase-config";
+import { firebaseApp, storage } from "../../firebase-config";
 import history from "../../../src/history";
 export const SIGNIN = "SIGNIN";
 export const USER = "USER";
 export const ERROR = "ERROR";
 export const ERROR_MESSAGE = "ERROR_MESSAGE";
 export const LOADING = "LOADING";
+export const LOAD_FAV_CARS = "LOAD_FAV_CARS";
 
 export const signInAction = (email, password) => async dispatch => {
   dispatch({ type: ERROR, payload: false });
@@ -129,6 +130,20 @@ export const updateUserProfile = (
       dispatch({ type: LOADING, payload: false });
     })
     .catch(error => console.error(error.message));
+};
+
+export const loadFavCars = email => async dispatch => {
+  await firebaseApp
+    .firestore()
+    .collection("userData")
+    .doc(email)
+    .get()
+    .then(querySnapshot => {
+      if (querySnapshot.exists) {
+        const result = querySnapshot.data();
+        dispatch({ type: LOAD_FAV_CARS, payload: result.auto });
+      }
+    });
 };
 
 // ToDo
