@@ -74,6 +74,7 @@ export const fetchData = () => async dispatch => {
 };
 
 export const searchClick = input => dispatch => {
+  input = input.trim();
   dispatch({ type: ERROR_FETCH_DATA, payload: false });
   dispatch({ type: SEARCH_CLICK, payload: true });
   const url = `${startUrl}/locations/v1/cities/autocomplete?apikey=${key}&q=${input}&language=ru-ru`;
