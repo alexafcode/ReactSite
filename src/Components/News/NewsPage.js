@@ -21,6 +21,9 @@ const NewsPage = props => {
       marginTop: "20%",
       position: "fixed",
       zIndex: 1
+    },
+    upButton: {
+      opacity: "0.3"
     }
   };
   const onTop = () => {
@@ -61,7 +64,12 @@ const NewsPage = props => {
       </Hidden>
       <div className="up" style={stylus.button}>
         {onTopButton && (
-          <Fab color="primary" aria-label="Up" onClick={() => onTop()}>
+          <Fab
+            color="primary"
+            style={stylus.upButton}
+            aria-label="Up"
+            onClick={() => onTop()}
+          >
             <ArrowUp />
           </Fab>
         )}
