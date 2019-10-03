@@ -24,7 +24,7 @@ const styles = {
     color: "white"
   },
   linkAuth: {
-    left: "70%" // ToDo calc
+    marginLeft: "auto" // ToDo calc
   }
 };
 
