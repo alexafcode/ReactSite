@@ -42,10 +42,7 @@ function AutoList(props) {
 
   const uniqAuto = () => {
     if (props.cars) {
-      let setAuto = new Set();
-      props.cars.forEach(a => {
-        setAuto.add(a.manufacturer);
-      });
+      const setAuto = [...new Set(props.cars.map(a => a.manufacturer))];
       const arrSet = Array.from(setAuto);
       return arrSet;
     }
