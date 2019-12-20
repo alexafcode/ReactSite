@@ -32,11 +32,6 @@ export default (state = defaultState, action) => {
         error: true,
         errorMessage: action.payload
       };
-    case "ERROR_MESSAGE":
-      return {
-        ...state,
-        errorMessage: action.payload
-      };
     default:
       return state;
   }
