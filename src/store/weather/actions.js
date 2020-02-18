@@ -114,9 +114,7 @@ export const searchPanelHide = () => dispatch => {
 };
 
 export const getWeatherCity = data => dispatch => {
-  const url = `${startUrl}/currentconditions/v1/${
-    data.keyCity
-  }?apikey=${key}&language=ru-ru&details=true`;
+  const url = `${startUrl}/currentconditions/v1/${data.keyCity}?apikey=${key}&language=ru-ru&details=true`;
   let city = {};
   axios
     .get(url)
@@ -136,16 +134,12 @@ export const getWeatherCity = data => dispatch => {
           res.Temperature.Metric.Unit
         }`,
         windDirect: res.Wind.Direction.Localized,
-        windSpeed: `${res.Wind.Speed.Metric.Value}  ${
-          res.Wind.Speed.Metric.Unit
-        }`,
+        windSpeed: `${res.Wind.Speed.Metric.Value}  ${res.Wind.Speed.Metric.Unit}`,
         weatherText: res.WeatherText,
         realFeelTemperature: `${res.RealFeelTemperature.Metric.Value.toFixed()}° ${
           res.RealFeelTemperature.Metric.Unit
         }`,
-        visibility: `${res.Visibility.Metric.Value} ${
-          res.Visibility.Metric.Unit
-        }`,
+        visibility: `${res.Visibility.Metric.Value} ${res.Visibility.Metric.Unit}`,
         WeatherIcon: res.WeatherIcon,
         IsDayTime: res.IsDayTime,
         time: time,
@@ -172,6 +166,9 @@ export const getForecast = queryKey => dispatch => {
           date: new Date(el.Date).toLocaleString("ru", {
             day: "numeric",
             month: "long"
+          }),
+          weekday: new Date(el.Date).toLocaleString("ru", {
+            weekday: "long"
           }),
           dayIcon: el.Day.Icon,
           dayIconText: el.Day.IconPhrase,
