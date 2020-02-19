@@ -8,10 +8,14 @@
   &:hover {
     transform: scale(1.05);
   }
-  .detail__date {
+  .date {
     color: white;
   }
-  .detail__day-icon {
+  .week {
+    color: white;
+    font-size: 0.75em;
+  }
+  .day-icon {
     width: 90px;
     height: 50px;
     min-height: 50px;
@@ -19,15 +23,15 @@
     background-position: center;
     background-repeat: no-repeat;
   }
-  .detail__day-temp {
+  .day-temp {
     color: lightgray;
   }
-  .detail__day-value {
+  .day-value {
     color: white;
     font-size: 1.5rem;
     font-weight: 400;
   }
-  .detail__night-icon {
+  .night-icon {
     width: 90px;
     height: 50px;
     min-height: 50px;
@@ -35,15 +39,15 @@
     background-position: center;
     background-repeat: no-repeat;
   }
-  .detail__night-temp {
+  .night-temp {
     color: lightgray;
   }
-  .detail__night-value {
+  .night-value {
     color: white;
     font-size: 1.25rem;
     font-weight: 400;
   }
-  .detail__text {
+  .text {
     font-size: 0.7rem;
     word-break: normal;
     color: lightgray;
@@ -54,23 +58,23 @@
   .detail {
     width: 90px;
     margin: 1px;
-    .detail__date {
+    .date {
       font-size: 0.75rem;
     }
-    .detail__day-icon {
+    .day-icon {
       width: 15vw;
     }
-    .detail__day-value {
+    .day-value {
       font-size: 1rem;
     }
-    .detail__night-icon {
+    .night-icon {
       width: 15vw;
       display: none;
     }
-    .detail__night-value {
+    .night-value {
       font-size: 1rem;
     }
-    .detail__text {
+    .text {
       word-break: break-word;
     }
   }

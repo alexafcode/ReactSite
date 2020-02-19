@@ -22,9 +22,7 @@ class WeatherCard extends React.Component {
     });
   }
   render() {
-    const icon = require(`../../assets/weather-icons/${
-      this.props.city.WeatherIcon
-    }.png`);
+    const icon = require(`../../assets/weather-icons/${this.props.city.WeatherIcon}.png`);
 
     const styles = {
       root: {
@@ -142,7 +140,4 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  null
-)(WeatherCard);
+export default connect(mapStateToProps, null)(WeatherCard);
