@@ -1,6 +1,9 @@
 import axios from "axios";
 import keys from "../../keys";
 import { getWeatherForCity } from "./helperActions";
+
+import { getWeather } from "../../api/weather-api";
+
 export const FETCH_DATA = "FETCH_DATA";
 export const CITY_IS_LOADING = "CITY_IS_LOADING";
 export const SEARCH_CLICK = "SEARCH_CLICK";
@@ -14,6 +17,25 @@ export const ERROR_MESSAGE = "ERROR_MESSAGE";
 export const key = keys.weather;
 export const startUrl = "https://dataservice.accuweather.com";
 
+// export const fetchData = () => async dispatch => {
+//   if ("geolocation" in navigator) {
+//     navigator.geolocation.getCurrentPosition(({ coords }) => {
+//       const latitude = coords.latitude;
+//       const longitude = coords.longitude;
+//       getWeather(latitude, longitude)
+//         .then(city => {
+//           dispatch({ type: FETCH_DATA, payload: city });
+//           dispatch({ type: CITY_IS_LOADING, payload: false });
+//         })
+//         .catch(error => {
+//           console.error("Erorr", error.message);
+//           dispatch({ type: CITY_IS_LOADING, payload: false });
+//           dispatch({ type: ERROR_FETCH_DATA, payload: true });
+//           dispatch({ type: ERROR_MESSAGE, payload: error.message });
+//         });
+//     });
+//   }
+// };
 export const fetchData = () => async dispatch => {
   let arr = [];
   if (localStorage.getItem("city") != null) {
