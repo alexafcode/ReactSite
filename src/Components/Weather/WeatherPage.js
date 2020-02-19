@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import WeatherSearch from "./WeatherSearch";
-import WeatherCard from "./WeatherCard";
+import WeatherCard from "./WaetherCard";
 import Loading from "../Layouts/Loading";
 import SearchLoading from "../Layouts/SearchLoading";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
