@@ -9,39 +9,53 @@ import {
 } from "../../store/weather/actions";
 
 class WeatherContainer extends React.Component {
-  render() {
-    return (
-      <WeatherPage
-        city={this.props.city}
-        loading={this.props.loading}
-        showSearchLoad={this.props.showSearchLoad}
-        searchClick={this.props.searchClick}
-        searchCities={this.props.searchCities}
-        searchPanelHide={this.props.searchPanelHide}
-        showSearchResult={this.props.showSearchResult}
-        getForecast={this.props.getForecast}
-        error={this.props.error}
-        errorMessage={this.props.errorMessage}
-      />
-    );
-  }
   componentDidMount() {
     !this.props.city.length &&
       this.props.isAuthenticated &&
       this.props.fetchData();
   }
+
+  render() {
+    const {
+      city,
+      loading,
+      showSearchLoad,
+      searchClick,
+      searchCities,
+      searchPanelHide,
+      showSearchResult,
+      getForecast,
+      error,
+      errorMessage
+    } = this.props;
+
+    return (
+      <WeatherPage
+        city={city}
+        loading={loading}
+        showSearchLoad={showSearchLoad}
+        searchClick={searchClick}
+        searchCities={searchCities}
+        searchPanelHide={searchPanelHide}
+        showSearchResult={showSearchResult}
+        getForecast={getForecast}
+        error={error}
+        errorMessage={errorMessage}
+      />
+    );
+  }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ AuthReducers, weatherRedusers }) => {
   return {
-    isAuthenticated: state.AuthReducers.isAuthenticated,
-    city: state.weatherRedusers.city,
-    loading: state.weatherRedusers.loading,
-    showSearchLoad: state.weatherRedusers.showSearchLoad,
-    searchCities: state.weatherRedusers.searchCities,
-    showSearchResult: state.weatherRedusers.showSearchResult,
-    error: state.weatherRedusers.error,
-    errorMessage: state.weatherRedusers.errorMessage
+    isAuthenticated: AuthReducers.isAuthenticated,
+    city: weatherRedusers.city,
+    loading: weatherRedusers.loading,
+    showSearchLoad: weatherRedusers.showSearchLoad,
+    searchCities: weatherRedusers.searchCities,
+    showSearchResult: weatherRedusers.showSearchResult,
+    error: weatherRedusers.error,
+    errorMessage: weatherRedusers.errorMessage
   };
 };
 
@@ -52,7 +66,4 @@ const mapDispatchToProps = {
   getForecast
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WeatherContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(WeatherContainer);

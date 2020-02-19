@@ -14,26 +14,31 @@ function WeatherPage(props) {
       textAlight: "center"
     }
   };
+  const {
+    city,
+    showSearchLoad,
+    loading,
+    error,
+    errorMessage,
+    getForecast
+  } = props;
 
   return (
     <div style={stylus.container} className="container">
-      {props.showSearchLoad && <SearchLoading />}
+      {showSearchLoad && <SearchLoading />}
       <WeatherSearch />
-      {props.loading && <Loading />}
-      {props.error && (
-        <Message
-          type={"error"}
-          text={props.errorMessage ? props.errorMessage : ""}
-        />
+      {loading && <Loading />}
+      {error && (
+        <Message type={"error"} text={errorMessage ? errorMessage : ""} />
       )}
       <TransitionGroup>
-        {props.city &&
-          !props.loading &&
-          props.city.map((city, index) => (
+        {city &&
+          !loading &&
+          city.map((city, index) => (
             <CSSTransition timeout={500} key={index} classNames="transition">
               <WeatherCard
                 city={city}
-                getForecast={props.getForecast}
+                getForecast={getForecast}
                 key={`item-${index}`}
               />
             </CSSTransition>
