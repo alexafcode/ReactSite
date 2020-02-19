@@ -1,5 +1,5 @@
 .search {
-  .search__paper {
+  .paper {
     padding: 2px 4px;
     display: flex;
     align-items: center;
@@ -8,17 +8,17 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
-  .search__input {
+  .input {
     margin-left: 0.5rem;
     flex: 1;
     input {
       font-size: 1.25rem;
     }
   }
-  .search__icon {
+  .icon {
     padding: 10;
   }
-  .search__result {
+  .result {
     left: 0;
     right: 0;
     z-index: 1;
@@ -35,10 +35,10 @@
 
 @media screen and (max-width: 800px) {
   .search {
-    .search__paper {
+    .paper {
       width: 80%;
     }
-    .search__result {
+    .result {
       width: 80%;
     }
   }
