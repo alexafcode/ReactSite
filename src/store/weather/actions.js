@@ -1,8 +1,8 @@
 import axios from "axios";
 import keys from "../../keys";
-import { getWeatherForCity } from "./helperActions";
+import { getWeatherForCity, isSaveCity, getCityFromLS } from "./helperActions";
 
-import { getWeather } from "../../api/weather-api";
+import { getWeather, getForecastForCity } from "../../api/weather-api";
 
 export const FETCH_DATA = "FETCH_DATA";
 export const CITY_IS_LOADING = "CITY_IS_LOADING";
@@ -17,83 +17,96 @@ export const ERROR_MESSAGE = "ERROR_MESSAGE";
 export const key = keys.weather;
 export const startUrl = "https://dataservice.accuweather.com";
 
-// export const fetchData = () => async dispatch => {
-//   if ("geolocation" in navigator) {
-//     navigator.geolocation.getCurrentPosition(({ coords }) => {
-//       const latitude = coords.latitude;
-//       const longitude = coords.longitude;
-//       getWeather(latitude, longitude)
-//         .then(city => {
-//           dispatch({ type: FETCH_DATA, payload: city });
-//           dispatch({ type: CITY_IS_LOADING, payload: false });
-//         })
-//         .catch(error => {
-//           console.error("Erorr", error.message);
-//           dispatch({ type: CITY_IS_LOADING, payload: false });
-//           dispatch({ type: ERROR_FETCH_DATA, payload: true });
-//           dispatch({ type: ERROR_MESSAGE, payload: error.message });
-//         });
-//     });
-//   }
-// };
 export const fetchData = () => async dispatch => {
-  let arr = [];
-  if (localStorage.getItem("city") != null) {
-    try {
-      arr = JSON.parse(localStorage.getItem("city"));
-    } catch (e) {
-      return console.error(e);
-    }
-    arr.forEach(async el => {
+  let cityFromLS = [];
+  if (isSaveCity()) {
+    cityFromLS = getCityFromLS();
+    cityFromLS.forEach(async el => {
       try {
         const city = await getWeatherForCity(el);
         dispatch({ type: ERROR_FETCH_DATA, payload: false });
         dispatch({ type: FETCH_DATA, payload: city });
-        dispatch({ type: CITY_IS_LOADING, payload: false });
       } catch (e) {
         console.error("Error Fetch", e);
       }
     });
   }
-  // ToDo Compare key LS and position
   if ("geolocation" in navigator) {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        const baseUrl = `${startUrl}/locations/v1/cities/geoposition/search?apikey=${key}&q=${latitude},${longitude}&language=ru-ru`;
-        axios
-          .get(baseUrl)
-          .then(async response => {
-            // ToDo
-            const data = response.data;
-            try {
-              const city = await getWeatherForCity(data);
-              dispatch({ type: FETCH_DATA, payload: city });
-              dispatch({ type: CITY_IS_LOADING, payload: false });
-            } catch (e) {
-              console.error("Error Fetch", e);
-            }
-          })
-          .catch(error => {
-            console.error("Erorr", error.message);
-            dispatch({ type: CITY_IS_LOADING, payload: false });
-            dispatch({ type: ERROR_FETCH_DATA, payload: true });
-            dispatch({ type: ERROR_MESSAGE, payload: error.message });
-          });
-        //ToDo error
-      },
-      () => {
-        dispatch({ type: CITY_IS_LOADING, payload: false });
-        console.log("Cancel Geoposition");
-      }
-    );
+    navigator.geolocation.getCurrentPosition(({ coords }) => {
+      const latitude = coords.latitude;
+      const longitude = coords.longitude;
+      getWeather(latitude, longitude)
+        .then(city => {
+          dispatch({ type: FETCH_DATA, payload: city });
+        })
+        .catch(error => {
+          console.error("Erorr", error.message);
+          dispatch({ type: ERROR_FETCH_DATA, payload: true });
+          dispatch({ type: ERROR_MESSAGE, payload: error.message });
+        });
+    });
   } else {
-    // Geolocation is not Supported
     dispatch({ type: CITY_IS_LOADING, payload: false });
-    console.log("Geolocation is not Supported");
   }
 };
+// export const fetchData = () => async dispatch => {
+//   let arr = [];
+//   if (localStorage.getItem("city") != null) {
+//     try {
+//       arr = JSON.parse(localStorage.getItem("city"));
+//     } catch (e) {
+//       return console.error(e);
+//     }
+//     arr.forEach(async el => {
+//       try {
+//         const city = await getWeatherForCity(el);
+//         dispatch({ type: ERROR_FETCH_DATA, payload: false });
+//         dispatch({ type: FETCH_DATA, payload: city });
+//         dispatch({ type: CITY_IS_LOADING, payload: false });
+//       } catch (e) {
+//         console.error("Error Fetch", e);
+//       }
+//     });
+//   }
+//   // ToDo Compare key LS and position
+//   if ("geolocation" in navigator) {
+//     navigator.geolocation.getCurrentPosition(
+//       position => {
+//         const latitude = position.coords.latitude;
+//         const longitude = position.coords.longitude;
+//         const baseUrl = `${startUrl}/locations/v1/cities/geoposition/search?apikey=${key}&q=${latitude},${longitude}&language=ru-ru`;
+//         axios
+//           .get(baseUrl)
+//           .then(async response => {
+//             // ToDo
+//             const data = response.data;
+//             try {
+//               const city = await getWeatherForCity(data);
+//               dispatch({ type: FETCH_DATA, payload: city });
+//               dispatch({ type: CITY_IS_LOADING, payload: false });
+//             } catch (e) {
+//               console.error("Error Fetch", e);
+//             }
+//           })
+//           .catch(error => {
+//             console.error("Erorr", error.message);
+//             dispatch({ type: CITY_IS_LOADING, payload: false });
+//             dispatch({ type: ERROR_FETCH_DATA, payload: true });
+//             dispatch({ type: ERROR_MESSAGE, payload: error.message });
+//           });
+//         //ToDo error
+//       },
+//       () => {
+//         dispatch({ type: CITY_IS_LOADING, payload: false });
+//         console.log("Cancel Geoposition");
+//       }
+//     );
+//   } else {
+//     // Geolocation is not Supported
+//     dispatch({ type: CITY_IS_LOADING, payload: false });
+//     console.log("Geolocation is not Supported");
+//   }
+// };
 
 export const searchClick = input => dispatch => {
   input = input.trim();
@@ -176,31 +189,36 @@ export const getWeatherCity = data => dispatch => {
 };
 
 export const getForecast = queryKey => dispatch => {
-  let arr = [];
-  const url = `${startUrl}/forecasts/v1/daily/5day/${queryKey}?apikey=${key}&language=ru-ru&metric=true`;
-  axios
-    .get(url)
-    .then(result => {
-      const res = result.data.DailyForecasts;
-      arr = res.map(el => {
-        return {
-          key: queryKey,
-          date: new Date(el.Date).toLocaleString("ru", {
-            day: "numeric",
-            month: "long"
-          }),
-          weekday: new Date(el.Date).toLocaleString("ru", {
-            weekday: "long"
-          }),
-          dayIcon: el.Day.Icon,
-          dayIconText: el.Day.IconPhrase,
-          tempDay: `${el.Temperature.Maximum.Value.toFixed()} ° C`,
-          nightIcon: el.Night.Icon,
-          tempNight: `${el.Temperature.Minimum.Value.toFixed()} ° C`
-        };
-      });
+  getForecastForCity(queryKey)
+    .then(arr => {
       dispatch({ type: FORECAST_WEATHER, payload: arr });
+      return arr;
     })
-    .catch(error => console.error(error.message));
-  return arr;
+    .catch(e => console.error(e.message));
+  // let arr = [];
+  // const url = `${startUrl}/forecasts/v1/daily/5day/${queryKey}?apikey=${key}&language=ru-ru&metric=true`;
+  // axios
+  //   .get(url)
+  //   .then(result => {
+  //     const res = result.data.DailyForecasts;
+  //     arr = res.map(el => {
+  //       return {
+  //         key: queryKey,
+  //         date: new Date(el.Date).toLocaleString("ru", {
+  //           day: "numeric",
+  //           month: "long"
+  //         }),
+  //         weekday: new Date(el.Date).toLocaleString("ru", {
+  //           weekday: "long"
+  //         }),
+  //         dayIcon: el.Day.Icon,
+  //         dayIconText: el.Day.IconPhrase,
+  //         tempDay: `${el.Temperature.Maximum.Value.toFixed()} ° C`,
+  //         nightIcon: el.Night.Icon,
+  //         tempNight: `${el.Temperature.Minimum.Value.toFixed()} ° C`
+  //       };
+  //     });
+  //     dispatch({ type: FORECAST_WEATHER, payload: arr });
+  //   })
+  //   .catch(error => console.error(error.message));
 };

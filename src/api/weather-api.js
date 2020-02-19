@@ -4,7 +4,7 @@ const _startUrl = "https://dataservice.accuweather.com";
 const _key = keys.weather;
 
 const getResource = async url => {
-  const res = await fetch(`${_startUrl}${url}`);
+  const res = await fetch(`${_startUrl}${url}`, { mode: "no-cors" });
   if (!res.ok) {
     throw new Error(`Could not fetch ${url} , received ${res.status}`);
   }
@@ -28,10 +28,15 @@ async function getWeatherForCity(data) {
   const queryKey = data.Key ? data.Key : data.selectCity.Key;
   const url = `/currentconditions/v1/${queryKey}?apikey=${_key}&language=ru-ru&details=true`;
   const json = await getResource(url);
-  return json[0];
+  const item = {
+    data: json[0],
+    queryKey
+  };
+  return item;
 }
 
-function transformCity(res, city) {
+function transformCity(data, city) {
+  const { res, queryKey } = data;
   const time = new Date(res.LocalObservationDateTime).toLocaleString("ru", {
     day: "numeric",
     month: "long",
@@ -39,7 +44,7 @@ function transformCity(res, city) {
   });
   return {
     // fromLS: data.fromLS ? true : false,
-    // key: queryKey,
+    key: queryKey,
     city: city.cityName,
     country: city.countryName,
     temp: `${res.Temperature.Metric.Value.toFixed()}°  ${
@@ -57,4 +62,26 @@ function transformCity(res, city) {
     time: time,
     pressure: `${res.Pressure.Metric.Value} мм рт. ст.`
   };
+}
+export async function getForecastForCity(queryKey) {
+  const url = `/forecasts/v1/daily/5day/${queryKey}?apikey=${_key}&language=ru-ru&metric=true`;
+  const result = await getResource(url);
+  const res = result.data.DailyForecasts;
+  return res.map(el => {
+    return {
+      key: queryKey,
+      date: new Date(el.Date).toLocaleString("ru", {
+        day: "numeric",
+        month: "long"
+      }),
+      weekday: new Date(el.Date).toLocaleString("ru", {
+        weekday: "long"
+      }),
+      dayIcon: el.Day.Icon,
+      dayIconText: el.Day.IconPhrase,
+      tempDay: `${el.Temperature.Maximum.Value.toFixed()} ° C`,
+      nightIcon: el.Night.Icon,
+      tempNight: `${el.Temperature.Minimum.Value.toFixed()} ° C`
+    };
+  });
 }

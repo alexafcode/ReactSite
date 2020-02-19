@@ -1,6 +1,22 @@
 import axios from "axios";
 import { key, startUrl } from "./actions";
 
+export const isSaveCity = () => {
+  if (localStorage.getItem("city")) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const getCityFromLS = () => {
+  try {
+    return JSON.parse(localStorage.getItem("city"));
+  } catch (e) {
+    return console.error(e);
+  }
+};
+
 export const saveToLS = data => {
   let arr = [];
   let exist = false;
@@ -65,16 +81,12 @@ export async function getWeatherForCity(data) {
           res.Temperature.Metric.Unit
         }`,
         windDirect: res.Wind.Direction.Localized,
-        windSpeed: `${res.Wind.Speed.Metric.Value}  ${
-          res.Wind.Speed.Metric.Unit
-        }`,
+        windSpeed: `${res.Wind.Speed.Metric.Value}  ${res.Wind.Speed.Metric.Unit}`,
         weatherText: res.WeatherText,
         realFeelTemperature: `${res.RealFeelTemperature.Metric.Value.toFixed()}° ${
           res.RealFeelTemperature.Metric.Unit
         }`,
-        visibility: `${res.Visibility.Metric.Value} ${
-          res.Visibility.Metric.Unit
-        }`,
+        visibility: `${res.Visibility.Metric.Value} ${res.Visibility.Metric.Unit}`,
         WeatherIcon: res.WeatherIcon,
         IsDayTime: res.IsDayTime,
         time: time,

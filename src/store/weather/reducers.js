@@ -16,7 +16,8 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         // city: [action.payload, ...state.city]
-        city: [...state.city, action.payload]
+        city: [...state.city, action.payload],
+        loading: false
       };
     case "CITY_IS_LOADING":
       return {
@@ -26,13 +27,14 @@ export default (state = defaultState, action) => {
     case "ERROR_FETCH_DATA":
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        loading: false
       };
     case "ERROR_MESSAGE":
       return {
         ...state,
         errorMessage: action.payload
-      }
+      };
     case "SEARCH_CLICK":
       return {
         ...state,
@@ -52,7 +54,7 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         forecastWeather: [...action.payload, ...state.forecastWeather]
-      }
+      };
     default:
       return state;
   }
