@@ -4,9 +4,9 @@ const _startUrl = "https://dataservice.accuweather.com";
 const _key = keys.weather;
 
 const getResource = async url => {
-  const res = await fetch(`${_startUrl}${url}`, { mode: "no-cors" });
+  const res = await fetch(`${_startUrl}${url}`, { mode: "cors" });
   if (!res.ok) {
-    throw new Error(`Could not fetch ${url} , received ${res.status}`);
+    throw new Error(`Could not fetch ${url} \n, received ${res.status}`);
   }
   return await res.json();
 };
@@ -24,18 +24,18 @@ export async function getWeather(latitude, longitude) {
   return transformCity(cityData, names);
 }
 
-async function getWeatherForCity(data) {
+export async function getWeatherForCity(data) {
   const queryKey = data.Key ? data.Key : data.selectCity.Key;
   const url = `/currentconditions/v1/${queryKey}?apikey=${_key}&language=ru-ru&details=true`;
   const json = await getResource(url);
   const item = {
-    data: json[0],
+    res: json[0],
     queryKey
   };
   return item;
 }
 
-function transformCity(data, city) {
+export function transformCity(data, city) {
   const { res, queryKey } = data;
   const time = new Date(res.LocalObservationDateTime).toLocaleString("ru", {
     day: "numeric",
@@ -63,10 +63,11 @@ function transformCity(data, city) {
     pressure: `${res.Pressure.Metric.Value} мм рт. ст.`
   };
 }
+export function transformSearchCity(data) {}
 export async function getForecastForCity(queryKey) {
   const url = `/forecasts/v1/daily/5day/${queryKey}?apikey=${_key}&language=ru-ru&metric=true`;
   const result = await getResource(url);
-  const res = result.data.DailyForecasts;
+  const res = result.DailyForecasts;
   return res.map(el => {
     return {
       key: queryKey,
