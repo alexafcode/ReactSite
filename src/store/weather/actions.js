@@ -27,7 +27,12 @@ export const fetchData = () => async dispatch => {
     cityFromLS = getCityFromLS();
     cityFromLS.forEach(async el => {
       try {
-        const city = await getWeather(el);
+        const names = {
+          cityName: el.city,
+          countryName: el.country
+        };
+        const res = await getWeatherForCity(el);
+        const city = transformCity(res, names);
         dispatch({ type: ERROR_FETCH_DATA, payload: false });
         dispatch({ type: FETCH_DATA, payload: city });
       } catch (e) {
@@ -41,7 +46,10 @@ export const fetchData = () => async dispatch => {
       const longitude = coords.longitude;
       getWeather(latitude, longitude)
         .then(city => {
-          dispatch({ type: FETCH_DATA, payload: city });
+          // find save city key
+          if (!cityFromLS.some(el => el.Key === city.key)) {
+            dispatch({ type: FETCH_DATA, payload: city });
+          }
         })
         .catch(error => {
           console.error("Erorr", error.message);

@@ -30,20 +30,21 @@ export async function getWeatherForCity(data) {
   const json = await getResource(url);
   const item = {
     res: json[0],
-    queryKey
+    queryKey,
+    fromLS: data.fromLS ? true : false
   };
   return item;
 }
 
 export function transformCity(data, city) {
-  const { res, queryKey } = data;
+  const { res, queryKey, fromLS } = data;
   const time = new Date(res.LocalObservationDateTime).toLocaleString("ru", {
     day: "numeric",
     month: "long",
     year: "numeric"
   });
   return {
-    // fromLS: data.fromLS ? true : false,
+    fromLS,
     key: queryKey,
     city: city.cityName,
     country: city.countryName,

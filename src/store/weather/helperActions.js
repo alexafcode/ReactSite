@@ -1,5 +1,7 @@
+const _lsKey = "city";
+
 export const isSaveCity = () => {
-  if (localStorage.getItem("city")) {
+  if (localStorage.getItem(_lsKey)) {
     return true;
   } else {
     return false;
@@ -8,47 +10,53 @@ export const isSaveCity = () => {
 
 export const getCityFromLS = () => {
   try {
-    return JSON.parse(localStorage.getItem("city"));
+    return JSON.parse(localStorage.getItem(_lsKey));
   } catch (e) {
     return console.error(e);
   }
 };
 
 export const saveToLS = data => {
-  let arr = [];
   let exist = false;
-  let city = {};
-  if (localStorage.getItem("city") != null) {
-    try {
-      arr = JSON.parse(localStorage.getItem("city"));
-    } catch (e) {
-      return console.error(e);
-    }
+  const arr = getCityFromLS() || [];
+  const city = {
+    Key: data.key,
+    city: data.city,
+    country: data.country,
+    fromLS: true
+  };
+  if (arr) {
     if (arr.some(e => e.Key === data.key)) {
       exist = true;
     }
-  }
-  if (!exist) {
-    city = {
-      Key: data.key,
-      city: data.city,
-      country: data.country,
-      fromLS: true
-    };
+    if (!exist) {
+      arr.push(city);
+      saveCitysToLS(arr);
+    }
+  } else {
     arr.push(city);
-    localStorage.setItem("city", JSON.stringify(arr));
+    saveCitysToLS(arr);
   }
+};
+const saveCitysToLS = data => {
+  try {
+    localStorage.setItem(_lsKey, JSON.stringify(data));
+  } catch (e) {
+    console.error(e);
+  }
+};
+const removeLS = () => {
+  localStorage.removeItem(_lsKey);
 };
 
 export const deleteToLS = data => {
-  let arr = [];
-  if (localStorage.getItem("city") != null) {
-    try {
-      arr = JSON.parse(localStorage.getItem("city"));
-    } catch (e) {
-      return console.error(e);
-    }
+  const arr = getCityFromLS();
+  if (arr) {
     const filteredArr = arr.filter(el => el.Key != data.key);
-    localStorage.setItem("city", JSON.stringify(filteredArr));
+    if (filteredArr.length) {
+      saveCitysToLS(filteredArr);
+    } else {
+      removeLS();
+    }
   }
 };
