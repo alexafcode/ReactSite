@@ -40,6 +40,18 @@ export default (state = defaultState, action) => {
         ...state,
         showSearchLoad: action.payload
       };
+    case "FETCH_SEARCH_CITY":
+      return {
+        ...state,
+        showSearchLoad: true
+      };
+    case "FETCH_SEARCH_CITY_SUCCESS":
+      return {
+        ...state,
+        showSearchLoad: false,
+        searchCities: action.payload,
+        showSearchResult: true
+      };
     case "SEARCH_CITY":
       return {
         ...state,

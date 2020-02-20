@@ -1,13 +1,11 @@
-import axios from "axios";
-import keys from "../../keys";
-// import { getWeatherForCity, isSaveCity, getCityFromLS } from "./helperActions";
 import { isSaveCity, getCityFromLS } from "./helperActions";
 
 import {
   getWeather,
   getForecastForCity,
   getWeatherForCity,
-  transformCity
+  transformCity,
+  getSearchCity
 } from "../../api/weather-api";
 
 export const FETCH_DATA = "FETCH_DATA";
@@ -19,9 +17,9 @@ export const SHOW_FORECAST = "SHOW_FORECAST";
 export const FORECAST_WEATHER = "FORECAST_WEATHER";
 export const ERROR_FETCH_DATA = "ERROR_FETCH_DATA";
 export const ERROR_MESSAGE = "ERROR_MESSAGE";
+export const FETCH_SEARCH_CITY_SUCCESS = "FETCH_SEARCH_CITY_SUCCESS";
 
-export const key = keys.weather;
-export const startUrl = "https://dataservice.accuweather.com";
+export const FETCH_SEARCH_CITY = "FETCH_SEARCH_CITY";
 
 export const fetchData = () => async dispatch => {
   let cityFromLS = [];
@@ -56,40 +54,16 @@ export const fetchData = () => async dispatch => {
   }
 };
 
-export const searchClick = input => dispatch => {
+export const searchClick = input => async dispatch => {
   input = input.trim();
-  dispatch({ type: ERROR_FETCH_DATA, payload: false });
-  dispatch({ type: SEARCH_CLICK, payload: true });
-  const url = `${startUrl}/locations/v1/cities/autocomplete?apikey=${key}&q=${input}&language=ru-ru`;
-  let items = [];
-  let cities = {};
-  axios
-    .get(url)
-    .then(response => {
-      if (response.data.length > 0) {
-        items = response.data.map(el => {
-          return {
-            country: el.Country.LocalizedName,
-            city: el.LocalizedName,
-            keyCity: el.Key
-          };
-        });
-      } else {
-        cities = {
-          city: "Ничего не найдено"
-        };
-        items.push(cities);
-      }
-      dispatch({ type: SEARCH_CITY, payload: items });
-      dispatch({ type: SEARCH_CLICK, payload: false });
-      dispatch({ type: SHOW_SEARCH_RESULT, payload: true });
-    })
-    .catch(error => {
-      console.error(error);
-      dispatch({ type: SEARCH_CLICK, payload: false });
-      dispatch({ type: ERROR_FETCH_DATA, payload: true });
-      dispatch({ type: ERROR_MESSAGE, payload: error.message });
-    });
+  dispatch({ type: FETCH_SEARCH_CITY });
+  let cities = await getSearchCity(input);
+  if (!cities.length) {
+    cities = {
+      city: "Ничего не найдено"
+    };
+  }
+  dispatch({ type: FETCH_SEARCH_CITY_SUCCESS, payload: cities });
 };
 
 export const searchPanelHide = () => dispatch => {
@@ -98,7 +72,7 @@ export const searchPanelHide = () => dispatch => {
 
 export const getWeatherCity = d => async dispatch => {
   const data = { ...d };
-  data["Key"] = d.keyCity;
+  data["Key"] = d.keyCity; //ToDo
   const res = await getWeatherForCity(data);
   const names = {
     cityName: d.city,

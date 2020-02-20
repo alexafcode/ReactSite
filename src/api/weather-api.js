@@ -6,7 +6,7 @@ const _key = keys.weather;
 const getResource = async url => {
   const res = await fetch(`${_startUrl}${url}`, { mode: "cors" });
   if (!res.ok) {
-    throw new Error(`Could not fetch ${url} \n, received ${res.status}`);
+    throw new Error(`Could not fetch ${url}, received ${res.status}`);
   }
   return await res.json();
 };
@@ -63,7 +63,6 @@ export function transformCity(data, city) {
     pressure: `${res.Pressure.Metric.Value} мм рт. ст.`
   };
 }
-export function transformSearchCity(data) {}
 export async function getForecastForCity(queryKey) {
   const url = `/forecasts/v1/daily/5day/${queryKey}?apikey=${_key}&language=ru-ru&metric=true`;
   const result = await getResource(url);
@@ -83,6 +82,17 @@ export async function getForecastForCity(queryKey) {
       tempDay: `${el.Temperature.Maximum.Value.toFixed()} ° C`,
       nightIcon: el.Night.Icon,
       tempNight: `${el.Temperature.Minimum.Value.toFixed()} ° C`
+    };
+  });
+}
+export async function getSearchCity(query) {
+  const url = `/locations/v1/cities/autocomplete?apikey=${_key}&q=${query}&language=ru-ru`;
+  const result = await getResource(url);
+  return result.map(el => {
+    return {
+      country: el.Country.LocalizedName,
+      city: el.LocalizedName,
+      keyCity: el.Key
     };
   });
 }
