@@ -23,27 +23,26 @@ function WeatherPage(props) {
     getForecast
   } = props;
 
+  const hasData = city && !loading;
+  const searchLoading = showSearchLoad ? <SearchLoading /> : null;
+  const load = loading ? <Loading /> : null;
+  const errMessage = error ? (
+    <Message type={"error"} text={errorMessage ? errorMessage : ""} />
+  ) : null;
+
+  const cityItems = city.map(city => (
+    <CSSTransition timeout={500} key={city.key} classNames="transition">
+      <WeatherCard city={city} getForecast={getForecast} key={city.key} />
+    </CSSTransition>
+  ));
+
   return (
     <div style={stylus.container} className="container">
-      {showSearchLoad && <SearchLoading />}
+      {searchLoading}
       <WeatherSearch />
-      {loading && <Loading />}
-      {error && (
-        <Message type={"error"} text={errorMessage ? errorMessage : ""} />
-      )}
-      <TransitionGroup>
-        {city &&
-          !loading &&
-          city.map((city, index) => (
-            <CSSTransition timeout={500} key={index} classNames="transition">
-              <WeatherCard
-                city={city}
-                getForecast={getForecast}
-                key={`item-${index}`}
-              />
-            </CSSTransition>
-          ))}
-      </TransitionGroup>
+      {load}
+      {errMessage}
+      <TransitionGroup>{hasData && cityItems}</TransitionGroup>
     </div>
   );
 }
@@ -52,8 +51,9 @@ WeatherPage.propTypes = {
   city: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
   showSearchLoad: PropTypes.bool.isRequired,
-  getForecast: PropTypes.func.isRequired
-  // ToDo
+  getForecast: PropTypes.func.isRequired,
+  error: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string
 };
 
 export default WeatherPage;
