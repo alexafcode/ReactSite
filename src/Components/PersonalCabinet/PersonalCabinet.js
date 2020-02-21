@@ -7,23 +7,23 @@ import { DropzoneArea } from "material-ui-dropzone";
 import { resizeImage } from "../Helpers/Helper";
 import { updateUserProfile, loadFavCars } from "../../store/register/actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import history from "../../history";
 import "./PersonalCabinet.scss";
 
 const PersonalCabinet = props => {
+  const { user, loadFavCars, loading, favariteCars } = props;
   const [state, setState] = useState({
     disabled: true,
     blobImage: null,
     imageName: null,
-    changePhoto: false,
-    displayName: props.user ? props.user.displayName : ""
+    changePhoto: false
   });
+  const [displayName, setDisplayName] = useState(user ? user.displayName : "");
 
   const stylus = {
     media: {
       backgroundImage: `url(${
-        props.user.photoURL
-          ? props.user.photoURL
+        user.photoURL
+          ? user.photoURL
           : "https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/128x128/plain/user.png"
       })`
     }
@@ -50,32 +50,72 @@ const PersonalCabinet = props => {
 
   const saveProfile = () => {
     props.updateUserProfile(
-      props.user.email,
-      state.displayName,
+      user.email,
+      displayName,
       state.blobImage,
       state.changePhoto
     );
   };
   useEffect(() => {
-    props.loadFavCars(props.user.email);
+    loadFavCars(user.email);
   }, []);
+
+  const load = loading ? <LinearProgress /> : null;
+
+  const carsItems =
+    favariteCars &&
+    favariteCars.map((el, index) => (
+      // <li key={index} onClick={() => history.push(`/auto/${el.id}`)}>
+      <li key={index}>{el.name}</li>
+    ));
+  const buttonChange = state.disabled && (
+    <Button
+      variant="contained"
+      color="primary"
+      className="button__change"
+      onClick={() => setState({ ...state, disabled: !state.disabled })}
+    >
+      Изменить
+    </Button>
+  );
+  const buttonsSubmit = !state.disabled && (
+    <div className="button__submit">
+      <Button
+        variant="contained"
+        color="primary"
+        className="button__save"
+        onClick={() => saveProfile()}
+      >
+        Сохранить
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        className="button__cancel"
+        onClick={() => setState({ ...state, disabled: !state.disabled })}
+      >
+        Отмена
+      </Button>
+    </div>
+  );
+  const dropArea = !state.disabled && (
+    <div className="loader">
+      <DropzoneArea
+        onChange={dropFile}
+        className="dropzone"
+        showPreviews={true}
+        showPreviewsInDropzone={false}
+        maxFileSize={5000000}
+        filesLimit={1}
+      />
+    </div>
+  );
 
   return (
     <div className="cabinet">
       <div className="cabinet__media">
         <div className="image" style={stylus.media} />
-        {!state.disabled && (
-          <div className="loader">
-            <DropzoneArea
-              onChange={dropFile}
-              className="dropzone"
-              showPreviews={true}
-              showPreviewsInDropzone={false}
-              maxFileSize={5000000}
-              filesLimit={1}
-            />
-          </div>
-        )}
+        {dropArea}
       </div>
       <div className="cabinet__text">
         {!state.disabled && (
@@ -83,58 +123,17 @@ const PersonalCabinet = props => {
             disabled={state.disabled}
             label="Display Name"
             margin="normal"
-            value={state.displayName}
-            onChange={e => setState({ ...state, displayName: e.target.value })}
+            value={displayName}
+            onChange={({ target }) => setDisplayName(target.value)}
           />
         )}
-        <TextField
-          disabled
-          label="Email"
-          margin="normal"
-          value={props.user.email}
-        />
+        <TextField disabled label="Email" margin="normal" value={user.email} />
         <div className="button__container">
-          {state.disabled && (
-            <Button
-              variant="contained"
-              color="primary"
-              className="button__change"
-              onClick={() => setState({ ...state, disabled: !state.disabled })}
-            >
-              Изменить
-            </Button>
-          )}
-          {!state.disabled && (
-            <div className="button__submit">
-              <Button
-                variant="contained"
-                color="primary"
-                className="button__save"
-                onClick={() => saveProfile()}
-              >
-                Сохранить
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="button__cancel"
-                onClick={() =>
-                  setState({ ...state, disabled: !state.disabled })
-                }
-              >
-                Отмена
-              </Button>
-            </div>
-          )}
+          {buttonChange}
+          {buttonsSubmit}
         </div>
-        {props.loading && <LinearProgress />}
-        <div className="favorite">
-          {props.favariteCars &&
-            props.favariteCars.map((el, index) => (
-              // <li key={index} onClick={() => history.push(`/auto/${el.id}`)}>
-              <li key={index}>{el.name}</li>
-            ))}
-        </div>
+        {load}
+        <div className="favorite">{carsItems}</div>
       </div>
     </div>
   );
@@ -146,11 +145,11 @@ PersonalCabinet.propTypes = {
   favariteCars: PropTypes.array
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ AuthReducers }) => {
   return {
-    user: state.AuthReducers.user,
-    loading: state.AuthReducers.loading,
-    favariteCars: state.AuthReducers.favariteCars
+    user: AuthReducers.user,
+    loading: AuthReducers.loading,
+    favariteCars: AuthReducers.favariteCars
   };
 };
 
@@ -159,7 +158,4 @@ const mapDispatchToProps = {
   loadFavCars
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PersonalCabinet);
+export default connect(mapStateToProps, mapDispatchToProps)(PersonalCabinet);
