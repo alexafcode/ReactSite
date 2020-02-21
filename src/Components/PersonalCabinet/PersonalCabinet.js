@@ -10,7 +10,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import "./PersonalCabinet.scss";
 
 const PersonalCabinet = props => {
-  const { user, loadFavCars, loading, favariteCars } = props;
+  const { user, loadFavCars, loading, favoriteCars } = props;
   const [state, setState] = useState({
     disabled: true,
     blobImage: null,
@@ -63,8 +63,8 @@ const PersonalCabinet = props => {
   const load = loading ? <LinearProgress /> : null;
 
   const carsItems =
-    favariteCars &&
-    favariteCars.map((el, index) => (
+    favoriteCars &&
+    favoriteCars.map((el, index) => (
       // <li key={index} onClick={() => history.push(`/auto/${el.id}`)}>
       <li key={index}>{el.name}</li>
     ));
@@ -149,7 +149,7 @@ const mapStateToProps = ({ AuthReducers }) => {
   return {
     user: AuthReducers.user,
     loading: AuthReducers.loading,
-    favariteCars: AuthReducers.favariteCars
+    favoriteCars: AuthReducers.favoriteCars
   };
 };
 

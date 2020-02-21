@@ -5,7 +5,7 @@ const initialState = {
   error: false,
   errorMessage: "",
   loading: false,
-  favariteCars: null
+  favoriteCars: null
 };
 
 export default (state = initialState, action) => {
@@ -38,7 +38,7 @@ export default (state = initialState, action) => {
     case "LOAD_FAV_CARS":
       return {
         ...state,
-        favariteCars: action.payload
+        favoriteCars: action.payload
       };
     default:
       return state;
