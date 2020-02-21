@@ -11,7 +11,8 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         loading: false,
-        news: [...action.payload]
+        news: [...action.payload],
+        index: action.index
       };
     case "NEWS_LOADING":
       return {
@@ -19,11 +20,6 @@ export default (state = defaultState, action) => {
         error: false,
         errorMessage: null,
         loading: true
-      };
-    case "SET_INDEX":
-      return {
-        ...state,
-        index: action.payload
       };
     case "ERROR_FETCH_DATA":
       return {
