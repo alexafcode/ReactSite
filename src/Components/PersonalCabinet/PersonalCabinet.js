@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { DropzoneArea } from "material-ui-dropzone";
-import { resizeImage } from "../Helpers/Helper";
+import { resizeImage } from "../../helpers/helpers-image";
 import { updateUserProfile, loadFavCars } from "../../store/register/actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import "./PersonalCabinet.scss";
