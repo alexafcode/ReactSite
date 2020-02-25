@@ -5,7 +5,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  .cabinet__media {
+  .media {
     .image {
       width: 15vw;
       height: 30vh;
@@ -23,10 +23,7 @@
     display: flex;
     width: 40%;
     flex-direction: column;
-    .button__container {
-      // display: none; // ToDo
-      // .button__change {
-      // }
+    .buttons {
       .button__submit {
         .button__save {
           margin-right: 1rem;
@@ -45,7 +42,7 @@
     width: 80%;
     margin: 1rem auto;
     flex-direction: column;
-    .cabinet__media {
+    .media {
       .image {
         width: 90%;
       }
@@ -53,9 +50,9 @@
         width: 60%;
       }
     }
-    .cabinet__text {
+    .text {
       width: 80%;
-      .button__container {
+      .buttons {
         .button__submit {
           .button__save {
             margin-bottom: 1rem;

@@ -114,11 +114,11 @@ const PersonalCabinet = props => {
 
   return (
     <div className="cabinet">
-      <div className="cabinet__media">
+      <div className="media">
         <div className="image" style={stylus.media} />
         {dropArea}
       </div>
-      <div className="cabinet__text">
+      <div className="text">
         {!state.disabled && (
           <TextField
             disabled={state.disabled}
@@ -129,7 +129,7 @@ const PersonalCabinet = props => {
           />
         )}
         <TextField disabled label="Email" margin="normal" value={user.email} />
-        <div className="button__container">
+        <div className="buttons">
           {buttonChange}
           {buttonsSubmit}
         </div>
