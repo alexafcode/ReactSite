@@ -25,19 +25,21 @@ function AutoItem(props) {
   const [input, setInput] = useState("");
 
   const addComment = () => {
-    const user = props.user.displayName
-      ? props.user.displayName
-      : props.user.email;
-    let arr = comment ? comment : [];
-    let obj = {
-      comment: input,
-      name: user,
-      photoURL: props.user.photoURL ? props.user.photoURL : ""
-    };
-    arr.push(obj);
-    props.addComment(car.id, arr);
-    setComment(arr);
-    setInput("");
+    if (input !== "") {
+      const user = props.user.displayName
+        ? props.user.displayName
+        : props.user.email;
+      const arr = comment ? comment : [];
+      const obj = {
+        comment: input,
+        name: user,
+        photoURL: props.user.photoURL ? props.user.photoURL : ""
+      };
+      arr.push(obj);
+      props.addComment(car.id, arr);
+      setComment(arr);
+      setInput("");
+    }
   };
 
   const openImageSrc = () => {
@@ -129,8 +131,5 @@ const mapDispatchToProps = {
 
 export default compose(
   withRouter,
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
+  connect(mapStateToProps, mapDispatchToProps)
 )(AutoItem);

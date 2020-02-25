@@ -41,22 +41,28 @@ export const fetchData = () => async dispatch => {
     });
   }
   if ("geolocation" in navigator) {
-    navigator.geolocation.getCurrentPosition(({ coords }) => {
-      const latitude = coords.latitude;
-      const longitude = coords.longitude;
-      getWeather(latitude, longitude)
-        .then(city => {
-          // find save city key
-          if (!cityFromLS.some(el => el.Key === city.key)) {
-            dispatch({ type: FETCH_DATA, payload: city });
-          }
-        })
-        .catch(error => {
-          console.error("Erorr", error.message);
-          dispatch({ type: ERROR_FETCH_DATA, payload: true });
-          dispatch({ type: ERROR_MESSAGE, payload: error.message });
-        });
-    });
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        const latitude = coords.latitude;
+        const longitude = coords.longitude;
+        getWeather(latitude, longitude)
+          .then(city => {
+            // find save city key
+            if (!cityFromLS.some(el => el.Key === city.key)) {
+              dispatch({ type: FETCH_DATA, payload: city });
+            }
+          })
+          .catch(error => {
+            console.error("Erorr", error.message);
+            dispatch({ type: ERROR_FETCH_DATA, payload: true });
+            dispatch({ type: ERROR_MESSAGE, payload: error.message });
+          });
+      },
+      error => {
+        // cancel getCurrentPosition
+        dispatch({ type: CITY_IS_LOADING, payload: false });
+      }
+    );
   } else {
     dispatch({ type: CITY_IS_LOADING, payload: false });
   }
