@@ -1,11 +1,14 @@
 import { firebaseApp } from "../../firebase-config";
 import history from "../../../src/history";
+import { setItem, getItem, removeItem, isItem } from "../../helpers/helpers-ls";
 
 const SIGNIN = "SIGNIN";
 const LOAD_FAV_CARS = "LOAD_FAV_CARS";
 const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
 const SIGNIN_ERROR = "SIGNIN_ERROR";
 const SIGNOUT = "SIGNOUT";
+
+const _key = "authUser";
 
 export const signInAction = (email, password) => async dispatch => {
   dispatch({ type: SIGNIN, payload: true });
@@ -14,11 +17,7 @@ export const signInAction = (email, password) => async dispatch => {
     .signInWithEmailAndPassword(email, password)
     .then(({ user }) => {
       dispatch({ type: SIGNIN_SUCCESS, payload: user });
-      try {
-        localStorage.setItem("authUser", JSON.stringify(user));
-      } catch (e) {
-        console.error(e);
-      }
+      setItem(_key, user);
       history.push("/");
     })
     .catch(({ message }) => {
@@ -32,16 +31,14 @@ export const singOutAction = () => async dispatch => {
     .signOut()
     .then(() => {
       history.push("/");
-      if (localStorage.getItem("authUser") != null) {
-        localStorage.removeItem("authUser");
-      }
+      removeItem(_key);
       dispatch({ type: SIGNOUT });
     });
 };
 
 export const verifyAuth = () => async dispatch => {
-  if (localStorage.getItem("authUser") != null) {
-    const user = JSON.parse(localStorage.getItem("authUser"));
+  if (isItem(_key)) {
+    const user = getItem(_key);
     dispatch({ type: SIGNIN_SUCCESS, payload: user });
   } else {
     await firebaseApp.auth().onAuthStateChanged(user => {
@@ -58,11 +55,7 @@ export const createUserAction = (email, pw) => async dispatch => {
     .auth()
     .createUserWithEmailAndPassword(email, pw)
     .then(({ user }) => {
-      try {
-        localStorage.setItem("authUser", JSON.stringify(user));
-      } catch (e) {
-        console.error(e);
-      }
+      setItem(_key, user);
       dispatch({ type: SIGNIN_SUCCESS, payload: user });
       history.push("/");
     })
@@ -78,9 +71,7 @@ export const updateUserProfile = (
   changePhoto
 ) => async dispatch => {
   dispatch({ type: SIGNIN, payload: true });
-  if (localStorage.getItem("authUser") != null) {
-    localStorage.removeItem("authUser");
-  }
+  removeItem(_key);
   const user = firebaseApp.auth().currentUser;
   let urlPath = null;
   if (changePhoto) {
@@ -105,11 +96,7 @@ export const updateUserProfile = (
       history.push("/");
       await firebaseApp.auth().onAuthStateChanged(user => {
         if (user) {
-          try {
-            localStorage.setItem("authUser", JSON.stringify(user));
-          } catch (e) {
-            console.error(e);
-          }
+          setItem(_key, user);
           dispatch({ type: SIGNIN_SUCCESS, payload: user });
         }
       });
