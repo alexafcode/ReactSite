@@ -1,33 +1,28 @@
-import { firebaseApp, storage } from "../../firebase-config";
+import { firebaseApp } from "../../firebase-config";
 import history from "../../../src/history";
-export const SIGNIN = "SIGNIN";
-export const USER = "USER";
-export const ERROR = "ERROR";
-export const ERROR_MESSAGE = "ERROR_MESSAGE";
-export const LOADING = "LOADING";
-export const LOAD_FAV_CARS = "LOAD_FAV_CARS";
+
+const SIGNIN = "SIGNIN";
+const LOAD_FAV_CARS = "LOAD_FAV_CARS";
+const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
+const SIGNIN_ERROR = "SIGNIN_ERROR";
+const SIGNOUT = "SIGNOUT";
 
 export const signInAction = (email, password) => async dispatch => {
-  dispatch({ type: ERROR, payload: false });
-  dispatch({ type: LOADING, payload: true });
+  dispatch({ type: SIGNIN, payload: true });
   await firebaseApp
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then(user => {
-      dispatch({ type: SIGNIN, payload: true });
-      dispatch({ type: USER, payload: user.user });
-      dispatch({ type: LOADING, payload: false });
+    .then(({ user }) => {
+      dispatch({ type: SIGNIN_SUCCESS, payload: user });
       try {
-        localStorage.setItem("authUser", JSON.stringify(user.user));
+        localStorage.setItem("authUser", JSON.stringify(user));
       } catch (e) {
         console.error(e);
       }
       history.push("/");
     })
-    .catch(error => {
-      dispatch({ type: ERROR, payload: true });
-      dispatch({ type: ERROR_MESSAGE, payload: error.message });
-      dispatch({ type: LOADING, payload: false });
+    .catch(({ message }) => {
+      dispatch({ type: SIGNIN_ERROR, payload: message });
     });
 };
 
@@ -40,46 +35,39 @@ export const singOutAction = () => async dispatch => {
       if (localStorage.getItem("authUser") != null) {
         localStorage.removeItem("authUser");
       }
-      dispatch({ type: SIGNIN, payload: false });
-      dispatch({ type: USER, payload: null });
+      dispatch({ type: SIGNOUT });
     });
 };
 
 export const verifyAuth = () => async dispatch => {
   if (localStorage.getItem("authUser") != null) {
     const user = JSON.parse(localStorage.getItem("authUser"));
-    dispatch({ type: SIGNIN, payload: true });
-    dispatch({ type: USER, payload: user });
+    dispatch({ type: SIGNIN_SUCCESS, payload: user });
   } else {
     await firebaseApp.auth().onAuthStateChanged(user => {
       if (user) {
-        dispatch({ type: SIGNIN, payload: true });
-        dispatch({ type: USER, payload: user });
+        dispatch({ type: SIGNIN_SUCCESS, payload: user });
       }
     });
   }
 };
 
 export const createUserAction = (email, pw) => async dispatch => {
-  dispatch({ type: LOADING, payload: true });
+  dispatch({ type: SIGNIN, payload: true });
   await firebaseApp
     .auth()
     .createUserWithEmailAndPassword(email, pw)
-    .then(user => {
+    .then(({ user }) => {
       try {
-        localStorage.setItem("authUser", JSON.stringify(user.user));
+        localStorage.setItem("authUser", JSON.stringify(user));
       } catch (e) {
         console.error(e);
       }
-      dispatch({ type: SIGNIN, payload: true });
-      dispatch({ type: USER, payload: user.user });
-      dispatch({ type: LOADING, payload: false });
+      dispatch({ type: SIGNIN_SUCCESS, payload: user });
       history.push("/");
     })
-    .catch(error => {
-      dispatch({ type: ERROR, payload: true });
-      dispatch({ type: ERROR_MESSAGE, payload: error.message });
-      dispatch({ type: LOADING, payload: false });
+    .catch(({ message }) => {
+      dispatch({ type: SIGNIN_ERROR, payload: message });
     });
 };
 
@@ -89,7 +77,7 @@ export const updateUserProfile = (
   blobImage,
   changePhoto
 ) => async dispatch => {
-  dispatch({ type: LOADING, payload: true });
+  dispatch({ type: SIGNIN, payload: true });
   if (localStorage.getItem("authUser") != null) {
     localStorage.removeItem("authUser");
   }
@@ -114,7 +102,6 @@ export const updateUserProfile = (
       photoURL: urlPath ? urlPath : user.photoURL
     })
     .then(async () => {
-      console.log("Update successful");
       history.push("/");
       await firebaseApp.auth().onAuthStateChanged(user => {
         if (user) {
@@ -123,11 +110,9 @@ export const updateUserProfile = (
           } catch (e) {
             console.error(e);
           }
-          dispatch({ type: SIGNIN, payload: true });
-          dispatch({ type: USER, payload: user });
+          dispatch({ type: SIGNIN_SUCCESS, payload: user });
         }
       });
-      dispatch({ type: LOADING, payload: false });
     })
     .catch(error => console.error(error.message));
 };

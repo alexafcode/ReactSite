@@ -13,27 +13,28 @@ export default (state = initialState, action) => {
     case "SIGNIN":
       return {
         ...state,
-        isAuthenticated: action.payload
+        loading: true,
+        error: false
       };
-    case "USER":
+    case "SIGNIN_SUCCESS":
       return {
         ...state,
-        user: action.payload
+        isAuthenticated: true,
+        user: action.payload,
+        loading: false
       };
-    case "ERROR":
+    case "SIGNIN_ERROR":
       return {
         ...state,
-        error: action.payload
-      };
-    case "ERROR_MESSAGE":
-      return {
-        ...state,
+        loading: false,
+        error: true,
         errorMessage: action.payload
       };
-    case "LOADING":
+    case "SIGNOUT":
       return {
         ...state,
-        loading: action.payload
+        isAuthenticated: false,
+        user: null
       };
     case "LOAD_FAV_CARS":
       return {

@@ -17,7 +17,8 @@ const PersonalCabinet = props => {
     imageName: null,
     changePhoto: false
   });
-  const [displayName, setDisplayName] = useState(user ? user.displayName : "");
+  const dn = user && user.displayName ? user.displayName : "";
+  const [displayName, setDisplayName] = useState(dn);
 
   const stylus = {
     media: {
