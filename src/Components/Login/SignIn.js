@@ -40,48 +40,53 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function SignIn(props) {
+  const { signInAction, loading, error, errorMessage } = props;
   const classes = useStyles();
-  const [state, setState] = useState({
-    email: "",
-    password: "",
-    emailError: false,
-    // passwordError: false,
-    emailErrorText: ""
-    // passwordErrorText: ""
-  });
+
+  const [email, setEmail] = useState("");
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [password, setPassword] = useState("");
+
+  const signIn = e => {
+    e.preventDefault();
+    if (email && password && !errorEmail) {
+      signInAction(email, password);
+      setPassword("");
+    }
+  };
 
   const emailValidation = email => {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (reg.test(email)) {
-      setState({
-        ...state,
-        email: email,
-        emailError: false,
-        emailErrorText: ""
-      });
+      setEmail(email);
+      setErrorEmail(false);
     } else {
-      setState({
-        ...state,
-        email: email,
-        emailError: true,
-        emailErrorText: "Email not Corrected"
-      });
+      setEmail(email);
+      setErrorEmail(true);
     }
   };
+  const emailError = errorEmail && (
+    <p style={{ color: "red" }}>{"Email not Corrected"}</p>
+  );
+  const formError = error && <p style={{ color: "red" }}>{errorMessage}</p>;
+  const load = loading && <LinearProgress />;
+  const avatar = (
+    <Avatar className={classes.avatar}>
+      <LockOutlinedIcon />
+    </Avatar>
+  );
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+        {avatar}
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={e => signIn(e)}>
           <TextField
-            error={state.emailError}
+            error={errorEmail}
             variant="outlined"
             margin="normal"
             required
@@ -90,12 +95,10 @@ function SignIn(props) {
             name="email"
             autoComplete="email"
             autoFocus
-            value={state.email}
-            onChange={e => emailValidation(e.target.value)}
+            value={email}
+            onChange={({ target }) => emailValidation(target.value)}
           />
-          {state.emailError && (
-            <p style={{ color: "red" }}>{state.emailErrorText}</p>
-          )}
+          {emailError}
           <TextField
             variant="outlined"
             margin="normal"
@@ -105,28 +108,18 @@ function SignIn(props) {
             label="Password"
             type="password"
             autoComplete="current-password"
-            value={state.password}
-            onChange={e => setState({ ...state, password: e.target.value })}
+            value={password}
+            onChange={({ target }) => setPassword(target.value)}
           />
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
-          {props.loading && <LinearProgress />}
-          {props.error && <p style={{ color: "red" }}>{props.errorMessage}</p>}
+          {load}
+          {formError}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={e => {
-              e.preventDefault();
-              if (state.email && state.password && !state.emailError) {
-                props.signInAction(state.email, state.password);
-                setState({ ...state, password: "" });
-              }
-            }}
+            onClick={e => signIn(e)}
           >
             Sign In
           </Button>
@@ -166,7 +159,4 @@ SignIn.propTypes = {
   signInAction: PropTypes.func.isRequired
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
