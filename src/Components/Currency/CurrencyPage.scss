@@ -1,22 +1,22 @@
 .form {
-  .input__from {
+  .from {
     width: 25%;
   }
   .input__container {
     width: 30%;
     display: flex;
     flex-direction: column;
-    .input__value {
+    .value-input {
       display: flex;
     }
-    .input__price {
+    .price-input {
       font-weight: bold;
       display: flex;
     }
-    .input__unit {
+    .unit-input {
       display: flex;
     }
-    .form__button {
+    .button-exchange {
       margin: auto;
       margin-top: 1rem;
       width: 30%;
@@ -26,12 +26,12 @@
 
 @media screen and (max-width: 800px) {
   .form {
-    .input__from {
+    .from {
       width: 85%;
     }
     .input__container {
       width: 95%;
-      .form__button {
+      .button-exchange {
         width: 60%;
       }
     }

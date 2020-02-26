@@ -8,27 +8,28 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 function CurrencyModal(props) {
+  const { open, handleClose, currencies } = props;
   return (
     <div>
       <Dialog
-        open={props.open}
-        onClose={props.handleClose}
+        open={open}
+        onClose={handleClose}
         scroll="paper"
         aria-labelledby="scroll-dialog-title"
       >
         <DialogTitle>Current Exchange Rate</DialogTitle>
         <DialogContent>
-          {props.currencies.map((c, index) => (
+          {currencies.map((c, index) => (
             <DialogContentText key={index}>
               <u>{c.name}</u>
               <br />
               <b>{c.value} Рублей</b>
-              <br /> за {c.nominal} {c.nominal == 1 ? "единицу" : "единиц"}
+              <br /> за {c.nominal} {c.nominal === 1 ? "единицу" : "единиц"}
             </DialogContentText>
           ))}
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.handleClose} color="primary">
+          <Button onClick={handleClose} color="primary">
             Close
           </Button>
         </DialogActions>

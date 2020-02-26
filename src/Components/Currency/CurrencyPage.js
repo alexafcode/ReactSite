@@ -9,6 +9,7 @@ import CurrencyModel from "./CurrencyModal";
 import "./CurrencyPage.scss";
 
 const CurrencyPage = props => {
+  const { currencies, date } = props;
   const [state, setState] = useState({
     fromValue: null,
     amount: 1,
@@ -33,23 +34,25 @@ const CurrencyPage = props => {
   return (
     <div className="form">
       <Select
-        className="input__from"
+        className="from"
         autoWidth={true}
         value={state.fromValue}
         onChange={e => setState({ ...state, fromValue: e })}
         isSearchable
-        options={props.currencies}
+        options={currencies}
       />
       <div className="input__container">
         {state.fromValue && (
           <>
-            <div className="input__value">
+            <div className="value-input">
               <img src={amountLogo} alt="amount" />
               <TextField
                 type="number"
                 label="Amount Roubles"
                 value={state.amount}
-                onChange={e => setState({ ...state, amount: e.target.value })}
+                onChange={({ target }) =>
+                  setState({ ...state, amount: target.value })
+                }
                 margin="normal"
               />
             </div>
@@ -58,7 +61,7 @@ const CurrencyPage = props => {
               <br />
               {state.fromValue.name}
             </Typography>
-            <div className="input__price">
+            <div className="price-input">
               <img src={amountLogo} alt="amount" />
               <Typography
                 gutterBottom
@@ -72,7 +75,7 @@ const CurrencyPage = props => {
             <Typography gutterBottom variant="h6" component="h6">
               Цена за единицу:
             </Typography>
-            <div className="input__unit">
+            <div className="unit-input">
               <img src={amountLogo} alt="amount" />
               <Typography
                 gutterBottom
@@ -87,14 +90,14 @@ const CurrencyPage = props => {
               Данные на Дату:
             </Typography>
             <Typography gutterBottom variant="h5" component="h5">
-              {props.date}
+              {date}
             </Typography>
           </>
         )}
         <Button
           variant="outlined"
           color="primary"
-          className="form__button"
+          className="button-exchange"
           onClick={() => setState({ ...state, openModal: true })}
         >
           Exchange Rate
@@ -102,7 +105,7 @@ const CurrencyPage = props => {
         <CurrencyModel
           handleClose={handleClose}
           open={state.openModal}
-          currencies={props.currencies}
+          currencies={currencies}
         />
       </div>
     </div>
