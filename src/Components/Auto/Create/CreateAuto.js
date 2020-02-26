@@ -8,10 +8,9 @@ import PropTypes from "prop-types";
 import Fab from "@material-ui/core/Fab";
 import TextField from "@material-ui/core/TextField";
 import { DropzoneArea } from "material-ui-dropzone";
-import { resizeImage } from "../../Helpers/Helper";
+import { resizeImage } from "../../../helpers/helpers-image";
 import { uploadAuto } from "../../../store/auto/actions";
 import "./CreateAuto.scss";
-
 
 function CreateAuto(props) {
   const [state, setState] = useState({
@@ -145,7 +144,7 @@ function CreateAuto(props) {
 CreateAuto.propTypes = {
   loading: PropTypes.bool.isRequired,
   uploadAuto: PropTypes.func.isRequired
-}
+};
 
 const mapStateToProps = state => {
   return {
@@ -157,8 +156,4 @@ const mapDispatchToProps = {
   uploadAuto
 };
 
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CreateAuto);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateAuto);

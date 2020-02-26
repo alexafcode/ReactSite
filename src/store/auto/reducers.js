@@ -6,24 +6,23 @@ const initialState = {
 };
 export default (state = initialState, action) => {
   switch (action.type) {
-    case "LOAD_AUTO_DB":
+    case "FETCH_LOAD_REQUEST":
       return {
         ...state,
+        loading: true,
+        error: false
+      };
+    case "FETCH_LOAD_SUCCESS":
+      return {
+        ...state,
+        loading: false,
         cars: action.payload
       };
-    case "CARS_IS_LOADING":
+    case "FETCH_LOAD_ERROR":
       return {
         ...state,
-        loading: action.payload
-      };
-    case "ERROR":
-      return {
-        ...state,
-        error: action.payload
-      };
-    case "ERROR_MESSAGE":
-      return {
-        ...state,
+        loading: false,
+        error: true,
         errorMessage: action.payload
       };
     default:

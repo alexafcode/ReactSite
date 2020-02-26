@@ -1,20 +1,18 @@
 import { autoDb, storage } from "../../firebase-config";
 import history from "../../../src/history";
 
-export const LOAD_AUTO_DB = "LOAD_AUTO_DB";
-export const CARS_IS_LOADING = "CARS_IS_LOADING";
-export const ERROR_MESSAGE = "ERROR_MESSAGE";
-export const ERROR = "ERROR";
-// export const ADD_COMMENT = "ADD_COMMENT";
+const FETCH_LOAD_REQUEST = "FETCH_LOAD_REQUEST";
+const FETCH_LOAD_SUCCESS = "FETCH_LOAD_SUCCESS";
+const FETCH_LOAD_ERROR = "FETCH_LOAD_ERROR";
 
 export const loadCars = () => async dispatch => {
-  let tempDB = [];
+  const tempDB = [];
   await autoDb
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(s => {
         const data = s.data();
-        let auto = {
+        const auto = {
           id: s.id,
           name: data.name,
           descriptions: data.descriptions,
@@ -26,14 +24,11 @@ export const loadCars = () => async dispatch => {
         };
         tempDB.push(auto);
       });
-      dispatch({ type: ERROR, payload: false });
-      dispatch({ type: LOAD_AUTO_DB, payload: tempDB });
-      dispatch({ type: CARS_IS_LOADING, payload: false });
+      dispatch({ type: FETCH_LOAD_SUCCESS, payload: tempDB });
     })
     .catch(error => {
       console.error(error.message);
-      dispatch({ type: ERROR, payload: true });
-      dispatch({ type: ERROR_MESSAGE, payload: error.message });
+      dispatch({ type: FETCH_LOAD_ERROR, payload: error.message });
     });
 };
 
@@ -51,9 +46,8 @@ export const addComment = (id, newComment) => async dispatch => {
     });
 };
 export const uploadAuto = state => async dispatch => {
-  dispatch({ type: CARS_IS_LOADING, payload: true });
-  dispatch({ type: ERROR, payload: false });
-  let data = {
+  dispatch({ type: FETCH_LOAD_REQUEST });
+  const data = {
     id: state.modelValue.replace(/\s/g, ""),
     name: state.modelValue,
     descriptions: state.descValue,
@@ -81,13 +75,10 @@ export const uploadAuto = state => async dispatch => {
             .set(data)
             .then(() => {
               console.log("Document successfully written!");
-              dispatch({ type: CARS_IS_LOADING, payload: false });
             })
             .catch(error => {
               console.error(error.message);
-              dispatch({ type: CARS_IS_LOADING, payload: false });
-              dispatch({ type: ERROR, payload: true });
-              dispatch({ type: ERROR_MESSAGE, payload: error.message });
+              dispatch({ type: FETCH_LOAD_ERROR, payload: error.message });
             });
         });
       });
