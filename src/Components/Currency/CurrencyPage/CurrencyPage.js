@@ -4,8 +4,8 @@ import Select from "react-select";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import amountLogo from "../../assets/icons_amount.png";
-import CurrencyModel from "./CurrencyModal";
+import amountLogo from "../../../assets/icons_amount.png";
+import CurrencyModel from "../CurrencyModal";
 import "./CurrencyPage.scss";
 
 const CurrencyPage = props => {

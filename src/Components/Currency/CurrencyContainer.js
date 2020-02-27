@@ -3,6 +3,8 @@ import CurrencyPage from "./CurrencyPage";
 import Loading from "../Layouts/Loading";
 import Message from "../Layouts/Message";
 
+import { fetchNews } from "../../api/currency-api";
+
 const CurrencyContainer = () => {
   const [state, setState] = useState({
     date: null,
@@ -19,33 +21,10 @@ const CurrencyContainer = () => {
     }
   };
 
-  const fetchData = async () => {
-    setState({ ...state, loading: true });
-    const url = "https://www.cbr-xml-daily.ru/daily_json.js";
-    fetch(url)
-      .then(result => result.json())
-      .then(response => {
-        const time = response.Timestamp;
-        const date = new Date(time).toLocaleString("ru", {
-          day: "numeric",
-          month: "long",
-          year: "numeric"
-        });
-        const data = response.Valute;
-        const arr = Object.keys(data).map(key => {
-          const e = data[key];
-          return {
-            name: e.Name,
-            value: e.Value,
-            nominal: e.Nominal
-          };
-        });
-        arr.map(c => {
-          c.label = c.name;
-          return c;
-        });
-        arr.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
-        setCurrencies(arr);
+  const fetch = () => {
+    fetchNews()
+      .then(({ valuteArr, date }) => {
+        setCurrencies(valuteArr);
         setState({ ...state, loading: false, date });
       })
       .catch(e => {
@@ -57,9 +36,9 @@ const CurrencyContainer = () => {
         }); // check
       });
   };
+
   useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetch();
   }, []);
 
   return (
