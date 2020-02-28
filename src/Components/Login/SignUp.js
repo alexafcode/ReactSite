@@ -41,92 +41,64 @@ const useStyles = makeStyles(theme => ({
 
 function SignUp(props) {
   const classes = useStyles();
+  const { error, errorMessage, loading, createUserAction } = props;
 
-  const [state, setState] = useState({
-    email: "",
-    password: "",
-    emailError: false,
-    passwordError: false,
-    emailErrorText: "",
-    passwordErrorText: ""
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({
+    email: false,
+    password: false
   });
 
-  const emailValidation = email => {
+  const validateEmail = email => {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (reg.test(email)) {
-      setState({
-        ...state,
-        email: email,
-        emailError: false,
-        emailErrorText: ""
-      });
+      setEmail(email);
+      setErrors({ ...errors, email: false });
     } else {
-      setState({
-        ...state,
-        email: email,
-        emailError: true,
-        emailErrorText: "Email not Corrected"
-      });
+      setErrors({ ...errors, email: true });
+      setEmail(email);
     }
   };
 
-  const pwdValidation = pwd => {
+  const validatePassword = pwd => {
     if (pwd.length >= 6) {
-      setState({
-        ...state,
-        password: pwd,
-        passwordError: false,
-        passwordErrorText: ""
-      });
+      setPassword(pwd);
+      setErrors({ ...errors, password: false });
     } else {
-      setState({
-        ...state,
-        password: pwd,
-        passwordError: true,
-        passwordErrorText: "Your password must be at least 6 characters long "
-      });
+      setPassword(pwd);
+      setErrors({ ...errors, password: true });
     }
-  }
+  };
+  const submitForm = e => {
+    e.preventDefault();
+    if (!errors.email && !errors.password) {
+      createUserAction(email, password);
+    }
+  };
+
+  const avatar = (
+    <Avatar className={classes.avatar}>
+      <LockOutlinedIcon />
+    </Avatar>
+  );
+  const formError = error && <p style={{ color: "red" }}>{errorMessage}</p>;
+  const load = loading && <LinearProgress />;
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+        {avatar}
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={e => submitForm(e)}>
           <Grid container spacing={2}>
-            {/* <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-              />
-            </Grid> */}
             <Grid item xs={12}>
               <TextField
-                value={state.email}
-                error={state.emailError}
+                value={email}
+                error={errors.email}
                 variant="outlined"
                 required
                 fullWidth
@@ -134,16 +106,14 @@ function SignUp(props) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                onChange={e => emailValidation(e.target.value)}
+                helperText={errors.email ? "Email not Corrected" : ""}
+                onChange={({ target }) => validateEmail(target.value)}
               />
-              {state.emailError && (
-                <p style={{ color: "red" }}>{state.emailErrorText}</p>
-              )}
             </Grid>
             <Grid item xs={12}>
               <TextField
-                value={state.password}
-                error={state.passwordError}
+                value={password}
+                error={errors.password}
                 variant="outlined"
                 required
                 fullWidth
@@ -151,33 +121,24 @@ function SignUp(props) {
                 label="Password"
                 type="password"
                 autoComplete="current-password"
-                onChange={e => pwdValidation(e.target.value)}
+                helperText={
+                  errors.password
+                    ? "Your password must be at least 6 characters long"
+                    : ""
+                }
+                onChange={({ target }) => validatePassword(target.value)}
               />
-              {state.passwordError && (
-                <p style={{ color: "red" }}>{state.passwordErrorText}</p>
-              )}
             </Grid>
-            {/* <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid> */}
           </Grid>
-          {props.loading && <LinearProgress />}
-          {props.error && <p style={{ color: "red" }}>{props.errorMessage}</p>}
+          {load}
+          {formError}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={e => {
-              e.preventDefault();
-              if (!state.emailError && !state.passwordError) {
-                props.createUserAction(state.email, state.password);
-              }
-            }}
+            onClick={e => submitForm(e)}
           >
             Sign Up
           </Button>
@@ -212,7 +173,4 @@ SignUp.propTypes = {
   createUserAction: PropTypes.func.isRequired
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
