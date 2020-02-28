@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import StartPage from "./Components/StartPage";
 import SignIn from "./Components/Login/SignIn";
 import SignUp from "./Components/Login/SignUp";
-import MenuAppBar from "./Components/Layouts/MenuAppBar";
+import MenuAppBar from "./Components/Navigation/MenuAppBar";
 import NotFound from "./Components/Layouts/NotFound";
 import configureStore from "./store/configureStore";
 import AutoItem from "./Components/Auto/AutoItem/AutoItem";
