@@ -11,7 +11,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Input from "@material-ui/core/Input";
 import Typography from "@material-ui/core/Typography";
-import Comment from "./Comment";
+import Comment from "../Comment/";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Rating from "material-ui-rating";

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
-import AutoCard from "./AutoCard";
-import AutoFilter from "./AutoFilter";
+import AutoCard from "../AutoCard";
+import AutoFilter from "../AutoFilter/AutoFilter";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Pagination from "material-ui-flat-pagination";

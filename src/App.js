@@ -10,13 +10,13 @@ import NotFound from "./Components/Layouts/NotFound";
 import configureStore from "./store/configureStore";
 import AutoItem from "./Components/Auto/AutoItem/AutoItem";
 import PrivateRoute from "./Components/Layouts/PrivateRoute";
-import CreateAuto from "./Components/Auto/Create/CreateAuto";
+import CreateAuto from "./Components/Auto/CreateAuto";
 import "./App.scss";
 
 const store = configureStore();
 const Weather = lazy(() => import("./Components/Weather/WeatherContainer"));
 const Currency = lazy(() => import("./Components/Currency/CurrencyContainer"));
-const Auto = lazy(() => import("./Components/Auto/AutoList/AutoContainer"));
+const Auto = lazy(() => import("./Components/Auto/AutoContainer"));
 const News = lazy(() => import("./Components/News/NewsContainer"));
 const PC = lazy(() => import("./Components/PersonalCabinet/PersonalCabinet"));
 
