@@ -25,12 +25,12 @@ class NewsContainer extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ NewsReducers }) => {
   return {
-    news: state.NewsReducers.news,
-    loading: state.NewsReducers.loading,
-    error: state.NewsReducers.error,
-    errorMessage: state.NewsReducers.errorMessage
+    news: NewsReducers.news,
+    loading: NewsReducers.loading,
+    error: NewsReducers.error,
+    errorMessage: NewsReducers.errorMessage
   };
 };
 
@@ -45,7 +45,4 @@ NewsContainer.propTypes = {
   errorMessage: PropTypes.string
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NewsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(NewsContainer);
