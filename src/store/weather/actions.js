@@ -25,20 +25,21 @@ export const fetchData = () => async dispatch => {
   let cityFromLS = [];
   if (isSaveCity()) {
     cityFromLS = getCityFromLS();
-    cityFromLS.forEach(async el => {
-      try {
-        const names = {
-          cityName: el.city,
-          countryName: el.country
-        };
-        const res = await getWeatherForCity(el);
-        const city = transformCity(res, names);
-        dispatch({ type: ERROR_FETCH_DATA, payload: false });
-        dispatch({ type: FETCH_DATA, payload: city });
-      } catch (e) {
-        console.error("Error Fetch", e);
-      }
-    });
+    await Promise.all(
+      cityFromLS.map(async el => {
+        try {
+          const names = {
+            cityName: el.city,
+            countryName: el.country
+          };
+          const res = await getWeatherForCity(el);
+          const city = transformCity(res, names);
+          dispatch({ type: FETCH_DATA, payload: city });
+        } catch (e) {
+          console.log(e);
+        }
+      })
+    );
   }
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(
