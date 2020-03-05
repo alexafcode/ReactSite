@@ -13,6 +13,7 @@ import "./AutoList.scss";
 const theme = createMuiTheme();
 
 function AutoList(props) {
+  const { cars, changeFilter, filterCars } = props;
   const [state, setState] = useState({
     offset: 0,
     limit: 4,
@@ -41,8 +42,8 @@ function AutoList(props) {
   };
 
   const uniqAuto = () => {
-    if (props.cars) {
-      const setAuto = [...new Set(props.cars.map(a => a.manufacturer))];
+    if (cars) {
+      const setAuto = [...new Set(cars.map(a => a.manufacturer))];
       const arrSet = Array.from(setAuto);
       return arrSet;
     }
@@ -62,58 +63,63 @@ function AutoList(props) {
       toggleDrawer();
     }
   };
+  const mobileFilter = (
+    <div className="filter__mobile">
+      <Fab color="primary" aria-label="Add" size="small" onClick={toggleDrawer}>
+        <OpenInBrowser />
+      </Fab>
+      <Hidden only={["md", "xl", "lg"]}>
+        <div
+          style={{ visibility: !state.visible ? "hidden" : "visible" }}
+          ref={wrapperRef}
+        >
+          <AutoFilter
+            filters={uniqAuto()}
+            changeLimit={changeLimit}
+            className="filter"
+            changeFilter={changeFilter}
+            goToFirstPage={goToFirstPage}
+          />
+        </div>
+      </Hidden>
+    </div>
+  );
+  const fullFilter = (
+    <div className="filter__full">
+      <AutoFilter
+        filters={uniqAuto()}
+        changeLimit={changeLimit}
+        className="filter"
+        changeFilter={changeFilter}
+        goToFirstPage={goToFirstPage}
+      />
+    </div>
+  );
+
+  const pagination = (
+    <MuiThemeProvider theme={theme}>
+      <CssBaseline />
+      <Pagination
+        className="pagination"
+        limit={state.limit}
+        offset={state.offset}
+        total={filterCars.length}
+        onClick={(e, offset, page) => handleClick(offset, page)}
+        centerRipple={true}
+      />
+    </MuiThemeProvider>
+  );
 
   return (
     <div className="autolist">
-      <div className="filter__mobile">
-        <Fab
-          color="primary"
-          aria-label="Add"
-          size="small"
-          onClick={toggleDrawer}
-        >
-          <OpenInBrowser />
-        </Fab>
-        <Hidden only={["md", "xl", "lg"]}>
-          <div
-            style={{ visibility: !state.visible ? "hidden" : "visible" }}
-            ref={wrapperRef}
-          >
-            <AutoFilter
-              filters={uniqAuto()}
-              changeLimit={changeLimit}
-              className="filter"
-              changeFilter={props.changeFilter}
-              goToFirstPage={goToFirstPage}
-            />
-          </div>
-        </Hidden>
-      </div>
-      <div className="filter__full">
-        <AutoFilter
-          filters={uniqAuto()}
-          changeLimit={changeLimit}
-          className="filter"
-          changeFilter={props.changeFilter}
-          goToFirstPage={goToFirstPage}
-        />
-      </div>
+      {mobileFilter}
+      {fullFilter}
       <div className="cars">
-        {props.filterCars.slice(state.offset, state.to).map((car, index) => (
+        {filterCars.slice(state.offset, state.to).map((car, index) => (
           <AutoCard car={car} key={`item-${index}`} />
         ))}
       </div>
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <Pagination
-          className="pagination"
-          limit={state.limit}
-          offset={state.offset}
-          total={props.filterCars.length}
-          onClick={(e, offset, page) => handleClick(offset, page)}
-          centerRipple={true}
-        />
-      </MuiThemeProvider>
+      {pagination}
     </div>
   );
 }
