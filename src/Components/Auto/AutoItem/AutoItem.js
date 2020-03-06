@@ -21,22 +21,21 @@ import "./AutoItem.scss";
 
 function AutoItem(props) {
   const { car } = props.location.state;
+  const { user, addComment } = props;
   const [comment, setComment] = useState(car.comment);
   const [input, setInput] = useState("");
 
-  const addComment = () => {
+  const addCommentToPage = () => {
     if (input !== "") {
-      const user = props.user.displayName
-        ? props.user.displayName
-        : props.user.email;
+      const userName = user.displayName ? user.displayName : user.email;
       const arr = comment ? comment : [];
       const obj = {
         comment: input,
-        name: user,
-        photoURL: props.user.photoURL ? props.user.photoURL : ""
+        name: userName,
+        photoURL: user.photoURL ? user.photoURL : ""
       };
       arr.push(obj);
-      props.addComment(car.id, arr);
+      addComment(car.id, arr);
       setComment(arr);
       setInput("");
     }
@@ -54,6 +53,28 @@ function AutoItem(props) {
   useEffect(() => {
     onTop();
   }, []);
+
+  const comments =
+    comment && comment.map((el, index) => <Comment comment={el} key={index} />);
+
+  const inputComment = (
+    <div className="comment">
+      <Input
+        placeholder="Add Comment"
+        className="comment__input"
+        onChange={({ target }) => setInput(target.value)}
+        value={input}
+      />
+      <Fab
+        color="primary"
+        aria-label="Add"
+        size="small"
+        onClick={() => addCommentToPage()}
+      >
+        <AddIcon />
+      </Fab>
+    </div>
+  );
 
   return (
     <Card className="car">
@@ -88,29 +109,11 @@ function AutoItem(props) {
       >
         To List Cars
       </Button>
-      <CardActions>
-        <div className="comment__add">
-          <Input
-            placeholder="Add Comment"
-            className="comment__input"
-            onChange={e => setInput(e.target.value)}
-            value={input}
-          />
-          <Fab
-            color="primary"
-            aria-label="Add"
-            size="small"
-            onClick={() => addComment()}
-          >
-            <AddIcon />
-          </Fab>
-        </div>
-      </CardActions>
+      <CardActions>{inputComment}</CardActions>
       <Typography variant="h6" component="h6" style={{ marginLeft: "2%" }}>
         {comment ? "Комментарии:" : "Пока Комментариев Нет"}
       </Typography>
-      {comment &&
-        comment.map((el, index) => <Comment comment={el} key={index} />)}
+      {comments}
     </Card>
   );
 }
@@ -120,9 +123,9 @@ AutoItem.propTypes = {
   addComment: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ AuthReducers }) => {
   return {
-    user: state.AuthReducers.user
+    user: AuthReducers.user
   };
 };
 const mapDispatchToProps = {
