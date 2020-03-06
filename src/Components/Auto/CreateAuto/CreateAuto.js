@@ -13,6 +13,7 @@ import { uploadAuto } from "../../../store/auto/actions";
 import "./CreateAuto.scss";
 
 function CreateAuto(props) {
+  const { uploadAuto, error, errorMessage, loading } = props;
   const [state, setState] = useState({
     manufacturerValue: "",
     modelValue: "",
@@ -59,37 +60,38 @@ function CreateAuto(props) {
   };
 
   const uploadCar = () => {
-    const valid = validFields();
-    if (valid) {
+    if (validFields()) {
       // ToDo Spinner
-      props.uploadAuto(state);
+      uploadAuto(state);
     } else {
       // ToDo Error Label
       console.log("not Valid");
     }
   };
 
+  const errorTextField = error && (
+    <TextField
+      error
+      id="standard-error"
+      label="Error"
+      value={errorMessage ? errorMessage : ""}
+      margin="normal"
+      InputProps={{
+        readOnly: true
+      }}
+    />
+  );
+
   return (
     <div className="create">
-      {props.error && (
-        <TextField
-          error
-          id="standard-error"
-          label="Error"
-          value={props.errorMessage ? props.errorMessage : ""}
-          margin="normal"
-          InputProps={{
-            readOnly: true
-          }}
-        />
-      )}
+      {errorTextField}
       <div className="create__section">
         <Input
           placeholder="Manufacturer"
           value={state.manufacturerValue}
-          className="man__input"
-          onChange={e =>
-            setState({ ...state, manufacturerValue: e.target.value })
+          className="input"
+          onChange={({ target }) =>
+            setState({ ...state, manufacturerValue: target.value })
           }
           inputProps={{
             "aria-label": "Manufacturer"
@@ -99,7 +101,9 @@ function CreateAuto(props) {
           placeholder="Model"
           className="model__input"
           value={state.modelValue}
-          onChange={e => setState({ ...state, modelValue: e.target.value })}
+          onChange={({ target }) =>
+            setState({ ...state, modelValue: target.value })
+          }
           inputProps={{
             "aria-label": "Model"
           }}
@@ -110,7 +114,9 @@ function CreateAuto(props) {
           rows={2}
           rowsMax={10}
           value={state.descValue}
-          onChange={e => setState({ ...state, descValue: e.target.value })}
+          onChange={({ target }) =>
+            setState({ ...state, descValue: target.value })
+          }
           className="desc__input"
           inputProps={{
             "aria-label": "Model"
@@ -136,7 +142,7 @@ function CreateAuto(props) {
           <AddIcon />
         </Fab>
       </div>
-      {props.loading && <Loading />}
+      {loading && <Loading />}
     </div>
   );
 }
@@ -146,10 +152,9 @@ CreateAuto.propTypes = {
   uploadAuto: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ AutoReducers }) => {
   return {
-    loading: state.AutoReducers.loading,
-    ...state
+    loading: AutoReducers.loading
   };
 };
 const mapDispatchToProps = {
