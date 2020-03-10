@@ -1,8 +1,8 @@
 import React from "react";
 import "./Message.css";
 
-const Message = props => {
-  return <div className={props.type}>{props.text}</div>;
+const Message = ({ type, text }) => {
+  return <div className={type}>{text}</div>;
 };
 
 export default Message;
