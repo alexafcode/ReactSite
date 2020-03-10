@@ -14,7 +14,8 @@ import AddIcon from "@material-ui/icons/Add";
 import history from "../../../history";
 
 function CheckboxLabels(props) {
-  const initial = props.filters.map(filter => {
+  const { filters, changeLimit, changeFilter, goToFirstPage } = props;
+  const initial = filters.map(filter => {
     return {
       name: filter,
       checked: false
@@ -30,38 +31,36 @@ function CheckboxLabels(props) {
     limit: 4
   });
 
-  const handleChangeLimit = event => {
+  const handleChangeLimit = ({ target }) => {
     setValues(oldValues => ({
       ...oldValues,
-      [event.target.name]: event.target.value
+      [target.name]: target.value
     }));
-    props.changeLimit(event.target.value);
+    changeLimit(target.value);
   };
 
-  const handleChange = name => event => {
+  const handleChange = name => ({ target }) => {
     let init = state.initial;
-    init.map(el =>
-      el.name === name ? (el.checked = event.target.checked) : el
-    );
-    if (event.target.checked) {
-      let newFilters = state.selectedFilters;
+    init.map(el => (el.name === name ? (el.checked = target.checked) : el));
+    if (target.checked) {
+      const newFilters = state.selectedFilters;
       newFilters.push(name);
       setState({ ...state, selectedFilters: newFilters });
-      props.changeFilter(newFilters);
+      changeFilter(newFilters);
     } else {
       const newFilters = state.selectedFilters.filter(el => el !== name);
       setState({ ...state, selectedFilters: newFilters });
-      props.changeFilter(newFilters);
+      changeFilter(newFilters);
     }
-    props.goToFirstPage();
+    goToFirstPage();
   };
 
   const resetFilters = () => {
     let initial = state.initial;
     initial.map(el => (el.checked = false));
     setState({ initial, selectedFilters: [] });
-    props.changeFilter([]);
-    props.goToFirstPage();
+    changeFilter([]);
+    goToFirstPage();
   };
 
   const stylus = {
@@ -82,29 +81,33 @@ function CheckboxLabels(props) {
       marginTop: theme.spacing(2)
     }
   }));
+
   const classes = useStyles();
+
+  const filterGroup =
+    filters &&
+    state.initial.map((filter, index) => {
+      return (
+        <FormControlLabel
+          key={index}
+          control={
+            <Checkbox
+              checked={filter.checked}
+              onChange={handleChange(filter.name)}
+              value={filter.checked}
+              color="primary"
+              name={filter.name}
+            />
+          }
+          label={filter.name}
+        />
+      );
+    });
 
   return (
     <div>
       <FormGroup style={stylus.formGroup} className="filter">
-        {props.filters &&
-          state.initial.map((filter, index) => {
-            return (
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    checked={filter.checked}
-                    onChange={handleChange(filter.name)}
-                    value={filter.checked}
-                    color="primary"
-                    name={filter.name}
-                  />
-                }
-                label={filter.name}
-              />
-            );
-          })}
+        {filterGroup}
         <Button
           variant="contained"
           color="primary"
