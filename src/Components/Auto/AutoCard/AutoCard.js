@@ -10,30 +10,27 @@ import history from "../../../history";
 import "./AutoCard.scss";
 
 function AutoCard(props) {
+  const { id, imageUrlPrev, imageUrl, name, descriptions } = props.car;
 
   return (
     <Card className="card__item">
-      <CardActionArea
-        onClick={() => history.push(`/auto/${props.car.id}`, props)}
-      >
+      <CardActionArea onClick={() => history.push(`/auto/${id}`, props)}>
         <CardMedia
-          className="card__media"
-          image={
-            props.car.imageUrlPrev ? props.car.imageUrlPrev : props.car.imageUrl
-          }
-          title={props.car.name}
+          className="media"
+          image={imageUrlPrev ? imageUrlPrev : imageUrl}
+          title={name}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {props.car.name}
+            {name}
           </Typography>
           <Typography
             variant="body2"
             color="textSecondary"
             component="p"
-            className="card__desc"
+            className="desc"
           >
-            {props.car.descriptions}
+            {descriptions}
           </Typography>
         </CardContent>
       </CardActionArea>

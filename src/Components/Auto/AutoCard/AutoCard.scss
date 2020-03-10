@@ -2,10 +2,10 @@
   max-width: 45%;
   margin: auto;
   margin-bottom: 2%;
-  .card__media {
+  .media {
     height: 250px;
   }
-  .card__desc {
+  .desc {
     height: 160px;
     overflow: hidden;
   }
@@ -14,7 +14,7 @@
 @media screen and (max-width: 1400px) {
   .card__item {
     max-width: 40%;
-    .card__media {
+    .media {
       height: 40vw;
     }
   }
