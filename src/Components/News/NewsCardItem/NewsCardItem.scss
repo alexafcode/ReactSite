@@ -2,12 +2,12 @@
   max-width: 50%;
   margin: auto;
   margin-bottom: 2rem;
-  .card__media {
+  .media {
     height: 500px;
     width: 100%;
   }
-  .card__title {
-    .card__text {
+  .title {
+    .title__text {
       font-size: 1.5rem;
       font-family: "Roboto", "Helvetica", "Arial", sans-serif;
       font-weight: 400;
@@ -20,11 +20,11 @@
 @media screen and (max-width: 1150px) {
   .card {
     max-width: 70%;
-    .card__media {
+    .media {
       height: 25vh;
     }
-    .card__title {
-      .card__text {
+    .title {
+      .title__text {
         font-size: 1rem;
       }
     }
@@ -33,7 +33,7 @@
 @media screen and (max-width: 1000px) {
   .card {
     max-width: 80%;
-    .card__media {
+    .media {
       height: 25vh;
     }
   }

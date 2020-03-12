@@ -47,12 +47,12 @@ const NewsCardItem = props => {
       <CardActionArea>
         <CardMedia
           ref={ref}
-          className="card__media"
+          className="media"
           image={srcImage()}
           title={news.title}
         />
-        <CardContent className="card__title">
-          <div className="card__text">{news.title}</div>
+        <CardContent className="title">
+          <div className="title__text">{news.title}</div>
           <ExpansionPanel style={{ boxShadow: "none" }}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} />
             <ExpansionPanelDetails>

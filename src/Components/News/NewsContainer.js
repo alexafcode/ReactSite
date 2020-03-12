@@ -8,16 +8,17 @@ import Message from "../Layouts/Message";
 
 class NewsContainer extends React.Component {
   render() {
-    if (this.props.error) {
-      return <Message type="error" text={this.props.errorMessage} />;
-    } else if (this.props.loading) {
+    const { error, errorMessage, loading, news } = this.props;
+    if (error) {
+      return <Message type="error" text={errorMessage} />;
+    } else if (loading) {
       return (
         <div style={{ margin: "auto", width: "10%", marginTop: "10%" }}>
           <Loading />
         </div>
       );
     } else {
-      return <NewsPage news={this.props.news} />;
+      return <NewsPage news={news} />;
     }
   }
   componentDidMount() {

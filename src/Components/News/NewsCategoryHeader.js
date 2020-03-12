@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchData } from "../../store/news/actions";
 import Fab from "@material-ui/core/Fab";
-import { categoryMenu } from "./const";
+import { categoryMenu } from "./categoryConst";
 
 const NewsCategoryHeader = props => {
   const stylus = {
@@ -58,7 +58,4 @@ const mapDispatchToProps = {
   fetchData
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NewsCategoryHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(NewsCategoryHeader);

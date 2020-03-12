@@ -7,7 +7,7 @@ import ArrowUp from "@material-ui/icons/KeyboardArrowUp";
 import NewsCategoryHeader from "./NewsCategoryHeader";
 import Hidden from "@material-ui/core/Hidden";
 
-const NewsPage = props => {
+const NewsPage = ({ news }) => {
   const stylus = {
     container: {
       paddingTop: "1rem"
@@ -74,7 +74,7 @@ const NewsPage = props => {
           </Fab>
         )}
       </div>
-      {props.news.map((el, index) => (
+      {news.map((el, index) => (
         <NewsCardItem news={el} key={index} />
       ))}
     </div>

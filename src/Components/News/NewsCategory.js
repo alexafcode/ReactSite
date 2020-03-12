@@ -7,7 +7,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import { categoryMenu } from "./const";
+import { categoryMenu } from "./categoryConst";
 
 const StyledMenu = withStyles({
   main: {
@@ -101,7 +101,7 @@ function NewsCategoryMenu(props) {
 
 const mapStateToProps = state => {
   return {
-    index: state.NewsReducers.index,
+    index: state.NewsReducers.index
   };
 };
 
@@ -109,7 +109,4 @@ const mapDispatchToProps = {
   fetchData
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NewsCategoryMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(NewsCategoryMenu);
