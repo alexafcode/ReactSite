@@ -5,7 +5,7 @@ import dayIcon from "../../../assets/weather-icons/day.jpg";
 import nightIcon from "../../../assets/weather-icons/night.jpg";
 import pressureIcon from "../../../assets/weather-icons/icon-pressure.png";
 import WeatherDetail from "../WeatherDetail";
-import { saveToLS, deleteToLS } from "../../../store/weather/helperActions";
+import WithLocalStorage from "../../../HOC/withLocalStorage";
 import "./WeatherCard.scss";
 
 class WeatherCard extends React.Component {
@@ -22,7 +22,13 @@ class WeatherCard extends React.Component {
     });
   }
   render() {
-    const { city, forecastWeather, getForecast } = this.props;
+    const {
+      city,
+      forecastWeather,
+      getForecast,
+      saveToLS,
+      deleteToLS
+    } = this.props;
     const icon = require(`../../../assets/weather-icons/${city.WeatherIcon}.png`);
 
     const styles = {
@@ -134,4 +140,5 @@ const mapStateToProps = (state, { city }) => {
   };
 };
 
-export default connect(mapStateToProps, null)(WeatherCard);
+const Wrapped = WithLocalStorage(WeatherCard);
+export default connect(mapStateToProps, null)(Wrapped);
