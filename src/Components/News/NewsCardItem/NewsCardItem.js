@@ -13,8 +13,7 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import "./NewsCardItem.scss";
 
-const NewsCardItem = props => {
-  const { news } = props;
+const NewsCardItem = ({news}) => {
   const redirectToNewsPage = () => {
     window.open(news.url, "_blank");
   };
