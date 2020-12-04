@@ -1,8 +1,9 @@
 .detail {
   margin: 0.25rem;
-  width: 100px;
-  height: 250px;
-  min-height: 200px;
+  // width: 100px;
+  // height: 250px;
+  // min-height: 200px;
+  flex: 1;
   border-radius: 1rem;
   text-align: center;
   &:hover {
