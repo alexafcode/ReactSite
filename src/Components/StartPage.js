@@ -9,11 +9,13 @@ function StartPage() {
     window.innerHeight ||
     document.documentElement.clientHeight ||
     document.body.clientHeight;
+  const heightToolBar = (width <= 768) ? 56 : 64;
+
 
   const stylus = {
     main: {
       width: "100%",
-      height: height - 64,
+      height: height - heightToolBar,
       backgroundImage: `url(https://picsum.photos/${width}/${height}?random)`,
       backgroundSize: "cover",
       backgroundPosition: "center",
