@@ -1,22 +1,19 @@
 import React from "react";
+import useDeviceDetect from "../hooks/useMobileDetect";
 
 function StartPage() {
-  const width =
-    window.innerWidth ||
-    document.documentElement.clientWidth ||
-    document.body.clientWidth;
-  const height =
-    window.innerHeight ||
-    document.documentElement.clientHeight ||
-    document.body.clientHeight;
-  const heightToolBar = (width <= 768) ? 56 : 64;
+  const { isMobile } = useDeviceDetect();
+  const { innerWidth: width, innerHeight: height } = window;
 
+  const heightToolBar = isMobile ? 56 : 64;
 
   const stylus = {
     main: {
       width: "100%",
       height: height - heightToolBar,
-      backgroundImage: `url(https://picsum.photos/${width}/${height}?random)`,
+      backgroundImage: `url(https://picsum.photos/${width}/${
+        height - heightToolBar
+      }?random)`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
