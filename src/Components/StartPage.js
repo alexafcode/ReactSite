@@ -11,9 +11,7 @@ function StartPage() {
     main: {
       width: "100%",
       height: height - heightToolBar,
-      backgroundImage: `url(https://picsum.photos/${width}/${
-        height - heightToolBar
-      }?random)`,
+      backgroundImage: `url(https://picsum.photos/${width}/${height}?random)`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
