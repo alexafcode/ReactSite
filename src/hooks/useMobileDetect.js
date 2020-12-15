@@ -1,21 +1,31 @@
-﻿import React, { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 
 function getWindowSize() {
-  const { innerWidth: width } = window;
-  return width <= 768;
+  const { innerWidth: width, innerHeight: height, navigator } = window;
+  const userAgent = typeof navigator === "undefined" ? "" : navigator.userAgent;
+  const isMobile = Boolean(
+    userAgent.match(
+      /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+    )
+  );
+  return {
+    width,
+    height,
+    isMobile,
+  };
 }
 
-export default function useMobileDetect() {
-  const [isMobile, setMobile] = useState(getWindowSize());
+export default function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowSize());
 
   useEffect(() => {
     function handleResize() {
-      setMobile(getWindowSize());
+      setWindowDimensions(getWindowSize());
     }
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  return { isMobile };
+  return windowDimensions;
 }

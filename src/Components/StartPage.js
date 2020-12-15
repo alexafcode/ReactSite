@@ -1,9 +1,8 @@
 import React from "react";
-import useDeviceDetect from "../hooks/useMobileDetect";
+import useWindowDimensions from "../hooks/useMobileDetect";
 
 function StartPage() {
-  const { isMobile } = useDeviceDetect();
-  const { innerWidth: width, innerHeight: height } = window;
+  const { height, width, isMobile } = useWindowDimensions();
 
   const heightToolBar = isMobile ? 56 : 64;
 
