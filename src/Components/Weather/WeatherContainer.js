@@ -5,7 +5,7 @@ import {
   fetchData,
   searchClick,
   searchPanelHide,
-  getForecast
+  getForecast,
 } from "../../store/weather/actions";
 
 class WeatherContainer extends React.Component {
@@ -26,7 +26,7 @@ class WeatherContainer extends React.Component {
       showSearchResult,
       getForecast,
       error,
-      errorMessage
+      errorMessage,
     } = this.props;
 
     return (
@@ -55,7 +55,7 @@ const mapStateToProps = ({ AuthReducers, weatherRedusers }) => {
     searchCities: weatherRedusers.searchCities,
     showSearchResult: weatherRedusers.showSearchResult,
     error: weatherRedusers.error,
-    errorMessage: weatherRedusers.errorMessage
+    errorMessage: weatherRedusers.errorMessage,
   };
 };
 
@@ -63,7 +63,7 @@ const mapDispatchToProps = {
   fetchData,
   searchClick,
   searchPanelHide,
-  getForecast
+  getForecast,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WeatherContainer);

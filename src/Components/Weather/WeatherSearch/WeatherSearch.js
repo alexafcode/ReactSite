@@ -9,6 +9,7 @@ import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import SearchList from "../SearchList";
+import ClearIcon from "@material-ui/icons/Clear";
 import "./WeatherSearch.scss";
 
 function WeatherSearch(props) {
@@ -16,7 +17,7 @@ function WeatherSearch(props) {
     searchCities,
     searchPanelHide,
     searchClick,
-    showSearchResult
+    showSearchResult,
   } = props;
   const initialState = "";
   const [input, setInput] = useState(initialState);
@@ -55,12 +56,12 @@ function WeatherSearch(props) {
           value={input}
           onChange={({ target }) => setInput(target.value)}
         />
+        <ClearIcon onClick={() => setInput("")} />
         <IconButton
           className="icon"
           aria-label="Search"
           onClick={() => {
-            searchClick(input);
-            // setInput(initialState);
+            if (input) searchClick(input);
           }}
         >
           <SearchIcon />
@@ -83,19 +84,19 @@ WeatherSearch.propTypes = {
   searchClick: PropTypes.func.isRequired,
   searchCities: PropTypes.array.isRequired,
   searchPanelHide: PropTypes.func.isRequired,
-  showSearchResult: PropTypes.bool.isRequired
+  showSearchResult: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = ({ weatherRedusers }) => {
   return {
     showSearchLoad: weatherRedusers.showSearchLoad,
     searchCities: weatherRedusers.searchCities,
-    showSearchResult: weatherRedusers.showSearchResult
+    showSearchResult: weatherRedusers.showSearchResult,
   };
 };
 const mapDispatchToProps = {
   searchClick,
-  searchPanelHide
+  searchPanelHide,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WeatherSearch);
