@@ -46,6 +46,8 @@ function WeatherSearch(props) {
     }
   };
 
+  const clearIcon = input ? <ClearIcon onClick={() => setInput("")} /> : null;
+
   return (
     <div className="search">
       <Paper className="paper">
@@ -56,7 +58,7 @@ function WeatherSearch(props) {
           value={input}
           onChange={({ target }) => setInput(target.value)}
         />
-        <ClearIcon onClick={() => setInput("")} />
+        {clearIcon}
         <IconButton
           className="icon"
           aria-label="Search"
