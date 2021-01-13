@@ -1,9 +1,8 @@
-import keys from "../keys";
-
 const _startUrl = "https://dataservice.accuweather.com";
-const _key = keys.weather;
 
-const getResource = async url => {
+const _key = process.env.REACT_APP_WEATHER_KEY;
+
+const getResource = async (url) => {
   const res = await fetch(`${_startUrl}${url}`, { mode: "cors" });
   if (!res.ok) {
     throw new Error(`Could not fetch ${url}, received ${res.status}`);
@@ -18,7 +17,7 @@ export async function getWeather(latitude, longitude) {
     cityName: json.ParentCity
       ? json.ParentCity.LocalizedName
       : json.LocalizedName,
-    countryName: json.Country ? json.Country.LocalizedName : json.country
+    countryName: json.Country ? json.Country.LocalizedName : json.country,
   };
   const cityData = await getWeatherForCity(json);
   return transformCity(cityData, names);
@@ -31,7 +30,7 @@ export async function getWeatherForCity(data) {
   const item = {
     res: json[0],
     queryKey,
-    fromLS: data.fromLS ? true : false
+    fromLS: data.fromLS ? true : false,
   };
   return item;
 }
@@ -41,7 +40,7 @@ export function transformCity(data, city) {
   const time = new Date(res.LocalObservationDateTime).toLocaleString("ru", {
     day: "numeric",
     month: "long",
-    year: "numeric"
+    year: "numeric",
   });
   return {
     fromLS,
@@ -61,39 +60,39 @@ export function transformCity(data, city) {
     WeatherIcon: res.WeatherIcon,
     IsDayTime: res.IsDayTime,
     time: time,
-    pressure: `${res.Pressure.Metric.Value} мм рт. ст.`
+    pressure: `${res.Pressure.Metric.Value} мм рт. ст.`,
   };
 }
 export async function getForecastForCity(queryKey) {
   const url = `/forecasts/v1/daily/5day/${queryKey}?apikey=${_key}&language=ru-ru&metric=true`;
   const result = await getResource(url);
   const res = result.DailyForecasts;
-  return res.map(el => {
+  return res.map((el) => {
     return {
       key: queryKey,
       date: new Date(el.Date).toLocaleString("ru", {
         day: "numeric",
-        month: "long"
+        month: "long",
       }),
       weekday: new Date(el.Date).toLocaleString("ru", {
-        weekday: "long"
+        weekday: "long",
       }),
       dayIcon: el.Day.Icon,
       dayIconText: el.Day.IconPhrase,
       tempDay: `${el.Temperature.Maximum.Value.toFixed()} ° C`,
       nightIcon: el.Night.Icon,
-      tempNight: `${el.Temperature.Minimum.Value.toFixed()} ° C`
+      tempNight: `${el.Temperature.Minimum.Value.toFixed()} ° C`,
     };
   });
 }
 export async function getSearchCity(query) {
   const url = `/locations/v1/cities/autocomplete?apikey=${_key}&q=${query}&language=ru-ru`;
   const result = await getResource(url);
-  return result.map(el => {
+  return result.map((el) => {
     return {
       country: el.Country.LocalizedName,
       city: el.LocalizedName,
-      keyCity: el.Key
+      keyCity: el.Key,
     };
   });
 }
