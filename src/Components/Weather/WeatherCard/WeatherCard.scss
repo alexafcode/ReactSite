@@ -89,7 +89,6 @@
     width: 500px;
     margin: auto;
     display: flex;
-    height: 240px;
     padding: 20px;
     margin-bottom: 1vh;
     border-radius: 1em;
@@ -107,18 +106,10 @@
       padding: 1rem;
       .center {
         font-size: 0.75rem;
-        // .center-icon {
-        //   width: 40vw;
-        //   height: 17vh;
-        //   background-position: center;
-        // }
         .center-text {
           .center-temp {
             font-size: 1.5rem;
           }
-        }
-        .center-wind {
-          // font-size: 1.25rem;
         }
       }
       .footer {
