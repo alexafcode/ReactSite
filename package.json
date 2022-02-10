@@ -9,7 +9,7 @@
     "material-ui-dropzone": "^2.3.5",
     "material-ui-flat-pagination": "^3.2.0",
     "material-ui-rating": "^4.0.0-beta.2",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
